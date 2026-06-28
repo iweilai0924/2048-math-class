@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2048 數學課（颱風雨備・線上限定）｜數感實驗室</title>
+<style>
+  :root{--green:#009b6b;--dark:#004B24;--paper:#FEF8EE;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:"PingFang TC","Noto Sans TC",system-ui,sans-serif;background:var(--paper);color:#1a1a1a;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:6vw 5vw}
+  main{max-width:760px;width:100%;text-align:center}
+  .eyebrow{color:var(--green);font-weight:700;letter-spacing:.1em;font-size:clamp(13px,2.4vw,16px)}
+  h1{font-size:clamp(32px,8vw,56px);color:var(--dark);margin:.2em 0 .1em}
+  .sub{color:#666;font-size:clamp(14px,3vw,18px);margin-bottom:2em}
+  .cards{display:grid;gap:14px}
+  a.card{display:block;text-decoration:none;background:#fff;border:2px solid #e7e2d6;border-left:8px solid var(--green);border-radius:14px;padding:18px 22px;text-align:left;transition:.15s;box-shadow:0 2px 8px rgba(0,0,0,.04)}
+  a.card:hover{transform:translateY(-2px);border-color:var(--green);box-shadow:0 6px 18px rgba(0,155,107,.15)}
+  a.card .t{font-size:clamp(17px,3.6vw,22px);font-weight:700;color:var(--dark)}
+  a.card .d{font-size:clamp(13px,2.6vw,15px);color:#777;margin-top:3px}
+  a.full{border-left-color:var(--dark);background:linear-gradient(180deg,#fff,#f3faf6)}
+  a.full .t{color:var(--green)}
+  .hint{margin-top:1.8em;color:#999;font-size:clamp(12px,2.4vw,14px)}
+  footer{margin-top:1.4em;color:#aaa;font-size:12px}
+</style>
+</head>
+<body>
+<main>
+  <div class="eyebrow">颱風雨備・線上限定</div>
+  <h1>2048 數學課</h1>
+  <div class="sub">用益智遊戲 2048 學指數成長、次方、思考策略與 AI｜數感實驗室</div>
+  <div class="cards">
+    <a class="card full" href="5_2048_完整簡報.html"><div class="t">▶ 完整版（三節合併・70 頁）</div><div class="d">一次看完三節課</div></a>
+    <a class="card" href="5_2048_L1_簡報.html"><div class="t">第一節　認識 2048 與成長的祕密</div><div class="d">玩 2048・指數 vs 線性・印度米粒傳說</div></a>
+    <a class="card" href="5_2048_L2_簡報.html"><div class="t">第二節　倍數的力量</div><div class="d">世界紀錄・次方表示法・高手訣竅</div></a>
+    <a class="card" href="5_2048_L3_簡報.html"><div class="t">第三節　2048 大變身與 AI</div><div class="d">費氏版・立體 3D・貪食蛇・AI 玩 2048</div></a>
+  </div>
+  <div class="hint">鍵盤：方向鍵翻頁 ・ o 總覽 ・ p 口白註記 ・ g 安全線 ・ f 全螢幕</div>
+  <footer>數感實驗室 ・ numeracy-deck-kit</footer>
+</main>
+</body>
+</html>
