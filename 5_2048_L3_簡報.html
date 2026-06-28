@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2048 L3：2048 大變身與 AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="base.css">
+<style>
+/* === 版型 CSS（來自 layouts/，合併去重，只留本檔用到的） === */
+/* cover */
+.probe-cover{padding:0 var(--edge-x) var(--edge-bottom);}
+.probe-cover__visual{flex:1;min-height:0;margin:0 calc(-1 * var(--edge-x));background:var(--paper-warm);display:flex;align-items:center;justify-content:center;overflow:hidden;}
+.probe-cover__visual.img-ph{border:none;border-radius:0;}
+.probe-cover__bottom{padding-top:calc(2.5 * var(--u));display:flex;justify-content:space-between;align-items:flex-end;}
+.probe-cover__title{font-size:var(--fs-cover-title);font-weight:900;color:var(--ink);line-height:1.15;border-top:3px solid var(--green-primary);padding-top:calc(1.5 * var(--u));}
+.probe-cover__title small{display:block;font-size:calc(1.3 * var(--u));font-weight:700;letter-spacing:0.35em;color:var(--green-primary);margin-bottom:calc(0.6 * var(--u));}
+.probe-cover__right{display:flex;flex-direction:column;align-items:flex-end;gap:calc(1.4 * var(--u));}
+.probe-cover__subtitle{font-size:calc(1.4 * var(--u));font-weight:500;color:var(--mid-gray);text-align:right;line-height:1.9;}
+.probe-cover__logo{display:block;height:calc(2.4 * var(--u));width:auto;aspect-ratio:162.16/45.83;color:var(--green-primary);}
+/* chapter */
+.probe-chapter{padding:0;flex-direction:row;}
+.probe-chapter__left{width:38%;background:var(--green-primary);display:flex;align-items:flex-end;justify-content:flex-end;padding:calc(5 * var(--u));position:relative;overflow:hidden;}
+.probe-chapter__num{font-size:var(--fs-chapter-num);font-weight:900;color:rgba(255,255,255,0.18);line-height:0.82;letter-spacing:-0.04em;user-select:none;}
+.probe-chapter__right{flex:1;display:flex;flex-direction:column;justify-content:center;padding:calc(5 * var(--u)) calc(7 * var(--u)) calc(5 * var(--u)) calc(6 * var(--u));}
+.probe-chapter__label{font-size:var(--fs-label);font-weight:700;letter-spacing:0.3em;color:var(--green-primary);margin-bottom:calc(1 * var(--u));}
+.probe-chapter__title{font-size:var(--fs-chapter-title);font-weight:900;color:var(--ink);border-top:3px solid var(--green-primary);padding-top:calc(1.8 * var(--u));line-height:1.18;}
+.probe-chapter__sub{font-size:calc(2 * var(--u));font-weight:500;color:var(--mid-gray);margin-top:calc(1.5 * var(--u));line-height:1.6;}
+/* grid */
+.probe-grid__hero{font-size:var(--fs-hero);font-weight:900;color:var(--ink);border-top:3px solid var(--green-primary);padding-top:calc(1.5 * var(--u));margin-bottom:calc(3.4 * var(--u));}
+.probe-grid__grid{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:auto auto 1fr;column-gap:calc(3 * var(--u));flex:1;min-height:0;}
+.probe-grid__grid--4{grid-template-columns:repeat(4,1fr);column-gap:calc(2 * var(--u));}
+.probe-grid__card{display:grid;grid-template-rows:subgrid;grid-row:span 3;border-top:3px solid var(--green-primary);padding-top:calc(1.5 * var(--u));}
+.probe-grid__label{font-size:calc(0.95 * var(--u));font-weight:700;letter-spacing:0.3em;color:var(--green-primary);}
+.probe-grid__title{font-size:var(--fs-card-title);font-weight:900;color:var(--ink);margin:calc(0.5 * var(--u)) 0 calc(1 * var(--u));}
+.probe-grid__body{font-size:calc(2 * var(--u));line-height:1.55;color:var(--ink);}
+/* split */
+.probe-split__hero{font-size:var(--fs-hero);font-weight:900;color:var(--ink);border-top:3px solid var(--green-primary);padding-top:calc(1.5 * var(--u));margin-bottom:calc(3 * var(--u));}
+.probe-split__grid{display:grid;grid-template-columns:1fr 1.1fr;gap:calc(4 * var(--u));flex:1;min-height:0;}
+.probe-split__grid>*{min-height:0;}
+.probe-split__body{display:flex;flex-direction:column;justify-content:center;}
+.probe-split__desc{font-size:calc(2.1 * var(--u));line-height:1.75;color:var(--ink);}
+.probe-split__list-label{font-size:var(--fs-label);font-weight:700;letter-spacing:0.2em;color:var(--green-primary);margin:calc(2 * var(--u)) 0 calc(0.8 * var(--u));}
+.probe-split__list{list-style:none;}
+.probe-split__list li{font-size:calc(2 * var(--u));line-height:1.7;color:var(--ink);padding-left:calc(1.8 * var(--u));position:relative;}
+.probe-split__list li::before{content:"";position:absolute;left:0;top:calc(1 * var(--u));width:calc(0.7 * var(--u));height:calc(0.7 * var(--u));border-radius:50%;background:var(--green-primary);}
+/* rows */
+.probe-rows__hero{font-size:var(--fs-hero);font-weight:900;color:var(--ink);border-top:3px solid var(--green-primary);padding-top:calc(1.5 * var(--u));margin-bottom:calc(2 * var(--u));}
+.probe-rows{flex:1;min-height:0;display:flex;flex-direction:column;gap:calc(1.2 * var(--u));justify-content:center;}
+.probe-rows__row{display:grid;grid-template-columns:auto auto 1fr;align-items:center;gap:calc(1.5 * var(--u));background:var(--paper-warm);border-radius:var(--radius-sm);border-left:3px solid var(--green-primary);padding:calc(1.1 * var(--u)) calc(1.6 * var(--u));}
+.probe-rows__tag{font-size:calc(1.8 * var(--u));font-weight:900;letter-spacing:0.05em;color:#fff;background:var(--green-primary);border-radius:calc(0.3 * var(--u));padding:calc(0.4 * var(--u)) calc(1.1 * var(--u));white-space:nowrap;}
+.probe-rows__item{font-size:calc(2.1 * var(--u));font-weight:900;color:var(--ink);line-height:1.35;white-space:nowrap;}
+.probe-rows__to{font-size:calc(2 * var(--u));color:var(--ink);line-height:1.35;}
+/* journey（課程回顧：三節旅程） */
+.probe-journey__hero{font-size:var(--fs-hero);font-weight:900;color:var(--ink);border-top:3px solid var(--green-primary);padding-top:calc(1.5 * var(--u));margin-bottom:calc(2.4 * var(--u));}
+.probe-journey{display:flex;align-items:stretch;justify-content:center;gap:calc(1 * var(--u));flex:1;min-height:0;}
+.probe-journey__card{flex:1 1 0;min-width:0;min-height:0;overflow:hidden;display:flex;flex-direction:column;justify-content:center;gap:calc(1.1 * var(--u));background:var(--paper-warm);border-top:4px solid var(--green-primary);border-radius:var(--radius-md);box-shadow:var(--shadow-card);padding:calc(2 * var(--u)) calc(1.9 * var(--u)) calc(2.2 * var(--u));}
+.probe-journey__head{display:flex;align-items:center;gap:calc(1.1 * var(--u));}
+.probe-journey__dot{flex:0 0 auto;width:calc(3.4 * var(--u));height:calc(3.4 * var(--u));border-radius:50%;background:var(--green-primary);color:#fff;font-size:calc(2 * var(--u));font-weight:900;line-height:1;display:flex;align-items:center;justify-content:center;}
+.probe-journey__label{font-size:calc(2 * var(--u));font-weight:700;letter-spacing:0.12em;color:var(--green-primary);}
+.probe-journey__title{font-size:calc(2.6 * var(--u));font-weight:900;color:var(--ink);line-height:1.2;border-bottom:2px solid rgba(55,156,57,0.22);padding-bottom:calc(0.9 * var(--u));}
+.probe-journey__list{list-style:none;display:flex;flex-direction:column;gap:calc(0.85 * var(--u));}
+.probe-journey__list li{font-size:calc(2 * var(--u));line-height:1.45;color:var(--ink);padding-left:calc(1.7 * var(--u));position:relative;}
+.probe-journey__list li::before{content:"";position:absolute;left:0;top:calc(0.82 * var(--u));width:calc(0.7 * var(--u));height:calc(0.7 * var(--u));border-radius:50%;background:var(--green-primary);}
+.probe-journey__arrow{flex:0 0 auto;align-self:center;font-size:calc(3 * var(--u));font-weight:900;color:var(--green-primary);}
+/* steps */
+.probe-steps__hero{font-size:var(--fs-hero);font-weight:900;color:var(--ink);border-top:3px solid var(--green-primary);padding-top:calc(1.5 * var(--u));margin-bottom:calc(3 * var(--u));}
+.probe-steps{display:flex;align-items:stretch;justify-content:center;gap:calc(1 * var(--u));flex:1;min-height:0;}
+.probe-steps__node{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:calc(0.8 * var(--u));background:#fff;border-top:4px solid var(--green-primary);border-radius:var(--radius-md);box-shadow:var(--shadow-card);padding:calc(1.8 * var(--u)) calc(1.6 * var(--u));justify-content:center;}
+.probe-steps__num{font-size:calc(1.1 * var(--u));font-weight:700;letter-spacing:0.2em;color:var(--green-primary);}
+.probe-steps__title{font-size:var(--fs-card-title);font-weight:900;color:var(--ink);line-height:1.25;}
+.probe-steps__desc{font-size:calc(2 * var(--u));line-height:1.5;color:var(--ink);}
+.probe-steps__arrow{flex:0 0 auto;align-self:center;font-size:calc(2.6 * var(--u));font-weight:900;color:var(--green-primary);}
+/* breather */
+.probe-breather{text-align:center;}
+.probe-breather .page-label,.probe-breather .page-label__num{color:rgba(255,255,255,0.7);}
+.probe-breather .page-label__num{background:rgba(255,255,255,0.22);color:#fff;}
+.probe-breather .page-label__bar{background:rgba(255,255,255,0.35);}
+.probe-breather .brand-footer .brand-logo{color:rgba(255,255,255,0.55);}
+.probe-breather__quote{font-size:calc(3.8 * var(--u));font-weight:900;color:#fff;line-height:1.4;max-width:84%;}
+.probe-breather__quote .hi{color:var(--ink);}
+.probe-breather__sub{font-size:calc(2 * var(--u));color:rgba(255,255,255,0.7);margin-top:calc(2 * var(--u));}
+/* 金句頁改深藍：覆寫 base.css 的深綠 letterbox，讓邊框與本頁配色一致（深綠僅保留給分組頁） */
+body:has(.deck .slide.active.probe-breather){background:#0E2A47;}
+/* thanks */
+.probe-thanks{justify-content:center;align-items:center;text-align:center;}
+.probe-thanks__title{font-size:calc(4.6 * var(--u));font-weight:900;color:var(--ink);}
+.probe-thanks__body{font-size:calc(2 * var(--u));color:var(--mid-gray);margin-top:calc(2 * var(--u));max-width:66%;line-height:1.7;}
+.probe-thanks__logo{position:absolute;left:50%;bottom:calc(10 * var(--u));transform:translateX(-50%);display:block;height:calc(3 * var(--u));width:auto;aspect-ratio:162.16/45.83;color:var(--green-primary);}
+/* === 自訂元件 === */
+/* 待補圖占位框（標示來源） */
+.img-ph{background:var(--paper-warm);border:2px dashed #C9BCA6;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;text-align:center;padding:calc(2.4 * var(--u));min-height:0;overflow:hidden;width:100%;height:100%;}
+.img-ph span{font-size:calc(2 * var(--u));font-weight:700;line-height:1.5;color:#8d7f66;letter-spacing:0.01em;}
+/* SVG 圖框 */
+.fig{width:100%;height:100%;min-height:0;display:flex;align-items:center;justify-content:center;}
+.figsvg{width:100%;height:100%;}
+/* 留言區選項 */
+.opts{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(1.8 * var(--u));flex:1;min-height:0;align-content:center;}
+.opt{display:flex;align-items:center;gap:calc(1.4 * var(--u));background:var(--paper-warm);border-radius:var(--radius-md);border-left:4px solid var(--green-primary);padding:calc(1.8 * var(--u)) calc(2 * var(--u));box-shadow:var(--shadow-card);}
+.opt__n{font-size:calc(3.4 * var(--u));font-weight:900;color:var(--green-primary);line-height:1;}
+.opt__t{font-size:calc(2.4 * var(--u));font-weight:900;color:var(--ink);line-height:1.3;}
+.note-line{font-size:calc(2 * var(--u));color:var(--mid-gray);margin-top:calc(2.4 * var(--u));}
+/* 影片內嵌（iframe 16:9，不爆框） */
+.vidcap{font-size:calc(2 * var(--u));font-weight:700;color:var(--green-primary);margin-top:calc(2.4 * var(--u));}
+.videoembed{display:flex;flex-direction:column;min-height:0;justify-content:center;gap:calc(0.9 * var(--u));}
+.videoembed__frame{position:relative;width:100%;aspect-ratio:16/9;flex:0 0 auto;background:#000;border-radius:var(--radius-md);overflow:hidden;box-shadow:var(--shadow-elevated);}
+.videoembed__link{font-size:calc(1.6 * var(--u));font-weight:700;color:var(--green-primary);line-height:1.4;word-break:break-all;}
+/* 遊戲連結按鈕 */
+.gamelink{align-self:flex-start;display:inline-block;font-size:calc(2 * var(--u));font-weight:900;color:#fff;background:var(--green-primary);border-radius:var(--radius-md);padding:calc(1 * var(--u)) calc(2.2 * var(--u));margin-top:calc(2.2 * var(--u));text-decoration:none;line-height:1.3;box-shadow:var(--shadow-card);}
+/* ===== 分組家族「統一樣板」（深綠底＋黃色時間徽章＋白字，與 L1 一致）=====
+   引導頁 → .probe-group--std：置中大標「分組時間」＋活動名＋黃色徽章(時鐘 SVG＋N 分鐘)＋白字說明＋網址
+   活動頁 → .probe-group--act：同深綠識別＋黃色徽章＋統一標頭「分組進行中」，保留各自 split 功能內容 */
+.probe-group{background:var(--green-dark);}
+.probe-group .page-label,.probe-group .page-label__num{color:rgba(255,255,255,0.9);}
+.probe-group .page-label__num{background:rgba(255,255,255,0.25);color:#fff;}
+.probe-group .page-label__bar{background:rgba(255,255,255,0.45);}
+.probe-group .brand-footer .brand-logo{color:rgba(255,255,255,0.72);}
+.probe-group__timer{display:inline-flex;align-items:center;gap:calc(1.3 * var(--u));font-weight:900;color:var(--green-dark);background:var(--hi-yellow);border-radius:calc(100 * var(--u));box-shadow:0 calc(0.5 * var(--u)) calc(1.8 * var(--u)) rgba(0,0,0,0.28);min-height:0;overflow:hidden;}
+.probe-group__clock{flex:0 0 auto;color:var(--green-dark);}
+.probe-group--std .slide-frame{align-items:center;justify-content:center;text-align:center;gap:calc(2.2 * var(--u));}
+.probe-group--std .probe-group__title{font-size:calc(6 * var(--u));font-weight:900;color:#fff;line-height:1.08;letter-spacing:0.04em;}
+.probe-group--std .probe-group__title::after{content:"";display:block;width:calc(7 * var(--u));height:calc(0.5 * var(--u));background:rgba(255,255,255,0.5);border-radius:calc(100 * var(--u));margin:calc(1.4 * var(--u)) auto 0;}
+.probe-group--std .probe-group__activity{display:inline-block;font-size:calc(3 * var(--u));font-weight:900;color:#fff;background:rgba(255,255,255,0.12);border:2px solid rgba(255,255,255,0.5);border-radius:calc(100 * var(--u));padding:calc(0.5 * var(--u)) calc(3 * var(--u));min-height:0;overflow:hidden;}
+.probe-group--std .probe-group__timer{font-size:calc(3.8 * var(--u));padding:calc(1 * var(--u)) calc(3.4 * var(--u));}
+.probe-group--std .probe-group__clock{width:calc(5 * var(--u));height:calc(5 * var(--u));}
+.probe-group--std .probe-group__desc{font-size:calc(2.3 * var(--u));font-weight:500;color:rgba(255,255,255,0.95);line-height:1.6;max-width:80%;}
+.probe-group--std .probe-group__url{display:inline-block;font-size:calc(2 * var(--u));font-weight:700;color:#fff;background:rgba(0,0,0,0.22);border-radius:var(--radius-sm);padding:calc(0.45 * var(--u)) calc(1.8 * var(--u));min-height:0;overflow:hidden;}
+.probe-group--act .slide-frame{gap:calc(1.6 * var(--u));}
+.probe-group--act .actbar{display:flex;align-items:center;gap:calc(1.6 * var(--u));flex-wrap:wrap;min-height:0;overflow:hidden;}
+.probe-group--act .probe-group__chip{font-size:calc(2 * var(--u));font-weight:900;letter-spacing:0.2em;color:var(--green-dark);background:var(--hi-yellow);padding:calc(0.45 * var(--u)) calc(2.2 * var(--u));border-radius:calc(100 * var(--u));min-height:0;overflow:hidden;}
+.probe-group--act .probe-group__timer{font-size:calc(2.3 * var(--u));padding:calc(0.55 * var(--u)) calc(2.2 * var(--u));}
+.probe-group--act .probe-group__clock{width:calc(3 * var(--u));height:calc(3 * var(--u));}
+.probe-group--act .probe-split__hero{color:#fff;border-top-color:rgba(255,255,255,0.55);}
+.probe-group--act .probe-split__desc{color:rgba(255,255,255,0.95);}
+.probe-group--act .probe-split__list-label{color:var(--hi-yellow);}
+.probe-group--act .probe-split__list li{color:#fff;}
+.probe-group--act .probe-split__list li::before{background:var(--hi-yellow);}
+.probe-group--act .gamelink{background:var(--green-primary);border:2px solid rgba(255,255,255,0.6);}
+.probe-group--act .actfig{background:#fff;border-radius:var(--radius-md);box-shadow:var(--shadow-elevated);padding:calc(1.8 * var(--u));min-height:0;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+body:has(.deck .slide.active.probe-group){background:var(--green-dark);}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="nl-logo" viewBox="0 0 162.16 45.83"><g id="c"><path d="M45.83,22.92c0-3.53-2.56-6.46-5.93-7.03.32-.45.59-.93.79-1.43.35-.86.52-1.77.52-2.69,0-.23-.01-.46-.03-.68-.04-.46-.13-.91-.26-1.35-.33-1.1-.93-2.15-1.8-3.02-1.4-1.4-3.22-2.09-5.05-2.09-1.45,0-2.89.44-4.12,1.32,0,0,0,0,0,0-.58-3.37-3.5-5.93-7.03-5.93s-6.46,2.56-7.03,5.93c-.45-.32-.93-.59-1.43-.79-.86-.35-1.77-.52-2.69-.52-.46,0-.91.04-1.36.13-1.35.26-2.64.92-3.69,1.96-2.5,2.5-2.75,6.38-.78,9.17-3.37.58-5.93,3.5-5.93,7.03s2.56,6.46,5.93,7.03c-.32.45-.59.93-.79,1.43-.09.22-.16.43-.23.65-.13.44-.22.89-.26,1.35-.02.23-.03.46-.03.68,0,1.83.7,3.66,2.09,5.05.83.83,1.81,1.4,2.85,1.74.1.03.2.06.3.09.37.1.75.18,1.13.22.26.03.51.05.77.05s.53-.02.8-.05c.34-.04.68-.1,1.02-.19.15-.04.3-.08.45-.13.65-.22,1.28-.53,1.85-.93.58,3.36,3.5,5.93,7.03,5.93s6.46-2.56,7.03-5.93c0,0,0,0,0,0,1.23.87,2.67,1.31,4.12,1.31,1.83,0,3.66-.7,5.05-2.09,2.5-2.5,2.75-6.38.78-9.17,3.37-.58,5.93-3.5,5.93-7.03ZM16.31,38.61c-1.21,1.21-2.83,1.88-4.54,1.88s-3.33-.67-4.54-1.88c-1.21-1.21-1.88-2.83-1.88-4.54,0-1.48.5-2.89,1.42-4.03.13,0,.26.02.39.02,2.11,0,4.01-.92,5.31-2.38,1.45.16,2.8.79,3.85,1.84,1.21,1.21,1.88,2.83,1.88,4.54s-.67,3.33-1.88,4.54ZM40.49,34.07c0,1.72-.67,3.33-1.88,4.54-1.21,1.21-2.83,1.88-4.54,1.88s-3.31-.66-4.52-1.86l-.02-.02-15.25-15.25c0-.15.02-.29.02-.44,0-3.95-3.2-7.15-7.15-7.15-.13,0-.26.01-.39.02-.92-1.14-1.42-2.54-1.42-4.03,0-1.72.67-3.33,1.88-4.54,1.21-1.21,2.83-1.88,4.54-1.88s3.31.66,4.53,1.86l.03.04.02.02,15.22,15.22c0,.15-.02.29-.02.44,0,3.95,3.2,7.15,7.15,7.15.13,0,.26-.01.39-.02.92,1.14,1.42,2.54,1.42,4.03ZM39.07,15.79c-.13,0-.26-.02-.39-.02-2.11,0-4.01.92-5.31,2.38-1.45-.16-2.8-.79-3.85-1.84-1.21-1.21-1.88-2.83-1.88-4.54s.67-3.33,1.88-4.54,2.83-1.88,4.54-1.88,3.33.67,4.54,1.88,1.88,2.83,1.88,4.54c0,1.48-.5,2.89-1.42,4.03Z" fill="currentColor" stroke-width="0"/><path d="M59.1,17.51h5.55v1.13h-1.86c-.47.85-.98,1.57-1.54,2.13.91.35,1.83.72,2.74,1.11l-.74,1.2c-1.03-.49-2.07-.95-3.12-1.38-.08.04-.15.08-.23.14-1.27.72-2.95,1.13-5.06,1.22l-.34-1.32c1.67.01,3.04-.2,4.11-.64-.89-.34-1.78-.65-2.68-.93.41-.49.78-1,1.12-1.53h-2.43v-1.13h3.1c.21-.39.41-.79.59-1.2h-3.19v-3.49h3.78v-.97h-3.44v-2.25h-.91v-1.05h.91v-2.35h3.44v-1.05h1.33v1.05h3.44v2.35h1.2v1.05h-1.2v2.25h-3.44v.97h3.8v3.49h-4.26c-.21.43-.44.83-.67,1.2ZM58.89,13.86h-2.49v1.4h2.49v-1.4ZM56.72,8.54h2.17v-1.3h-2.17v1.3ZM58.89,9.59h-2.17v1.2h2.17v-1.2ZM61.4,18.63h-3c-.23.32-.46.63-.68.93.73.23,1.48.48,2.22.74.53-.44,1.02-1,1.46-1.67ZM60.22,8.54h2.17v-1.3h-2.17v1.3ZM62.39,9.59h-2.17v1.2h2.17v-1.2ZM62.73,13.86h-2.51v1.4h2.51v-1.4ZM64.12,12.91c1.37-1.8,2.31-4.42,2.83-7.86l1.39.1c-.19,1.05-.41,2.03-.65,2.93h4.54v1.42h-1.12v1.59c0,2.81-.61,5.32-1.84,7.53.75,1.14,1.76,2.26,3.02,3.38l-1.03,1.09c-1.12-1.07-2.04-2.14-2.78-3.2-.81,1.16-1.81,2.24-3,3.22l-.95-1.18c1.29-1,2.35-2.11,3.16-3.36-.2-.38-.38-.75-.53-1.13-.52-1.25-.91-2.88-1.16-4.89-.29.56-.61,1.07-.95,1.53l-.93-1.16ZM68.47,17.2c.9-1.81,1.35-3.85,1.35-6.11v-1.59h-2.57c-.1.31-.2.61-.3.89.27,2.86.74,5.04,1.41,6.56.04.09.08.17.11.25Z" fill="currentColor" stroke-width="0"/><path d="M80.03,7.13h9.2v-1.98h1.37v1.98h3.95v1.26h-3.95c.03,2.39.12,4.44.29,6.13,1.17-1.22,2.03-2.63,2.59-4.23l1.18.52c-.7,2.1-1.88,3.91-3.54,5.45.09.57.18,1.08.29,1.53.53,2.28,1.03,3.41,1.5,3.41.37,0,.72-1,1.06-3.01l1.05,1.01c-.51,2.48-1.21,3.73-2.11,3.73-1.08,0-1.97-1.43-2.66-4.29-.11-.44-.22-.91-.3-1.4-.38.28-.79.56-1.22.83l-.91-1.14c.67-.4,1.29-.83,1.86-1.3-.28-2.08-.43-4.5-.44-7.26h-9.2v2.87c0,2.3-.58,4.44-1.73,6.4l-1.16-.83c1.01-1.71,1.52-3.56,1.52-5.57v-4.13h1.37ZM78,22.2c.48-1.24.83-2.52,1.05-3.84l1.24.19c-.19,1.36-.52,2.66-.99,3.92l-1.29-.27ZM81.08,9.77h6.98v1.2h-6.98v-1.2ZM81.08,21.08v-2.99h1.37v2.89c0,.34.17.5.51.5h2.28c.42,0,.63-.21.63-.62v-1.4l1.25.35v1.26c0,1.15-.52,1.73-1.56,1.73h-2.93c-1.04,0-1.56-.58-1.56-1.73ZM82.69,12.23h4.89v4.15h-6.14v-4.15h1.25ZM86.32,13.4h-3.63v1.82h3.63v-1.82ZM82.94,17.45l1.03-.66c.65.67,1.2,1.35,1.67,2.04l-1.1.66c-.41-.66-.94-1.34-1.6-2.04ZM87.41,18.44l1.2-.27c.56,1.27,1,2.49,1.31,3.67l-1.29.25c-.24-1.14-.65-2.35-1.22-3.65ZM91.48,5.65l.95-.58c.53.48.98.94,1.35,1.4l-1.03.64c-.28-.41-.7-.9-1.27-1.45Z" fill="currentColor" stroke-width="0"/><path d="M100.01,23.08l-.4-1.22c2.33-.14,4.58-.45,6.73-.91l.57,1.07c-2.21.53-4.51.89-6.9,1.07ZM114.08,13.3h-11.31v-2h-3.06v-1.07h3.06v-1.92h11.31v1.92h3.08v1.07h-3.08v2ZM115.26,7.42h-13.69v1.88h-1.39v-3.01h7.49c-.06-.41-.17-.85-.3-1.32l1.39-.1c.14.49.24.96.3,1.42h7.59v3.07h-1.39v-1.94ZM103.28,14.09h11.71v6.65h-13.1v-6.65h1.39ZM103.28,16.03h10.33v-.97h-10.33v.97ZM103.28,17.91h10.33v-.97h-10.33v.97ZM113.61,18.83h-10.33v.95h10.33v-.95ZM107.83,10.23v-.95h-3.69v.95h3.69ZM107.83,12.33v-1.03h-3.69v1.03h3.69ZM109.14,9.28v.95h3.57v-.95h-3.57ZM109.14,11.3v1.03h3.57v-1.03h-3.57ZM110.05,22.03l.61-.95c2,.15,4.24.46,6.71.91l-.61,1.2c-2.29-.52-4.53-.91-6.71-1.16Z" fill="currentColor" stroke-width="0"/><path d="M123.25,17.33c-.11,1.77-.27,3.53-.46,5.26l-.82-.08c.21-2.07.39-3.81.51-5.22l.76.04ZM122.7,14.75V5.83h6.39v1.18h-2.21v1.84h1.92v1.14h-1.92v1.77h1.92v1.14h-1.92v1.84h2.24v3.41c0,1.45-.04,2.45-.11,3.01-.06.62-.28,1.07-.65,1.36-.34.28-.94.43-1.79.43h-1.1l-.34-1.36h1.33c.48,0,.82-.09,1.03-.27.19-.15.31-.45.36-.87.05-.45.08-1.29.08-2.5v-2.02h-5.23v-1.18ZM124.43,17.22c.1,1.59.18,3.18.23,4.75l-.74.04c-.05-1.87-.11-3.45-.17-4.73l.69-.06ZM125.7,8.85v-1.84h-1.77v1.84h1.77ZM125.7,10h-1.77v1.77h1.77v-1.77ZM123.93,12.91v1.84h1.77v-1.84h-1.77ZM125.74,17.02c.16,1.22.32,2.42.46,3.63l-.74.08c-.14-1.42-.27-2.62-.38-3.59l.67-.12ZM127.03,16.87c.22.98.41,1.97.59,2.95l-.67.12c-.18-1.15-.34-2.12-.49-2.91l.57-.16ZM132.39,19.12c.63.5,1.21,1.05,1.73,1.65l-.87,1.01c-.39-.54-.82-1.05-1.27-1.53-.47,1.02-1.16,1.97-2.07,2.85l-1.03-.87c1.51-1.33,2.4-2.9,2.68-4.71l1.12.27c-.05.47-.15.91-.29,1.34ZM137.49,10.66h-5.95v-1.03c-.52.4-1.06.77-1.63,1.11l-.91-1.11c2.23-1.2,4.01-2.79,5.34-4.77l1.31.41c-.14.21-.29.41-.44.62,1.47,1.44,3.08,2.6,4.83,3.49l-.82,1.2c-.6-.34-1.17-.7-1.73-1.11v1.18ZM133.91,12.19v5.12h-3.9v-5.12h3.9ZM131.12,13.45v2.6h1.69v-2.6h-1.69ZM131.82,9.42h5.59c-1.07-.75-2.05-1.6-2.95-2.56-.8.94-1.68,1.8-2.64,2.56ZM137.22,19.39c1,.75,1.92,1.6,2.76,2.54l-.89,1.05c-.7-.91-1.47-1.74-2.32-2.5-.48.96-1.16,1.85-2.03,2.68l-1.01-.87c1.53-1.35,2.45-2.94,2.76-4.77l1.1.29c-.08.54-.2,1.07-.36,1.59ZM138.99,12.19v5.12h-3.86v-5.12h3.86ZM136.23,13.45v2.6h1.65v-2.6h-1.65Z" fill="currentColor" stroke-width="0"/><path d="M147.6,10.04h11.9v1.34h-6.96c-1.2,1.07-2.3,1.95-3.29,2.62,2.52-.1,5.31-.19,8.37-.27-.47-.44-.99-.89-1.56-1.36l1.03-.74c1.61,1.28,2.98,2.54,4.11,3.76l-1.16.83c-.33-.41-.72-.85-1.16-1.3-1.62.03-3.19.06-4.7.1v2.35h6.96v1.3h-6.96v2.23h7.95v1.4h-17.21v-1.4h7.83v-2.23h-6.81v-1.3h6.81v-2.29c-2.02.08-3.93.18-5.74.31l-.27-1.3c.68-.25,1.48-.73,2.4-1.45.52-.41,1.02-.83,1.5-1.26h-3.04v-1.34ZM160.21,8.41h-13.44v2.68h-1.41v-4.05h7.49c-.1-.56-.24-1.14-.42-1.77l1.41-.12c.15.65.28,1.27.38,1.88h7.4v4.05h-1.41v-2.68Z" fill="currentColor" stroke-width="0"/><path d="M56.02,32.13h1.88l3.7,5.97h.02v-5.97h1.42v7.97h-1.8l-3.78-6.16h-.02v6.16h-1.42v-7.97Z" fill="currentColor" stroke-width="0"/><path d="M73.01,37.17c0,.48-.08.91-.25,1.3-.17.39-.39.71-.68.99-.29.27-.62.48-1.01.62s-.81.22-1.27.22-.88-.07-1.27-.22c-.39-.15-.73-.35-1.02-.62-.29-.27-.51-.6-.68-.99-.16-.39-.24-.82-.24-1.3v-5.04h1.42v4.99c0,.23.03.46.09.69.06.23.16.43.3.61.14.18.32.33.55.44.23.11.51.17.85.17s.62-.06.85-.17c.23-.11.41-.26.55-.44.14-.18.24-.38.3-.61.06-.23.09-.46.09-.69v-4.99h1.42v5.04Z" fill="currentColor" stroke-width="0"/><path d="M76.56,32.13h2.22l2.07,5.66h.03l2.05-5.66h2.23v7.97h-1.41v-6.41h-.02l-2.42,6.41h-.99l-2.39-6.41h-.02v6.41h-1.35v-7.97Z" fill="currentColor" stroke-width="0"/><path d="M88.77,32.13h5.28v1.24h-3.86v2.03h3.66v1.19h-3.66v2.25h4.06v1.26h-5.48v-7.97Z" fill="currentColor" stroke-width="0"/><path d="M97.5,32.13h2.77c.38,0,.74.04,1.09.12.35.08.67.21.94.39.27.18.49.42.66.71.16.29.25.65.25,1.07,0,.58-.16,1.05-.49,1.41-.33.36-.77.61-1.33.74l2.13,3.54h-1.71l-1.85-3.38h-1.04v3.38h-1.42v-7.97ZM100.08,35.56c.2,0,.41-.01.61-.04.2-.03.38-.09.55-.17.16-.08.29-.2.4-.35.11-.15.16-.35.16-.59,0-.22-.05-.4-.15-.53s-.22-.25-.37-.33c-.15-.08-.32-.14-.51-.17-.19-.03-.38-.04-.56-.04h-1.28v2.24h1.16Z" fill="currentColor" stroke-width="0"/><path d="M108.94,32.13h1.23l3.43,7.97h-1.62l-.74-1.82h-3.46l-.72,1.82h-1.59l3.47-7.97ZM110.74,37.06l-1.23-3.24-1.25,3.24h2.48Z" fill="currentColor" stroke-width="0"/><path d="M121.79,33.99c-.21-.29-.48-.49-.82-.62-.34-.13-.67-.2-.99-.2-.41,0-.79.07-1.13.22-.34.15-.63.36-.87.62-.24.26-.43.57-.56.92-.13.35-.2.74-.2,1.15,0,.44.06.83.19,1.19.13.36.31.67.55.93.24.26.52.46.85.6.33.14.7.21,1.11.21s.81-.08,1.14-.25c.33-.17.6-.39.8-.67l1.14.8c-.35.44-.78.79-1.29,1.03-.51.24-1.11.37-1.79.37-.62,0-1.19-.1-1.72-.31-.52-.21-.97-.5-1.35-.87-.37-.37-.67-.81-.88-1.33-.21-.51-.31-1.08-.31-1.71s.11-1.21.33-1.73c.22-.51.53-.95.91-1.31.39-.36.84-.64,1.37-.83.53-.19,1.1-.29,1.71-.29.25,0,.52.02.8.07.28.05.54.12.8.23.26.1.5.23.72.38s.42.33.57.54l-1.08.86Z" fill="currentColor" stroke-width="0"/><path d="M127.52,36.64l-2.99-4.51h1.73l2,3.36,2.03-3.36h1.64l-2.99,4.51v3.46h-1.42v-3.46Z" fill="currentColor" stroke-width="0"/><path d="M138.86,32.13h1.42v6.71h3.39v1.26h-4.81v-7.97Z" fill="currentColor" stroke-width="0"/><path d="M148.97,32.13h1.23l3.43,7.97h-1.62l-.74-1.82h-3.46l-.72,1.82h-1.59l3.47-7.97ZM150.77,37.06l-1.23-3.24-1.25,3.24h2.48Z" fill="currentColor" stroke-width="0"/><path d="M156.28,32.13h3.11c.3,0,.6.04.89.11.29.07.55.19.78.35.23.16.41.37.56.62.14.26.21.56.21.92,0,.45-.13.82-.38,1.11-.25.29-.59.5-1,.63v.02c.5.07.91.26,1.24.59s.48.75.48,1.29c0,.44-.09.8-.26,1.1-.17.3-.4.53-.68.71-.28.18-.6.31-.97.39-.36.08-.73.12-1.11.12h-2.87v-7.97ZM157.7,35.37h1.26c.47,0,.83-.09,1.08-.28.25-.19.37-.45.37-.8s-.13-.62-.38-.77c-.26-.15-.65-.23-1.19-.23h-1.14v2.07ZM157.7,38.9h1.27c.18,0,.38-.01.59-.04.21-.03.4-.08.58-.16.18-.08.32-.2.44-.36.12-.16.17-.37.17-.63,0-.42-.14-.71-.43-.88-.29-.17-.72-.25-1.29-.25h-1.33v2.32Z" fill="currentColor" stroke-width="0"/></g></symbol></svg>
+<div class="deck">
+
+<section class="slide probe-cover" style="background:#FCF4E6;position:relative;overflow:hidden;"><img src="assets/l3-cover-variants-ai.png" alt="2048 三種變身主視覺：費氏螺旋、立體方塊塔、貪食蛇與 AI 機器人" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;z-index:0;"><div style="position:absolute;top:calc(5 * var(--u));left:var(--edge-x);right:var(--edge-x);z-index:2;display:flex;justify-content:space-between;align-items:flex-start;gap:calc(3 * var(--u));"><div class="probe-cover__title"><small>L3 ・ 2048 數學實驗課</small>2048 大變身與 AI</div><svg class="probe-cover__logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB" style="margin-top:calc(0.6 * var(--u));"><use href="#nl-logo"/></svg></div></section>
+
+<section class="slide probe-chapter" style="background:#FEF4E8;"><div class="probe-chapter__left"><div class="probe-chapter__num">01</div></div><div class="probe-chapter__right"><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div><div class="probe-chapter__label">CHAPTER 01</div><div class="probe-chapter__title">換一套數字<br>遊戲就變身</div><div class="probe-chapter__sub">費氏 2584：同一個 2048，數字規則全換掉</div></div></section>
+
+<section class="slide" style="background:#FFFFFF;"><div class="page-label"><span class="page-label__num">03</span><span class="page-label__bar"></span><span>費氏數列</span></div><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div><div class="slide-frame"><div class="probe-split__hero">費氏數列：每個數都是前兩個相加</div><div class="fig" style="flex:1;min-height:0;margin-top:calc(1 * var(--u));"><svg class="figsvg" viewBox="0 55 720 300" preserveAspectRatio="xMidYMid meet" role="img" aria-label="費氏數列鏈：1 1 2 3 5 8 13 21，每個數都是前兩個相加">
+<defs><marker id="afib" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#379C39"/></marker></defs>
+<g fill="none" stroke-linecap="round" marker-end="url(#afib)">
+<path d="M87 256 C87 64, 199 64, 199 244" stroke="#379C39" stroke-width="3"/>
+<path d="M199 244 C199 64, 336 64, 336 230" stroke="#379C39" stroke-width="3"/>
+<path d="M336 230 C336 64, 505 64, 505 212" stroke="#379C39" stroke-width="3"/>
+<path d="M140 250 C140 124, 264 124, 264 238" stroke="#6FB873" stroke-width="3"/>
+<path d="M264 238 C264 124, 416 124, 416 222" stroke="#6FB873" stroke-width="3"/>
+<path d="M416 222 C416 124, 605 124, 605 200" stroke="#6FB873" stroke-width="3"/>
+</g>
+<g font-size="22" font-weight="800" text-anchor="middle" fill="#1F6F21" stroke="#FFFFFF" stroke-width="4" paint-order="stroke">
+<text x="143" y="92">1＋1＝2</text><text x="268" y="92">2＋3＝5</text><text x="420" y="92">5＋8＝13</text>
+<text x="202" y="150">1＋2＝3</text><text x="340" y="150">3＋5＝8</text><text x="510" y="150">8＋13＝21</text>
+</g>
+<g stroke="#379C39" stroke-width="2.5">
+<rect x="67" y="260" width="40" height="40" rx="9" fill="#FEF4E8"/>
+<rect x="117" y="254" width="46" height="46" rx="9" fill="#EAF3E7"/>
+<rect x="173" y="248" width="52" height="52" rx="10" fill="#FEF4E8"/>
+<rect x="235" y="242" width="58" height="58" rx="10" fill="#EAF3E7"/>
+<rect x="303" y="234" width="66" height="66" rx="11" fill="#FEF4E8"/>
+<rect x="379" y="226" width="74" height="74" rx="12" fill="#EAF3E7"/>
+<rect x="463" y="216" width="84" height="84" rx="13" fill="#379C39"/>
+<rect x="557" y="204" width="96" height="96" rx="14" fill="#004B24"/>
+</g>
+<g font-weight="900" text-anchor="middle" dominant-baseline="central">
+<text x="87" y="280" font-size="24" fill="#0A0A0A">1</text>
+<text x="140" y="277" font-size="26" fill="#0A0A0A">1</text>
+<text x="199" y="274" font-size="28" fill="#0A0A0A">2</text>
+<text x="264" y="271" font-size="30" fill="#0A0A0A">3</text>
+<text x="336" y="267" font-size="34" fill="#0A0A0A">5</text>
+<text x="416" y="263" font-size="38" fill="#0A0A0A">8</text>
+<text x="505" y="258" font-size="44" fill="#FFFFFF">13</text>
+<text x="605" y="252" font-size="50" fill="#FFFFFF">21</text>
+</g>
+<text x="360" y="336" text-anchor="middle" font-size="22" font-weight="700" fill="#686968">每個數＝前面兩個數相加，越長越快</text>
+</svg></div></div><aside class="plan-note"><div class="plan-note__source"><b>口白</b>先認識一串很特別的數字，叫費氏數列：1、1、2、3、5、8、13、21……它的規律超簡單，每一個數都是前面兩個加起來。1 加 1 等於 2，1 加 2 等於 3，2 加 3 等於 5，3 加 5 等於 8，就這樣一路長下去，而且越長越快。等一下我們要玩的第二款 2048，用的就是這串數字。</div><div class="plan-note__meta"><b>說明</b>介紹費氏數列規律（數列鏈・越後面越大）　｜　<b>版型</b>滿版圖 fig　｜　<b>素材</b>SVG 自畫：費氏數列鏈＋相加弧線</div></aside></section>
+
+<section class="slide" style="background:#FFFFFF;"><div class="page-label"><span class="page-label__num">04</span><span class="page-label__bar"></span><span>兔子問題</span></div><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div><div class="slide-frame"><div class="probe-split__hero">這串數字，是兔子生出來的</div><div class="probe-split__grid"><div class="probe-split__body"><div style="display:flex;align-items:center;gap:calc(2.6 * var(--u));"><figure style="flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:calc(0.8 * var(--u));"><div style="width:calc(12 * var(--u));aspect-ratio:356/480;border-radius:var(--radius-md);overflow:hidden;box-shadow:var(--shadow-card);background:var(--paper-warm);"><img src="assets/fibonacci-portrait.jpg" alt="13 世紀數學家費波那契的版畫肖像" style="width:100%;height:100%;object-fit:cover;display:block;"></div><figcaption style="width:calc(12 * var(--u));font-size:calc(1.1 * var(--u));font-weight:700;color:var(--mid-gray);line-height:1.45;text-align:center;">費波那契（Leonardo Fibonacci）· 公有領域</figcaption></figure><div class="probe-split__desc" style="flex:1;min-width:0;">13 世紀的數學家<span class="hi">費波那契</span>出了一道謎題：一對兔子，每個月生一對小兔。一個月一個月數下去，兔子的對數剛好排成 1、1、2、3、5、8……</div></div></div><div class="fig"><svg class="figsvg" viewBox="0 0 720 360" preserveAspectRatio="xMidYMid meet" role="img" aria-label="兔子問題：第1到6個月的兔子對數 1、1、2、3、5、8">
+<defs><g id="bun">
+<ellipse cx="-6" cy="-17" rx="4.5" ry="12" fill="#FFFFFF" stroke="#379C39" stroke-width="2"/>
+<ellipse cx="6" cy="-17" rx="4.5" ry="12" fill="#FFFFFF" stroke="#379C39" stroke-width="2"/>
+<ellipse cx="-6" cy="-17" rx="2" ry="7" fill="#F6C9C9"/>
+<ellipse cx="6" cy="-17" rx="2" ry="7" fill="#F6C9C9"/>
+<circle cx="0" cy="0" r="13" fill="#FFFFFF" stroke="#379C39" stroke-width="2"/>
+<circle cx="-4.5" cy="-1" r="1.9" fill="#0A0A0A"/>
+<circle cx="4.5" cy="-1" r="1.9" fill="#0A0A0A"/>
+<ellipse cx="0" cy="4" rx="2" ry="1.4" fill="#F2A0A0"/>
+<path d="M0 5 Q-3 8 -5 7" fill="none" stroke="#0A0A0A" stroke-width="1.3" stroke-linecap="round"/>
+<path d="M0 5 Q3 8 5 7" fill="none" stroke="#0A0A0A" stroke-width="1.3" stroke-linecap="round"/>
+</g></defs>
+<line x1="58" y1="300" x2="662" y2="300" stroke="#C9BCA6" stroke-width="1.5"/>
+<g stroke="#379C39" stroke-width="2.5">
+<rect x="80" y="244" width="70" height="56" rx="8" fill="#FEF4E8"/>
+<rect x="178" y="244" width="70" height="56" rx="8" fill="#FEF4E8"/>
+<rect x="276" y="218" width="70" height="82" rx="8" fill="#EAF3E7"/>
+<rect x="374" y="192" width="70" height="108" rx="8" fill="#EAF3E7"/>
+<rect x="472" y="140" width="70" height="160" rx="8" fill="#7FBF86"/>
+<rect x="570" y="62" width="70" height="238" rx="8" fill="#379C39"/>
+</g>
+<use href="#bun" transform="translate(115,216) scale(0.8)"/>
+<use href="#bun" transform="translate(213,216) scale(0.8)"/>
+<use href="#bun" transform="translate(311,190) scale(0.8)"/>
+<use href="#bun" transform="translate(409,164) scale(0.8)"/>
+<use href="#bun" transform="translate(507,112) scale(0.8)"/>
+<use href="#bun" transform="translate(605,34) scale(0.8)"/>
+<g font-weight="900" text-anchor="middle">
+<text x="115" y="284" font-size="28" fill="#0A0A0A">1</text>
+<text x="213" y="284" font-size="28" fill="#0A0A0A">1</text>
+<text x="311" y="262" font-size="30" fill="#0A0A0A">2</text>
+<text x="409" y="236" font-size="32" fill="#0A0A0A">3</text>
+<text x="507" y="186" font-size="36" fill="#08361B">5</text>
+<text x="605" y="110" font-size="40" fill="#FFFFFF">8</text>
+</g>
+<g font-size="18" font-weight="700" text-anchor="middle" fill="#686968">
+<text x="115" y="326">第1月</text><text x="213" y="326">第2月</text><text x="311" y="326">第3月</text>
+<text x="409" y="326">第4月</text><text x="507" y="326">第5月</text><text x="605" y="326">第6月</text>
+</g>
+</svg></div></div></div><aside class="plan-note"><div class="plan-note__source"><b>口白</b>這串數字是怎麼來的？故事要回到 13 世紀。有位數學家叫費波那契，他想了一個有趣的謎題：假設有一對兔子，每個月會生一對小兔，小兔長大後也會繼續生。一個月、兩個月、三個月過去，總共會有幾對兔子？數一數，剛好就是 1、1、2、3、5、8……這串數字後來就用他的名字，叫費氏數列。</div><div class="plan-note__meta"><b>說明</b>費氏數列的故事：兔子問題（費波那契）　｜　<b>版型</b>左文右圖 split　｜　<b>素材</b>SVG 自畫：第1～6月兔子對數成長</div></aside></section>
+
+<section class="slide probe-group probe-group--std" style="background:#004B24;"><div class="page-label"><span class="page-label__num">05</span><span class="page-label__bar"></span><span>分組時間</span></div><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div><div class="slide-frame"><div class="probe-group__title">分組時間</div><div class="probe-group__activity">費氏 2584 試玩</div><div class="probe-group__timer"><svg class="probe-group__clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.2V12l3.4 2"/></svg><span>5 分鐘</span></div><div class="probe-group__desc">玩費氏 2584：相鄰的費氏數相加，看哪一組先合出 233。</div><div class="probe-group__url">打開：numeracy-learn-kit.web.app/game/fibonacci-2584</div></div><aside class="plan-note"><div class="plan-note__source"><b>口白</b>好，換你們上場。等一下進到各組，老師會開啟費氏 2584 這款遊戲。規則只改了一條，先別急，等我講完玩法再開始。給大家五分鐘，看哪一組先合出 233。計時開始。</div><div class="plan-note__meta"><b>說明</b>分組時間頁（第 2 段・費氏試玩前）　｜　<b>版型</b>深綠呼吸頁・大字＋計時　｜　<b>素材</b>無圖</div></aside></section>
+
+<section class="slide probe-group probe-group--act" style="background:#004B24;"><div class="page-label"><span class="page-label__num">06</span><span class="page-label__bar"></span><span>費氏 2584 試玩</span></div><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div><div class="slide-frame"><div class="actbar"><div class="probe-group__chip">分組進行中</div><div class="probe-group__timer"><svg class="probe-group__clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.2V12l3.4 2"/></svg><span>5 分鐘</span></div></div><div class="probe-split__hero">玩玩看：費氏 2584</div><div class="probe-split__grid"><div class="probe-split__body"><div class="probe-split__desc">規則只改一條：原本「相同數字相加」，這款改成「相鄰費氏數相加」。1＋1＝2、1＋2＝3、2＋3＝5……一路合到 2584。</div><a class="gamelink" href="https://numeracy-learn-kit.web.app/game/fibonacci-2584/" target="_blank" rel="noopener">開啟費氏 2584 →</a></div><div class="fig actfig"><svg class="figsvg" viewBox="0 0 460 330" preserveAspectRatio="xMidYMid meet" role="img" aria-label="費氏 2584 玩法：相鄰的費氏數 2 和 3 滑在一起，合成下一個費氏數 5">
+<defs><marker id="a06" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#379C39"/></marker></defs>
+<g font-weight="800" text-anchor="middle">
+<text x="70" y="34" font-size="19" fill="#A6AAA6">1</text>
+<text x="110" y="34" font-size="19" fill="#A6AAA6">1</text>
+<text x="160" y="34" font-size="22" fill="#1F6F21">2</text>
+<text x="210" y="34" font-size="22" fill="#1F6F21">3</text>
+<text x="262" y="34" font-size="19" fill="#A6AAA6">5</text>
+<text x="312" y="34" font-size="19" fill="#A6AAA6">8</text>
+<text x="368" y="34" font-size="19" fill="#A6AAA6">13</text>
+</g>
+<path d="M150 44 q35 14 70 0" fill="none" stroke="#379C39" stroke-width="2.5"/>
+<text x="185" y="68" text-anchor="middle" font-size="16" font-weight="700" fill="#379C39">相鄰</text>
+<text x="136" y="92" text-anchor="middle" font-size="18" font-weight="900" fill="#004B24">滑在一起</text>
+<rect x="40" y="105" width="92" height="92" rx="12" fill="#EAF3E7" stroke="#379C39" stroke-width="2.5"/>
+<rect x="140" y="105" width="92" height="92" rx="12" fill="#9AD18F" stroke="#379C39" stroke-width="2.5"/>
+<g font-weight="900" text-anchor="middle" dominant-baseline="central" fill="#0A0A0A">
+<text x="86" y="151" font-size="46">2</text>
+<text x="186" y="151" font-size="46">3</text>
+</g>
+<line x1="246" y1="151" x2="312" y2="151" stroke="#379C39" stroke-width="5" marker-end="url(#a06)"/>
+<rect x="325" y="96" width="110" height="110" rx="13" fill="#379C39" stroke="#004B24" stroke-width="3"/>
+<text x="380" y="151" text-anchor="middle" dominant-baseline="central" font-size="56" font-weight="900" fill="#FFFFFF">5</text>
+<rect x="128" y="232" width="204" height="48" rx="24" fill="#EAF3E7" stroke="#379C39" stroke-width="2"/>
+<text x="230" y="256" text-anchor="middle" dominant-baseline="central" font-size="28" font-weight="900" fill="#1F6F21">2 ＋ 3 ＝ 5</text>
+<text x="230" y="308" text-anchor="middle" font-size="18" font-weight="700" fill="#686968">相鄰的費氏數才能合，不是相同數字</text>
+</svg></div></div></div><aside class="plan-note"><div class="plan-note__source"><b>口白</b>這款叫費氏 2584，跟原版差在合併規則：原本相同數字相加，這款改成相鄰的費氏數相加。開局給你兩個 1，1 加 1 等於 2，接下來 1 要找 2 才能合成 3、2 要找 3 合成 5……所以一塊磚不能跟自己合，要找的是鄰居。卡關的話，畫面上有「費氏數列」參考鈕可以點。目標是合到 2584。<br>遊戲連結：https://numeracy-learn-kit.web.app/game/fibonacci-2584/</div><div class="plan-note__meta"><b>說明</b>費氏試玩活動頁（第 2 段・分組進行）　｜　<b>版型</b>左文右圖 split＋遊戲連結　｜　<b>素材</b>SVG 自畫：相鄰費氏數 2＋3＝5 滑合示意（取代原截圖）</div></aside></section>
+
+<section class="slide" style="background:#FFFFFF;"><div class="page-label"><span class="page-label__num">07</span><span class="page-label__bar"></span><span>留言區作答</span></div><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div><div class="slide-frame"><div class="probe-grid__hero">留言區作答：手上是「55」，要找誰合？</div><div style="flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:calc(3 * var(--u));"><svg class="figsvg" viewBox="0 18 760 205" preserveAspectRatio="xMidYMid meet" style="width:100%;height:auto;max-height:76%;" role="img" aria-label="手上一個 55，三個候選方塊：選項①是 34、選項②是 55、選項③是 89，可以跟哪個合？">
+<text x="115" y="52" text-anchor="middle" font-size="20" font-weight="900" fill="#379C39">手上的</text>
+<rect x="55" y="90" width="120" height="120" rx="14" fill="#379C39" stroke="#004B24" stroke-width="3"/>
+<text x="115" y="150" text-anchor="middle" dominant-baseline="central" font-size="52" font-weight="900" fill="#FFFFFF">55</text>
+<text x="225" y="150" text-anchor="middle" dominant-baseline="central" font-size="46" font-weight="900" fill="#379C39">＋</text>
+<text x="225" y="205" text-anchor="middle" font-size="22" font-weight="900" fill="#004B24">？</text>
+<g font-weight="900" text-anchor="middle" fill="#379C39">
+<text x="360" y="56" font-size="34">①</text>
+<text x="510" y="56" font-size="34">②</text>
+<text x="660" y="56" font-size="34">③</text>
+</g>
+<g>
+<rect x="305" y="90" width="110" height="110" rx="13" fill="#EAF3E7" stroke="#379C39" stroke-width="2.5"/>
+<rect x="455" y="90" width="110" height="110" rx="13" fill="#EAF3E7" stroke="#379C39" stroke-width="2.5"/>
+<rect x="605" y="90" width="110" height="110" rx="13" fill="#EAF3E7" stroke="#379C39" stroke-width="2.5"/>
+</g>
+<g font-weight="900" text-anchor="middle" dominant-baseline="central" fill="#0A0A0A">
+<text x="360" y="145" font-size="48">34</text>
+<text x="510" y="145" font-size="48">55</text>
+<text x="660" y="145" font-size="48">89</text>
+</g>
+</svg><div style="text-align:center;font-size:calc(2.2 * var(--u));font-weight:700;color:var(--ink);">把號碼 <b style="color:var(--green-primary);font-weight:900;">①／②／③</b> 打在留言區，先猜再揭曉。</div></div></div><aside class="plan-note"><div class="plan-note__source"><b>口白</b>玩了一下，我考考大家。這次難一點：手上有一塊「55」，旁邊有三塊：①是 34、②是 55、③是 89。它要找哪一塊才能合併？把號碼打在留言區。答案是 ① 和 ③：55 找 34 會合成 89，55 找 89 會合成 144，因為 34、55、89、144 都是費氏數列裡前後相鄰的數；唯獨 ② 不行，因為 55＋55＝110，110 不在費氏數列裡，相同的數字也不能合。記住：這款要找鄰居，不是找雙胞胎。</div><div class="plan-note__meta"><b>說明</b>留言區選項問答頁（逼出「找鄰居不是找雙胞胎」；選項對應 SVG ①34／②55／③89，正解 ①＋③）　｜　<b>版型</b>滿版圖 fig＋留言區選項　｜　<b>素材</b>SVG 自畫：手上的 55＋三個候選 ①34／②55／③89</div></aside></section>
+
+<section class="slide" style="background:#FFFFFF;"><div class="page-label"><span class="page-label__num">08</span><span class="page-label__bar"></span><span>黃金比例</span></div><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div><div class="slide-frame"><div class="probe-split__hero">藏在花和貝殼裡的 1.618</div><div class="probe-split__grid"><div class="probe-split__body" style="justify-content:flex-start;gap:calc(1.6 * var(--u));"><div class="probe-split__desc">把相鄰的兩個費氏數相除，會越來越接近 <span class="hi">1.618</span>——也就是黃金比例。照著費氏方塊一格一格畫弧線，就連成一條螺旋；它也藏在向日葵、鸚鵡螺和松果裡。</div><div class="fig" style="flex:1;min-height:0;"><svg class="figsvg" viewBox="0 0 334 212" preserveAspectRatio="xMidYMid meet" role="img" aria-label="費氏螺旋：用 1 1 2 3 5 8 的方塊拼成，弧線連成黃金螺旋">
+<g stroke="#379C39" stroke-width="2">
+<rect x="24" y="18" width="176" height="176" rx="2.5" fill="#9AD18F"/>
+<rect x="200" y="18" width="110" height="110" rx="2.5" fill="#B7DEAE"/>
+<rect x="244" y="128" width="66" height="66" rx="2.5" fill="#D6EBCF"/>
+<rect x="200" y="150" width="44" height="44" rx="2.5" fill="#EAF3E7"/>
+<rect x="200" y="128" width="22" height="22" rx="2.5" fill="#FBEAD6"/>
+<rect x="222" y="128" width="22" height="22" rx="2.5" fill="#FEF4E8"/>
+</g>
+<g font-weight="900" fill="#0A0A0A" text-anchor="middle">
+<text x="211" y="146" font-size="10">1</text>
+<text x="233" y="146" font-size="10">1</text>
+<text x="213" y="190" font-size="17">2</text>
+<text x="288" y="185" font-size="22">3</text>
+<text x="255" y="80" font-size="30">5</text>
+<text x="178" y="190" font-size="44">8</text>
+</g>
+<path d="M244 150 A22 22 0 0 0 222 128 A22 22 0 0 0 200 150 A44 44 0 0 0 244 194 A66 66 0 0 0 310 128 A110 110 0 0 0 200 18 A176 176 0 0 0 24 194" fill="none" stroke="#004B24" stroke-width="3.5" stroke-linecap="round"/>
+</svg></div></div><div style="position:relative;height:100%;min-height:0;border-radius:var(--radius-md);overflow:hidden;box-shadow:var(--shadow-card);"><img src="assets/golden-ratio-nautilus.jpg" alt="鸚鵡螺殼剖面的對數螺線，呼應黃金螺旋" style="width:100%;height:100%;object-fit:cover;display:block;transform:rotate(180deg);transform-origin:center center;"><span style="position:absolute;right:calc(0.6 * var(--u));bottom:calc(0.5 * var(--u));font-size:calc(1.05 * var(--u));font-weight:700;color:#fff;background:rgba(0,0,0,0.5);padding:calc(0.25 * var(--u)) calc(0.8 * var(--u));border-radius:calc(0.3 * var(--u));line-height:1.3;">鸚鵡螺殼剖面 · Chris 73 / Wikimedia Commons（CC BY-SA 3.0）</span></div></div></div><aside class="plan-note"><div class="plan-note__source"><b>口白</b>玩完費氏 2584，我們來看這串數字的神奇之處。你拿相鄰的兩個費氏數相除，比如 8 除以 5、13 除以 8，算出來會越來越接近 1.618，也就是黃金比例。如果照著費氏數列的方塊，一格一格畫上四分之一圓弧，就會連成一條漂亮的螺旋。這個比例和螺旋還藏在大自然裡：向日葵種子的排列、鸚鵡螺的殼、松果的鱗片，都看得到它。一個小遊戲，居然連到了花和貝殼。</div><div class="plan-note__meta"><b>說明</b>玩完費氏後揭曉：費氏數列→黃金比例→自然界螺旋（移到留言區之後）　｜　<b>版型</b>左文＋費氏螺旋圖／右鸚鵡螺大圖 split　｜　<b>素材</b>SVG 自畫費氏螺旋（python 算座標・黃金螺旋）＋鸚鵡螺大圖（Wikimedia, CC BY-SA 3.0）</div></aside></section>
+
+<section class="slide probe-chapter" style="background:#FEF4E8;"><div class="probe-chapter__left"><div class="probe-chapter__num">02</div></div><div class="probe-chapter__right"><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div><div class="probe-chapter__label">CHAPTER 02</div><div class="probe-chapter__title">換一個方向<br>看世界</div><div class="probe-chapter__sub">從平面國到立體 3D：多一個維度，腦袋就轉不過來</div></div></section>
+
+<section class="slide" style="background:#FFFFFF;"><div class="page-label"><span class="page-label__num">10</span><span class="page-label__bar"></span><span>影片・平面國</span></div><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div><div class="slide-frame"><div class="probe-split__hero">二維生物，看得懂三維嗎？</div><div class="probe-split__grid"><div class="probe-split__body"><div class="probe-split__desc">《平面國》裡的生物住在一張平面上，從沒看過「上下」。多一個方向，有多難想像？</div><div class="vidcap">影片：TED-Ed《探索其他維度》（4:49）</div></div><div class="videoembed"><div class="videoembed__frame"><a href="https://www.youtube.com/watch?v=C6kn6nXMWF0" target="_blank" rel="noopener" style="display:block;width:100%;height:100%;position:relative;"><img src="https://img.youtube.com/vi/C6kn6nXMWF0/hqdefault.jpg" alt="探索其他維度（TED-Ed）影片封面" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius-md);"><span style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:calc(2.4 * var(--u));font-weight:900;color:#fff;background:rgba(190,32,38,0.92);padding:calc(0.9 * var(--u)) calc(2.8 * var(--u));border-radius:calc(100 * var(--u));box-shadow:0 calc(0.5 * var(--u)) calc(2 * var(--u)) rgba(0,0,0,0.45);white-space:nowrap;">▶ 點擊播放</span></a></div><a class="videoembed__link" href="https://www.youtube.com/watch?v=C6kn6nXMWF0" target="_blank" rel="noopener">在 YouTube 開啟：平面國的維度故事</a></div></div></div><aside class="plan-note"><div class="plan-note__source"><b>口白</b>等一下要玩的立體版，會讓你頭有點暈。先看一個故事。《平面國》裡的生物住在一張平面上，從來沒看過上下，當有人跟它說「還有第三個方向」時，它整個無法想像。我們面對立體版的暈，就跟平面國生物面對三維一樣。影片大概五分鐘，看完我們聊聊。</div><div class="plan-note__meta"><b>說明</b>影片頁・平面國／維度（第 3 段）　｜　<b>版型</b>左文右影片 split　｜　<b>素材</b>YouTube 內嵌 C6kn6nXMWF0</div></aside></section>
+
+<section class="slide" style="background:#FFFFFF;"><div class="page-label"><span class="page-label__num">11</span><span class="page-label__bar"></span><span>維度介紹</span></div><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div><div class="slide-frame"><div class="probe-split__hero">多一個方向，選擇就暴增</div><div class="probe-split__grid"><div class="probe-split__body"><div class="probe-split__desc">平面版 4×4 ＝ 16 格、只能 4 個方向。立體版 3×3×3 ＝ 27 格、6 個方向，還多了看不到的內層。</div><div class="probe-split__list-label">升一維，多了什麼</div><ul class="probe-split__list"><li>格子：16 → 27</li><li>方向：4 → 6</li><li>多了看不見的中間層</li></ul></div><div class="fig"><svg class="figsvg" viewBox="0 0 640 340" preserveAspectRatio="xMidYMid meet" role="img" aria-label="平面 16 格 4 方向，升維成立體 27 格 6 方向">
+<defs><marker id="ar" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#379C39"/></marker></defs>
+<rect x="46" y="74" width="176" height="176" fill="#FEF4E8" stroke="#379C39" stroke-width="2.5"/>
+<g stroke="#C9BCA6" stroke-width="1.5"><line x1="90" y1="74" x2="90" y2="250"/><line x1="134" y1="74" x2="134" y2="250"/><line x1="178" y1="74" x2="178" y2="250"/><line x1="46" y1="118" x2="222" y2="118"/><line x1="46" y1="162" x2="222" y2="162"/><line x1="46" y1="206" x2="222" y2="206"/></g>
+<g stroke="#379C39" stroke-width="3" marker-end="url(#ar)"><line x1="134" y1="162" x2="134" y2="58"/><line x1="134" y1="162" x2="134" y2="266"/><line x1="134" y1="162" x2="30" y2="162"/><line x1="134" y1="162" x2="238" y2="162"/></g>
+<text x="134" y="298" text-anchor="middle" font-size="22" font-weight="900" fill="#0A0A0A">平面 2D</text>
+<text x="134" y="324" text-anchor="middle" font-size="19" font-weight="700" fill="#686968">16 格・4 方向</text>
+<line x1="266" y1="160" x2="342" y2="160" stroke="#379C39" stroke-width="3.5" marker-end="url(#ar)"/>
+<text x="304" y="144" text-anchor="middle" font-size="18" font-weight="900" fill="#379C39">多一維</text>
+<polygon points="408,96 524,96 564,60 448,60" fill="#EAF3E7" stroke="#379C39" stroke-width="2.5"/>
+<polygon points="524,96 564,60 564,196 524,232" fill="#DCEBD6" stroke="#379C39" stroke-width="2.5"/>
+<rect x="408" y="96" width="116" height="136" fill="#FEF4E8" stroke="#379C39" stroke-width="2.5"/>
+<g stroke="#C9BCA6" stroke-width="1.5"><line x1="446.7" y1="96" x2="446.7" y2="232"/><line x1="485.3" y1="96" x2="485.3" y2="232"/><line x1="408" y1="141.3" x2="524" y2="141.3"/><line x1="408" y1="186.7" x2="524" y2="186.7"/></g>
+<g stroke="#379C39" stroke-width="3" marker-end="url(#ar)"><line x1="466" y1="164" x2="466" y2="84"/><line x1="466" y1="164" x2="466" y2="244"/><line x1="466" y1="164" x2="392" y2="164"/><line x1="466" y1="164" x2="540" y2="164"/><line x1="466" y1="164" x2="430" y2="200"/><line x1="466" y1="164" x2="512" y2="118"/></g>
+<text x="486" y="298" text-anchor="middle" font-size="22" font-weight="900" fill="#0A0A0A">立體 3D</text>
+<text x="486" y="324" text-anchor="middle" font-size="19" font-weight="700" fill="#686968">27 格・6 方向</text>
+</svg></div></div></div><aside class="plan-note"><div class="plan-note__source"><b>口白</b>我們把差別數一數。原版是四乘四、十六格，只能上下左右四個方向。立體版是三乘三乘三、二十七格，多了前和後，變成六個方向。最麻煩的是中間那一層你看不到，要轉一下才看得見。格子變多、方向變多，下一步要顧的東西就暴增，難怪會讓人轉不過來。</div><div class="plan-note__meta"><b>說明</b>把「升維」講成可數的差別（第 3 段）　｜　<b>版型</b>左文右圖 split　｜　<b>素材</b>SVG 自畫：平面 4 方向→立體 6 方向對照</div></aside></section>
+
+<section class="slide probe-group probe-group--std" style="background:#004B24;"><div class="page-label"><span class="page-label__num">12</span><span class="page-label__bar"></span><span>分組時間</span></div><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div><div class="slide-frame"><div class="probe-group__title">分組時間</div><div class="probe-group__activity">立體 3D 試玩</div><div class="probe-group__timer"><svg class="probe-group__clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.2V12l3.4 2"/></svg><span>5 分鐘</span></div><div class="probe-group__desc">玩立體 3D 2048：3×3×3、六個方向，挑戰合出比平面版更高的方塊。</div><div class="probe-group__url">打開：numeracy-learn-kit.web.app/game/2048-3d</div></div><aside class="plan-note"><div class="plan-note__source"><b>口白</b>看完平面國，換你親身體驗升維的暈。進到各組，老師開啟立體 3D 版。你可以往六個方向滑，還能旋轉看裡面那層。給大家五分鐘，目標是合出比平面版更高的方塊。先別急著往下噢，計時開始。</div><div class="plan-note__meta"><b>說明</b>分組時間頁（第 4 段・立體試玩前）　｜　<b>版型</b>深綠呼吸頁・大字＋計時　｜　<b>素材</b>無圖</div></aside></section>
+
+<section class="slide probe-group probe-group--act" style="background:#004B24;"><div class="page-label"><span class="page-label__num">13</span><span class="page-label__bar"></span><span>立體 3D 試玩</span></div><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div><div class="slide-frame"><div class="actbar"><div class="probe-group__chip">分組進行中</div><div class="probe-group__timer"><svg class="probe-group__clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.2V12l3.4 2"/></svg><span>5 分鐘</span></div></div><div class="probe-split__hero">玩玩看：立體 3D 2048</div><div class="probe-split__grid"><div class="probe-split__body"><div class="probe-split__desc">盤面疊成立方體，可以往六個方向滑，還能轉一圈看裡面那層。規則沒變：相同數字相撞就合併。</div><div class="probe-split__list-label">怎麼操作</div><ul class="probe-split__list"><li>電腦：方向鍵＋Q／E 切換上下層</li><li>平板：手指滑、雙指旋轉</li></ul><a class="gamelink" href="https://numeracy-learn-kit.web.app/game/2048-3d/" target="_blank" rel="noopener">開啟立體 3D 2048 →</a></div><div class="fig actfig"><svg class="figsvg" viewBox="82 48 356 428" preserveAspectRatio="xMidYMid meet" role="img" aria-label="立體 3D 2048：3×3×3 立方體，彩色方塊白數字，六個方向箭頭" style="min-height:0;overflow:hidden;"><defs><marker id="a3d" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1F6F21"/></marker></defs>
+<g stroke="#1F6F21" stroke-width="4" stroke-linecap="round" marker-end="url(#a3d)">
+<line x1="260.0" y1="98.0" x2="260.0" y2="64.0"/>
+<line x1="391.6" y1="174.0" x2="421.1" y2="157.0"/>
+<line x1="391.6" y1="326.0" x2="421.1" y2="343.0"/>
+<line x1="260.0" y1="402.0" x2="260.0" y2="436.0"/>
+<line x1="128.4" y1="326.0" x2="98.9" y2="343.0"/>
+<line x1="128.4" y1="174.0" x2="98.9" y2="157.0"/>
+</g>
+<g stroke-linejoin="round">
+<path d="M 260.0,106.0 L 301.6,130.0 L 260.0,154.0 L 218.4,130.0 Z" fill="#EAF3E7" stroke="#379C39" stroke-width="2"/>
+<path d="M 218.4,130.0 L 260.0,154.0 L 218.4,178.0 L 176.9,154.0 Z" fill="#EAF3E7" stroke="#379C39" stroke-width="2"/>
+<path d="M 176.9,154.0 L 218.4,178.0 L 176.9,202.0 L 135.3,178.0 Z" fill="#EAF3E7" stroke="#379C39" stroke-width="2"/>
+<path d="M 301.6,130.0 L 343.1,154.0 L 301.6,178.0 L 260.0,154.0 Z" fill="#EAF3E7" stroke="#379C39" stroke-width="2"/>
+<path d="M 260.0,154.0 L 301.6,178.0 L 260.0,202.0 L 218.4,178.0 Z" fill="#EAF3E7" stroke="#379C39" stroke-width="2"/>
+<path d="M 218.4,178.0 L 260.0,202.0 L 218.4,226.0 L 176.9,202.0 Z" fill="#EAF3E7" stroke="#379C39" stroke-width="2"/>
+<path d="M 343.1,154.0 L 384.7,178.0 L 343.1,202.0 L 301.6,178.0 Z" fill="#EAF3E7" stroke="#379C39" stroke-width="2"/>
+<path d="M 301.6,178.0 L 343.1,202.0 L 301.6,226.0 L 260.0,202.0 Z" fill="#EAF3E7" stroke="#379C39" stroke-width="2"/>
+<path d="M 260.0,202.0 L 301.6,226.0 L 260.0,250.0 L 218.4,226.0 Z" fill="#EAF3E7" stroke="#379C39" stroke-width="2"/>
+<path d="M 384.7,322.0 L 343.1,346.0 L 343.1,298.0 L 384.7,274.0 Z" fill="#379C39" stroke="#004B24" stroke-width="2"/>
+<path d="M 343.1,346.0 L 301.6,370.0 L 301.6,322.0 L 343.1,298.0 Z" fill="#C7E3BE" stroke="#379C39" stroke-width="2"/>
+<path d="M 301.6,370.0 L 260.0,394.0 L 260.0,346.0 L 301.6,322.0 Z" fill="#379C39" stroke="#004B24" stroke-width="2"/>
+<path d="M 384.7,274.0 L 343.1,298.0 L 343.1,250.0 L 384.7,226.0 Z" fill="#C7E3BE" stroke="#379C39" stroke-width="2"/>
+<path d="M 343.1,298.0 L 301.6,322.0 L 301.6,274.0 L 343.1,250.0 Z" fill="#379C39" stroke="#004B24" stroke-width="2"/>
+<path d="M 301.6,322.0 L 260.0,346.0 L 260.0,298.0 L 301.6,274.0 Z" fill="#C7E3BE" stroke="#379C39" stroke-width="2"/>
+<path d="M 384.7,226.0 L 343.1,250.0 L 343.1,202.0 L 384.7,178.0 Z" fill="#379C39" stroke="#004B24" stroke-width="2"/>
+<path d="M 343.1,250.0 L 301.6,274.0 L 301.6,226.0 L 343.1,202.0 Z" fill="#379C39" stroke="#004B24" stroke-width="2"/>
+<path d="M 301.6,274.0 L 260.0,298.0 L 260.0,250.0 L 301.6,226.0 Z" fill="#379C39" stroke="#004B24" stroke-width="2"/>
+<path d="M 135.3,322.0 L 176.9,346.0 L 176.9,298.0 L 135.3,274.0 Z" fill="#2C7E2E" stroke="#004B24" stroke-width="2"/>
+<path d="M 176.9,346.0 L 218.4,370.0 L 218.4,322.0 L 176.9,298.0 Z" fill="#A9D5A0" stroke="#2C7E2E" stroke-width="2"/>
+<path d="M 218.4,370.0 L 260.0,394.0 L 260.0,346.0 L 218.4,322.0 Z" fill="#2C7E2E" stroke="#004B24" stroke-width="2"/>
+<path d="M 135.3,274.0 L 176.9,298.0 L 176.9,250.0 L 135.3,226.0 Z" fill="#A9D5A0" stroke="#2C7E2E" stroke-width="2"/>
+<path d="M 176.9,298.0 L 218.4,322.0 L 218.4,274.0 L 176.9,250.0 Z" fill="#2C7E2E" stroke="#004B24" stroke-width="2"/>
+<path d="M 218.4,322.0 L 260.0,346.0 L 260.0,298.0 L 218.4,274.0 Z" fill="#2C7E2E" stroke="#004B24" stroke-width="2"/>
+<path d="M 135.3,226.0 L 176.9,250.0 L 176.9,202.0 L 135.3,178.0 Z" fill="#2C7E2E" stroke="#004B24" stroke-width="2"/>
+<path d="M 176.9,250.0 L 218.4,274.0 L 218.4,226.0 L 176.9,202.0 Z" fill="#2C7E2E" stroke="#004B24" stroke-width="2"/>
+<path d="M 218.4,274.0 L 260.0,298.0 L 260.0,250.0 L 218.4,226.0 Z" fill="#A9D5A0" stroke="#2C7E2E" stroke-width="2"/>
+</g>
+<g font-weight="900" text-anchor="middle" dominant-baseline="central">
+<text x="363.9" y="310.0" font-size="25" fill="#FFFFFF">4</text>
+<text x="280.8" y="358.0" font-size="25" fill="#FFFFFF">2</text>
+<text x="322.4" y="286.0" font-size="20" fill="#FFFFFF">16</text>
+<text x="363.9" y="214.0" font-size="25" fill="#FFFFFF">2</text>
+<text x="322.4" y="238.0" font-size="25" fill="#FFFFFF">4</text>
+<text x="280.8" y="262.0" font-size="25" fill="#FFFFFF">8</text>
+<text x="156.1" y="310.0" font-size="25" fill="#FFFFFF">2</text>
+<text x="239.2" y="358.0" font-size="25" fill="#FFFFFF">8</text>
+<text x="197.6" y="286.0" font-size="25" fill="#FFFFFF">4</text>
+<text x="239.2" y="310.0" font-size="20" fill="#FFFFFF">16</text>
+<text x="156.1" y="214.0" font-size="25" fill="#FFFFFF">8</text>
+<text x="197.6" y="238.0" font-size="25" fill="#FFFFFF">2</text>
+</g>
+<text x="260" y="462" text-anchor="middle" font-size="22" font-weight="900" fill="#1F6F21">3×3×3 立方體・可往 6 個方向滑</text></svg></div></div></div><aside class="plan-note"><div class="plan-note__source"><b>口白</b>這款是立體 3D 2048。盤面疊成一個三乘三乘三的立方體，規則沒變，還是相同數字撞在一起就合併，但現在你可以往六個方向滑。用電腦的同學，方向鍵控制上下左右，按 Q 和 E 切換上下層；用平板的，手指直接滑，兩根手指旋轉立方體看裡面那層。<br>遊戲連結：https://numeracy-learn-kit.web.app/game/2048-3d/</div><div class="plan-note__meta"><b>說明</b>立體試玩活動頁（第 4 段・分組進行）　｜　<b>版型</b>左說明右 SVG split＋遊戲連結（操作方式收進左欄文字，方向鍵／手指小圖移除）　｜　<b>素材</b>inline SVG 自畫：等角投影 3×3×3 立方體（彩色方塊白數字）＋6 方向箭頭（取代原灰糊截圖 screenshot-3d-2048.png）</div></aside></section>
+
+<section class="slide probe-chapter" style="background:#FEF4E8;"><div class="probe-chapter__left"><div class="probe-chapter__num">03</div></div><div class="probe-chapter__right"><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div><div class="probe-chapter__label">CHAPTER 03</div><div class="probe-chapter__title">換 AI 來玩</div><div class="probe-chapter__sub">電腦怎麼想幾步、算機率，玩得比人還強？</div></div></section>
+
+<section class="slide" style="background:#FFFFFF;"><div class="page-label"><span class="page-label__num">15</span><span class="page-label__bar"></span><span>現場看 AI 玩</span></div><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div><div class="slide-frame"><div class="probe-split__hero">現場看 AI 自己玩一次</div><div class="probe-split__grid"><div class="probe-split__body" style="justify-content:center;"><div class="probe-split__list-label">現場 demo 看什麼</div><ul class="probe-split__list"><li>把你們歸納的訣竅，變成打分規則</li><li>空格多、排得整齊就加分</li><li>一鍵自動跑，贏過全世界的玩家</li></ul><a class="gamelink" href="https://ovolve.github.io/2048-AI/" target="_blank" rel="noopener">現場開 AI 自動跑 →</a></div><div style="height:100%;min-height:0;border-radius:var(--radius-md);overflow:hidden;box-shadow:var(--shadow-card);"><img src="assets/ai-plays-2048.png" alt="友善機器人一邊想好幾步一邊玩 2048" style="width:100%;height:100%;object-fit:cover;display:block;"></div></div></div><aside class="plan-note"><div class="plan-note__source"><b>口白</b>看完影片，我直接開一個會自己玩的 AI 給大家看。它把你們剛剛歸納的訣竅全變成規則、還會打分數：空格越多、排得越整齊就加分；接著每一步先往下想好幾步，再把新磚九成冒 2、一成冒 4 的機率算進去，挑平均分數最高的那步。同樣的訣竅，被它算到極致，所以贏過全世界的玩家。<br><b>現場操作步驟</b>①課前先開好 https://ovolve.github.io/2048-AI/ 這個分頁，按一次右上「Auto-run」測試跑得動。②上課分享螢幕，按右上「Auto-run」，AI 就會自己玩，很快飆出比你們剛剛大很多的磚。③邊播邊講「每步先想好幾步＋算機率，就是把訣竅算到極致」。④想互動就按「Get Hint」，先讓學生在留言區猜下一步、再揭曉；要停就按「Stop」。⑤備援：怕現場網路出狀況，課前先錄 30 秒備用，或改放上一段 Code Bullet 影片。</div><div class="plan-note__meta"><b>說明</b>現場開 AI 自動跑 demo（第 5 段・呼應 heuristic→AI）。可見文字精簡為「標題一句＋3 短語＋按鈕」，細節（打分數規則、9 成冒 2／1 成冒 4 機率、挑平均最高）保留在上方口白　｜　<b>版型</b>左文右圖 split＋現場連結按鈕　｜　<b>素材</b>AI 玩 2048 示意圖 ai-plays-2048.png＋ovolve 2048-AI 現場連結（https://ovolve.github.io/2048-AI/）</div></aside></section>
+
+<section class="slide" style="background:linear-gradient(110deg, rgba(2,35,20,0.94) 0%, rgba(2,35,20,0.83) 26%, rgba(2,32,18,0.52) 46%, rgba(2,30,18,0.16) 64%, rgba(0,0,0,0) 77%), url('assets/ai-thinking-power.png') center/cover no-repeat;"><div class="page-label" style="color:rgba(255,255,255,0.92);"><span class="page-label__num">16</span><span class="page-label__bar" style="background:rgba(255,255,255,0.55);"></span><span>AI 的玩法</span></div><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div><div class="slide-frame" style="justify-content:flex-start;"><div style="max-width:54%;"><div style="font-size:calc(4.6 * var(--u));font-weight:900;color:#fff;line-height:1.2;border-top:calc(0.5 * var(--u)) solid var(--green-primary);padding-top:calc(1.6 * var(--u));text-shadow:0 calc(0.2 * var(--u)) calc(1.5 * var(--u)) rgba(0,0,0,0.78);">AI 的玩法：<br>想幾步＋算機率</div><ul style="list-style:none;margin-top:calc(3.4 * var(--u));display:flex;flex-direction:column;gap:calc(2.1 * var(--u));"><li style="display:flex;align-items:center;gap:calc(1.5 * var(--u));font-size:calc(2.5 * var(--u));font-weight:700;color:#fff;line-height:1.4;text-shadow:0 calc(0.15 * var(--u)) calc(1.1 * var(--u)) rgba(0,0,0,0.82);"><span style="flex:0 0 auto;width:calc(1.1 * var(--u));height:calc(1.1 * var(--u));border-radius:50%;background:var(--green-primary);box-shadow:0 0 0 calc(0.3 * var(--u)) rgba(255,255,255,0.4);"></span><span>往前想好幾步</span></li><li style="display:flex;align-items:center;gap:calc(1.5 * var(--u));font-size:calc(2.5 * var(--u));font-weight:700;color:#fff;line-height:1.4;text-shadow:0 calc(0.15 * var(--u)) calc(1.1 * var(--u)) rgba(0,0,0,0.82);"><span style="flex:0 0 auto;width:calc(1.1 * var(--u));height:calc(1.1 * var(--u));border-radius:50%;background:var(--green-primary);box-shadow:0 0 0 calc(0.3 * var(--u)) rgba(255,255,255,0.4);"></span><span>每一步都算機率、挑最好的</span></li><li style="display:flex;align-items:center;gap:calc(1.5 * var(--u));font-size:calc(2.5 * var(--u));font-weight:700;color:#fff;line-height:1.4;text-shadow:0 calc(0.15 * var(--u)) calc(1.1 * var(--u)) rgba(0,0,0,0.82);"><span style="flex:0 0 auto;width:calc(1.1 * var(--u));height:calc(1.1 * var(--u));border-radius:50%;background:var(--green-primary);box-shadow:0 0 0 calc(0.3 * var(--u)) rgba(255,255,255,0.4);"></span><span>把訣竅算到極致，玩得比人強</span></li></ul></div></div><aside class="plan-note"><div class="plan-note__source"><b>口白</b>AI 的玩法其實就三步。第一，往下想好幾步，把每種滑法都先在腦中試一遍。第二，把機率算進去，因為遊戲每次冒新方塊，九成是 2、一成是 4。第三，挑出平均下來分數最高的那一步。它跟我們「先想最可能發生什麼，再決定怎麼做」一模一樣，只是它想得更深，每秒能想幾百萬步。連運氣它都先把機率算好，再決定怎麼走。</div><div class="plan-note__meta"><b>說明</b>把 AI 玩法白話成三步（第 5 段）　｜　<b>版型</b>滿版背景圖＋左上白字（深色漸層壓底）　｜　<b>素材</b>AI 深度運算示意圖 ai-thinking-power.png</div></aside></section>
+
+<section class="slide probe-group probe-group--std" style="background:#004B24;"><div class="page-label"><span class="page-label__num">17</span><span class="page-label__bar"></span><span>分組時間</span></div><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div><div class="slide-frame"><div class="probe-group__title">分組時間</div><div class="probe-group__activity">貪食蛇試玩</div><div class="probe-group__timer"><svg class="probe-group__clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.2V12l3.4 2"/></svg><span>5 分鐘</span></div><div class="probe-group__desc">玩貪食蛇 2048：在即時競技場，跟內建 AI 對手對戰。</div><div class="probe-group__url">打開：numeracy-learn-kit.web.app/game/snake-2048</div></div><aside class="plan-note"><div class="plan-note__source"><b>口白</b>看完 AI 怎麼玩，換你親自跟 AI 對戰。進到各組，老師開啟貪食蛇 2048。這是一個即時競技場，你的對手就是內建的 AI 電腦。給大家五分鐘，看看你能不能打贏它。計時開始。</div><div class="plan-note__meta"><b>說明</b>分組時間頁（第 6 段・貪食蛇試玩前）　｜　<b>版型</b>深綠呼吸頁・大字＋計時　｜　<b>素材</b>無圖</div></aside></section>
+
+<section class="slide probe-group probe-group--act" style="background:#004B24;"><div class="page-label"><span class="page-label__num">18</span><span class="page-label__bar"></span><span>貪食蛇試玩</span></div><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div><div class="slide-frame"><div class="actbar"><div class="probe-group__chip">分組進行中</div><div class="probe-group__timer"><svg class="probe-group__clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.2V12l3.4 2"/></svg><span>5 分鐘</span></div></div><div class="probe-split__hero">玩玩看：貪食蛇 2048</div><div class="probe-split__grid"><div class="probe-split__body"><div class="probe-split__desc">像貪食蛇一樣移動，蛇身由數字方塊組成，相同數字會合併變大。而對手就是內建的 AI。</div><div class="probe-split__list-label">場上還有</div><ul class="probe-split__list"><li>道具「÷2」＝合併「×2」的相反</li><li>空白鍵可以衝刺</li></ul><a class="gamelink" href="https://numeracy-learn-kit.web.app/game/snake-2048/" target="_blank" rel="noopener">開啟貪食蛇 2048 →</a></div><div class="fig actfig"><svg class="figsvg" viewBox="20 58 480 364" preserveAspectRatio="xMidYMid meet" role="img" aria-label="貪食蛇 2048：你的數字蛇與內建 AI 對手對峙" style="min-height:0;overflow:hidden;"><polyline points="66,330 124,302 182,276 240,250" fill="none" stroke="#9AD18F" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+<polyline points="462,120 404,148 346,176 300,202" fill="none" stroke="#9AA7B2" stroke-width="22" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="37" y="301" width="58" height="58" rx="11" fill="#379C39" stroke="#004B24" stroke-width="3"/>
+<rect x="95" y="273" width="58" height="58" rx="11" fill="#379C39" stroke="#004B24" stroke-width="3"/>
+<rect x="153" y="247" width="58" height="58" rx="11" fill="#379C39" stroke="#004B24" stroke-width="3"/>
+<rect x="211" y="221" width="58" height="58" rx="11" fill="#379C39" stroke="#004B24" stroke-width="3"/>
+<rect x="433" y="91" width="58" height="58" rx="11" fill="#4F5E6E" stroke="#2E3A46" stroke-width="3"/>
+<rect x="375" y="119" width="58" height="58" rx="11" fill="#4F5E6E" stroke="#2E3A46" stroke-width="3"/>
+<rect x="317" y="147" width="58" height="58" rx="11" fill="#4F5E6E" stroke="#2E3A46" stroke-width="3"/>
+<rect x="271" y="173" width="58" height="58" rx="11" fill="#4F5E6E" stroke="#2E3A46" stroke-width="3"/>
+<g font-weight="900" text-anchor="middle" dominant-baseline="central" fill="#FFFFFF">
+<text x="66" y="330" font-size="27">2</text>
+<text x="124" y="302" font-size="27">4</text>
+<text x="182" y="276" font-size="27">8</text>
+<text x="240" y="250" font-size="22">16</text>
+<text x="462" y="120" font-size="27">4</text>
+<text x="404" y="148" font-size="27">8</text>
+<text x="346" y="176" font-size="22">16</text>
+<text x="300" y="202" font-size="22">32</text>
+</g>
+<polygon points="270.0,205.0 273.4,217.7 284.8,211.2 278.3,222.6 291.0,226.0 278.3,229.4 284.8,240.8 273.4,234.3 270.0,247.0 266.6,234.3 255.2,240.8 261.7,229.4 249.0,226.0 261.7,222.6 255.2,211.2 266.6,217.7" fill="#E8FF3A" stroke="#004B24" stroke-width="2"/>
+<circle cx="258.9" cy="246.4" r="3.5" fill="#FFFFFF"/><circle cx="258.9" cy="246.4" r="1.8" fill="#0A0A0A"/><circle cx="247.7" cy="232.4" r="3.5" fill="#FFFFFF"/><circle cx="247.7" cy="232.4" r="1.8" fill="#0A0A0A"/>
+<circle cx="281.1" cy="205.6" r="3.5" fill="#FFFFFF"/><circle cx="281.1" cy="205.6" r="1.8" fill="#0A0A0A"/><circle cx="292.3" cy="219.6" r="3.5" fill="#FFFFFF"/><circle cx="292.3" cy="219.6" r="1.8" fill="#0A0A0A"/>
+<text x="66" y="372" text-anchor="middle" font-size="22" font-weight="900" fill="#1F6F21">你</text>
+<text x="462" y="92" text-anchor="middle" font-size="22" font-weight="900" fill="#3C4654">AI 對手</text>
+<text x="262" y="404" text-anchor="middle" font-size="22" font-weight="900" fill="#1F6F21">你的數字蛇 vs 內建 AI 對手</text></svg></div></div></div><aside class="plan-note"><div class="plan-note__source"><b>口白</b>這款叫貪食蛇 2048。你像貪食蛇一樣在場上移動，蛇身是一串數字方塊，相同數字碰在一起會合併變大。場上還散著道具，其中有個「除以 2」，剛好是我們合併「乘以 2」的相反，乘和除是一對；空白鍵可以衝刺。最特別的是，你的對手就是內建的 AI，看看你能不能贏它。<br>遊戲連結：https://numeracy-learn-kit.web.app/game/snake-2048/</div><div class="plan-note__meta"><b>說明</b>貪食蛇試玩活動頁（第 6 段・分組進行）　｜　<b>版型</b>左文右圖 split＋遊戲連結　｜　<b>素材</b>inline SVG 自畫：數字方塊蛇身 vs AI 對手蛇對峙＋衝突火花（取代原雜亂截圖 screenshot-snake-2048.png）</div></aside></section>
+
+<section class="slide" style="background:#FFFFFF;"><div class="page-label"><span class="page-label__num">19</span><span class="page-label__bar"></span><span>課程回顧</span></div><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div><div class="slide-frame"><div class="probe-journey__hero">三節課，我們一路玩過來</div><div class="probe-journey"><div class="probe-journey__card"><div class="probe-journey__head"><span class="probe-journey__dot">1</span><span class="probe-journey__label">第一節</span></div><div class="probe-journey__title">成長規律</div><ul class="probe-journey__list"><li>2→4→8 翻倍＝指數成長</li><li>比一直加快太多</li></ul></div><div class="probe-journey__arrow" aria-hidden="true">→</div><div class="probe-journey__card"><div class="probe-journey__head"><span class="probe-journey__dot">2</span><span class="probe-journey__label">第二節</span></div><div class="probe-journey__title">次方與角落訣竅</div><ul class="probe-journey__list"><li>2048＝2 連乘 11 次（2¹¹）</li><li>大磚釘角落、排成樓梯，合併才順</li></ul></div><div class="probe-journey__arrow" aria-hidden="true">→</div><div class="probe-journey__card"><div class="probe-journey__head"><span class="probe-journey__dot">3</span><span class="probe-journey__label">第三節</span></div><div class="probe-journey__title">大變身與 AI</div><ul class="probe-journey__list"><li>換數字（費氏）、換維度（立體）、換對手（AI）</li><li>AI 想幾步＋算機率，玩得比人強</li></ul></div></div></div><aside class="plan-note"><div class="plan-note__source"><b>口白</b>三節課，我們一路玩過來。第一節，從 2、4、8 的翻倍，看見指數成長有多猛，比一直加快太多了。第二節，知道 2048 就是 2 連乘 11 次，還學會把大磚釘角落、排成樓梯。第三節，同一個遊戲玩出三種變身：換數字變費氏、換維度變立體、換對手換成 AI，也看到 AI 怎麼想幾步、算機率，玩得比人強。</div><div class="plan-note__meta"><b>說明</b>全 3 節課程回顧（第 7 段）　｜　<b>版型</b>對照列 rows（5 列）　｜　<b>素材</b>無圖</div></aside></section>
+
+<section class="slide probe-breather" style="background:#0E2A47;"><div class="page-label"><span class="page-label__num">20</span><span class="page-label__bar"></span><span>昇華金句</span></div><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div><div class="slide-frame" style="justify-content:center;align-items:center;"><div class="probe-breather__quote">數學，是一種<span class="hi">超能力</span>。</div><div class="probe-breather__sub">好策略＞蠻力，遊戲裡、生活裡都一樣。</div></div><aside class="plan-note"><div class="plan-note__source"><b>口白</b>最後送大家一句話：數學，是一種超能力。它讓電腦算到我們算不到的地方，也讓你在遊戲和生活裡，用好策略勝過蠻力。今天玩的每一款 2048，背後都是這種超能力。</div><div class="plan-note__meta"><b>說明</b>昇華金句呼吸頁（第 7 段收束）　｜　<b>版型</b>深藍金句頁（整頁色塊＋大字）　｜　<b>素材</b>無圖</div></aside></section>
+
+<section class="slide probe-thanks" style="background:linear-gradient(7deg, rgba(2,26,15,0.95) 2%, rgba(2,26,15,0.66) 22%, rgba(3,28,16,0.22) 38%, rgba(0,0,0,0) 50%), linear-gradient(96deg, rgba(2,26,15,0.42) 0%, rgba(2,26,15,0.12) 24%, rgba(0,0,0,0) 38%), url('assets/family-ai-2048.png') center/cover no-repeat; justify-content:flex-end; align-items:flex-start; text-align:left;"><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB" style="color:rgba(255,255,255,0.92);filter:drop-shadow(0 calc(0.12 * var(--u)) calc(0.4 * var(--u)) rgba(0,0,0,0.55));"><use href="#nl-logo"/></svg></div><div style="position:relative;z-index:2;max-width:48%;"><div style="font-size:calc(5.6 * var(--u));font-weight:900;color:#fff;line-height:1.08;text-shadow:0 calc(0.2 * var(--u)) calc(1.6 * var(--u)) rgba(0,0,0,0.8);">下次見</div><div style="font-size:calc(2.3 * var(--u));font-weight:500;color:rgba(255,255,255,0.96);line-height:1.65;margin-top:calc(1.8 * var(--u));text-shadow:0 calc(0.15 * var(--u)) calc(1.1 * var(--u)) rgba(0,0,0,0.85);">三節課，我們和 AI 一起把 2048 玩過一輪。回家揪爸媽再玩立體版、貪食蛇，挑戰打贏 AI！</div></div></section>
+
+</div>
+<script src="presenter.js"></script>
+</body>
+</html>

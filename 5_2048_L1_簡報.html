@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2048 翻倍的魔法 — L1 線上課簡報</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="base.css">
+<style>
+
+/* ===== 占位框 placeholder ===== */
+.img-ph{background:repeating-linear-gradient(45deg,#F4EEE2,#F4EEE2 calc(1.6*var(--u)),#ECE3D2 calc(1.6*var(--u)),#ECE3D2 calc(3.2*var(--u)));border:2px dashed #C7B999;border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;min-height:0;padding:calc(2*var(--u));}
+.img-ph__cap{font-size:calc(2*var(--u));font-weight:700;color:#766A4E;line-height:1.55;max-width:94%;}
+.img-ph__src{display:block;font-size:calc(1.4*var(--u));font-weight:900;letter-spacing:0.06em;color:var(--green-primary);margin-bottom:calc(0.8*var(--u));}
+/* ===== cover ===== */
+.probe-cover{padding:0 var(--edge-x) var(--edge-bottom);}
+.probe-cover__visual{flex:1;min-height:0;margin:0 calc(-1*var(--edge-x));overflow:hidden;}
+.probe-cover__visual.img-ph{border:none;border-radius:0;}
+.probe-cover__bottom{padding-top:calc(2.5*var(--u));display:flex;justify-content:space-between;align-items:flex-end;}
+.probe-cover__title{font-size:var(--fs-cover-title);font-weight:900;color:var(--ink);line-height:1.15;border-top:3px solid var(--green-primary);padding-top:calc(1.5*var(--u));}
+.probe-cover__title small{display:block;font-size:calc(1.3*var(--u));font-weight:700;letter-spacing:0.3em;color:var(--green-primary);margin-bottom:calc(0.6*var(--u));}
+.probe-cover__right{display:flex;flex-direction:column;align-items:flex-end;gap:calc(1.4*var(--u));}
+.probe-cover__subtitle{font-size:calc(1.1*var(--u));font-weight:500;color:var(--mid-gray);text-align:right;line-height:1.9;}
+.probe-cover__logo{display:block;height:calc(2.4*var(--u));width:auto;aspect-ratio:162.16/45.83;color:var(--green-primary);}
+/* ===== chapter ===== */
+.probe-chapter{padding:0;flex-direction:row;}
+.probe-chapter__left{width:38%;background:var(--green-primary);display:flex;align-items:flex-end;justify-content:flex-end;padding:calc(5*var(--u));position:relative;overflow:hidden;}
+.probe-chapter__num{font-size:var(--fs-chapter-num);font-weight:900;color:rgba(255,255,255,0.18);line-height:0.82;letter-spacing:-0.04em;user-select:none;}
+.probe-chapter__right{flex:1;display:flex;flex-direction:column;justify-content:center;padding:calc(5*var(--u)) calc(7*var(--u)) calc(5*var(--u)) calc(6*var(--u));}
+.probe-chapter__label{font-size:var(--fs-label);font-weight:700;letter-spacing:0.3em;color:var(--green-primary);margin-bottom:calc(1*var(--u));}
+.probe-chapter__title{font-size:var(--fs-chapter-title);font-weight:900;color:var(--ink);border-top:3px solid var(--green-primary);padding-top:calc(1.8*var(--u));}
+.probe-chapter__sub{font-size:calc(2*var(--u));font-weight:500;color:var(--mid-gray);margin-top:calc(1.5*var(--u));line-height:1.6;}
+/* ===== grid ===== */
+.probe-grid__hero{font-size:var(--fs-hero);font-weight:900;color:var(--ink);border-top:3px solid var(--green-primary);padding-top:calc(1.5*var(--u));margin-bottom:calc(3*var(--u));}
+.probe-grid__grid{display:grid;grid-template-rows:auto auto 1fr;column-gap:calc(3*var(--u));flex:1;min-height:0;}
+.probe-grid__card{display:grid;grid-template-rows:subgrid;grid-row:span 3;border-top:3px solid var(--green-primary);padding-top:calc(1.5*var(--u));min-height:0;overflow:hidden;}
+.probe-grid__label{font-size:calc(1*var(--u));font-weight:700;letter-spacing:0.25em;color:var(--green-primary);}
+.probe-grid__title{font-size:var(--fs-card-title);font-weight:900;color:var(--ink);margin:calc(0.5*var(--u)) 0 calc(0.9*var(--u));line-height:1.25;}
+.probe-grid__body{font-size:calc(2*var(--u));line-height:1.6;color:var(--ink);}
+.dx-ico{display:block;width:calc(4*var(--u));height:calc(4*var(--u));color:var(--green-primary);margin-bottom:calc(0.9*var(--u));}
+/* ===== split ===== */
+.probe-split__hero{font-size:var(--fs-hero);font-weight:900;color:var(--ink);border-top:3px solid var(--green-primary);padding-top:calc(1.5*var(--u));margin-bottom:calc(2.5*var(--u));}
+.probe-split__grid{display:grid;grid-template-columns:1fr 1.05fr;gap:calc(4*var(--u));flex:1;min-height:0;}
+.probe-split__grid>*{min-height:0;}
+.probe-split__body{display:flex;flex-direction:column;justify-content:center;}
+.probe-split__desc{font-size:calc(2.1*var(--u));line-height:1.8;color:var(--ink);}
+.probe-split__list-label{font-size:var(--fs-label);font-weight:700;letter-spacing:0.2em;color:var(--green-primary);margin:calc(2*var(--u)) 0 calc(1*var(--u));}
+.probe-split__list{list-style:none;}
+.probe-split__list li{font-size:calc(2*var(--u));line-height:1.7;color:var(--ink);padding-left:calc(1.8*var(--u));position:relative;}
+.probe-split__list li::before{content:"";position:absolute;left:0;top:calc(0.8*var(--u));width:calc(0.7*var(--u));height:calc(0.7*var(--u));border-radius:50%;background:var(--green-primary);}
+.probe-split__visual{border-radius:var(--radius-md);overflow:hidden;}
+/* ===== rows ===== */
+.probe-rows__hero{font-size:var(--fs-hero);font-weight:900;color:var(--ink);border-top:3px solid var(--green-primary);padding-top:calc(1.5*var(--u));margin-bottom:calc(1.5*var(--u));}
+.probe-rows{flex:1;min-height:0;display:flex;flex-direction:column;gap:calc(1*var(--u));justify-content:center;}
+.probe-rows__row{display:grid;grid-template-columns:auto 1fr auto 1.15fr;align-items:center;gap:calc(1.5*var(--u));background:var(--paper-warm);border-radius:var(--radius-sm);border-left:3px solid var(--green-primary);padding:calc(1*var(--u)) calc(1.6*var(--u));}
+.probe-rows__tag{font-size:calc(1*var(--u));font-weight:900;letter-spacing:0.1em;color:#fff;background:var(--green-primary);border-radius:calc(0.3*var(--u));padding:calc(0.25*var(--u)) calc(0.9*var(--u));white-space:nowrap;}
+.probe-rows__item{font-size:calc(2.1*var(--u));font-weight:900;color:var(--ink);line-height:1.4;}
+.probe-rows__arrow{font-size:calc(2*var(--u));font-weight:900;color:var(--green-primary);}
+.probe-rows__to{font-size:calc(2*var(--u));color:var(--ink);line-height:1.4;}
+/* ===== steps ===== */
+.probe-steps__hero{font-size:var(--fs-hero);font-weight:900;color:var(--ink);border-top:3px solid var(--green-primary);padding-top:calc(1.5*var(--u));margin-bottom:calc(3*var(--u));}
+.probe-steps{display:flex;align-items:stretch;justify-content:center;gap:calc(1*var(--u));flex:1;min-height:0;}
+.probe-steps__node{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:calc(0.6*var(--u));background:var(--paper-warm);border-top:4px solid var(--green-primary);border-radius:var(--radius-md);box-shadow:var(--shadow-card);padding:calc(1.6*var(--u));}
+.probe-steps__num{font-size:calc(0.95*var(--u));font-weight:700;letter-spacing:0.2em;color:var(--green-primary);}
+.probe-steps__title{font-size:var(--fs-card-title);font-weight:900;color:var(--ink);line-height:1.25;}
+.probe-steps__desc{font-size:calc(2*var(--u));line-height:1.55;color:var(--ink);}
+.probe-steps__arrow{flex:0 0 auto;align-self:center;font-size:calc(2.6*var(--u));font-weight:900;color:var(--green-primary);}
+/* ===== hero ===== */
+.probe-hero{align-items:center;}
+.probe-hero__headline{font-size:var(--fs-hero);font-weight:900;color:var(--ink);border-top:3px solid var(--green-primary);padding-top:calc(1.5*var(--u));align-self:flex-start;}
+.probe-hero__middle{flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:calc(2.2*var(--u));}
+.probe-hero__opts{display:flex;flex-wrap:wrap;gap:calc(1.6*var(--u));justify-content:center;max-width:92%;}
+.probe-hero__opt{font-size:calc(2.3*var(--u));font-weight:900;background:var(--paper-warm);border:2px solid var(--green-primary);border-radius:calc(100*var(--u));padding:calc(0.9*var(--u)) calc(2.6*var(--u));color:var(--ink);}
+.probe-hero__opt b{color:var(--green-primary);}
+.probe-hero__bubble{font-size:calc(2*var(--u));font-weight:700;background:var(--hi-yellow);padding:calc(0.7*var(--u)) calc(2.2*var(--u));border-radius:calc(100*var(--u));}
+.probe-hero__desc{font-size:calc(2.1*var(--u));font-weight:500;text-align:center;max-width:82%;line-height:1.7;}
+/* ===== hero 全幅背景版（米粒傳說預測頁）===== */
+.probe-hero--bg .probe-hero__headline{color:#fff;border-top-color:var(--hi-yellow);}
+.probe-hero--bg .probe-hero__desc{color:rgba(255,255,255,0.92);}
+.probe-hero--bg .page-label,.probe-hero--bg .page-label__num{color:rgba(255,255,255,0.85);}
+.probe-hero--bg .page-label__num{background:rgba(255,255,255,0.25);color:#fff;}
+.probe-hero--bg .page-label__bar{background:rgba(255,255,255,0.4);}
+.probe-hero--bg .brand-footer .brand-logo{color:rgba(255,255,255,0.6);}
+/* ===== stats (deep green) ===== */
+.probe-stats{background:var(--green-dark);}
+.probe-stats .page-label,.probe-stats .page-label__num{color:rgba(255,255,255,0.7);}
+.probe-stats .page-label__num{background:rgba(255,255,255,0.22);color:#fff;}
+.probe-stats .page-label__bar{background:rgba(255,255,255,0.35);}
+.probe-stats .brand-footer .brand-logo{color:rgba(255,255,255,0.55);}
+.probe-stats__headline{font-size:var(--fs-hero);font-weight:900;color:#fff;border-top:3px solid var(--hi-yellow);padding-top:calc(1.5*var(--u));align-self:flex-start;}
+.probe-stats__row{display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:auto auto auto;column-gap:calc(3*var(--u));row-gap:calc(0.8*var(--u));align-content:center;flex:1;min-height:0;}
+.probe-stats__item{display:grid;grid-template-rows:subgrid;grid-row:span 3;text-align:center;}
+.probe-stats__num{align-self:end;font-size:var(--fs-kpi);font-weight:900;color:var(--hi-yellow);line-height:1;}
+.probe-stats__num .unit{font-size:calc(2.2*var(--u));margin-left:calc(0.3*var(--u));color:#fff;}
+.probe-stats__label{font-size:var(--fs-card-title);font-weight:900;color:#fff;margin-top:calc(1*var(--u));}
+.probe-stats__desc{font-size:calc(2*var(--u));color:rgba(255,255,255,0.85);margin-top:calc(0.5*var(--u));line-height:1.5;}
+/* ===== breather ===== */
+/* p22 伏筆頁：非分組綠的色塊頁 → 深品牌藍 #0E2A47（與 L3 p20 金句頁一致）。深綠底 #004B24 僅保留給「分組時間」頁。 */
+.probe-breather{background:#0E2A47;}
+/* 覆寫 base.css 第53行的深綠 letterbox：本頁 letterbox 也變藍。只影響 breather 頁，分組頁(probe-group*)用別的選擇器、不受影響。 */
+body:has(.deck .slide.active.probe-breather){background:#0E2A47;}
+.probe-breather .slide-frame{align-items:center;justify-content:center;text-align:center;}
+.probe-breather .page-label,.probe-breather .page-label__num{color:rgba(255,255,255,0.7);}
+.probe-breather .page-label__num{background:rgba(255,255,255,0.22);color:#fff;}
+.probe-breather .page-label__bar{background:rgba(255,255,255,0.35);}
+.probe-breather .brand-footer .brand-logo{color:rgba(255,255,255,0.55);}
+.probe-breather__quote{font-size:calc(3.6*var(--u));font-weight:900;color:#fff;line-height:1.4;max-width:84%;}
+.probe-breather__quote .hi{color:var(--ink);}
+.probe-breather__sub{font-size:calc(2*var(--u));color:rgba(255,255,255,0.72);margin-top:calc(2*var(--u));max-width:80%;line-height:1.6;}
+/* ===== video ===== */
+.probe-video__hero{font-size:var(--fs-hero);font-weight:900;color:var(--ink);border-top:3px solid var(--green-primary);padding-top:calc(1.5*var(--u));margin-bottom:calc(1.4*var(--u));}
+.probe-video__note{font-size:calc(2*var(--u));color:var(--ink);line-height:1.6;margin-bottom:calc(1.2*var(--u));}
+.probe-video__frame{flex:1;min-height:0;border-radius:var(--radius-md);overflow:hidden;position:relative;background:#000;display:flex;align-items:center;justify-content:center;}
+.probe-video__frame img{width:100%;height:100%;object-fit:cover;}
+.probe-video__embed{position:relative;height:100%;aspect-ratio:16/9;max-width:100%;}
+.probe-video__meta .src-link[href]{text-decoration:underline;}
+.probe-video__play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:calc(9*var(--u));height:calc(9*var(--u));border-radius:50%;background:rgba(190,32,38,0.92);display:flex;align-items:center;justify-content:center;box-shadow:0 calc(0.5*var(--u)) calc(2*var(--u)) rgba(0,0,0,0.4);}
+.probe-video__play::after{content:"";border-style:solid;border-width:calc(1.7*var(--u)) 0 calc(1.7*var(--u)) calc(2.9*var(--u));border-color:transparent transparent transparent #fff;margin-left:calc(0.7*var(--u));}
+.probe-video__meta{margin-top:calc(1.2*var(--u));font-size:calc(1.5*var(--u));font-weight:700;color:var(--mid-gray);}
+.probe-video__meta .src-link{color:var(--green-primary);font-weight:900;}
+/* ===== thanks ===== */
+.probe-thanks{justify-content:center;align-items:center;text-align:center;}
+.probe-thanks__title{font-size:calc(4.2*var(--u));font-weight:900;color:var(--ink);}
+.probe-thanks__body{font-size:calc(2.1*var(--u));color:var(--mid-gray);margin-top:calc(2*var(--u));max-width:72%;line-height:1.7;}
+.probe-thanks__meta{font-size:calc(1.6*var(--u));color:var(--label-gray);margin-top:calc(1.4*var(--u));}
+.probe-thanks__logo{position:absolute;left:50%;bottom:calc(9*var(--u));transform:translateX(-50%);display:block;height:calc(3*var(--u));width:auto;aspect-ratio:162.16/45.83;color:var(--green-primary);}
+
+
+/* ===== 分組時間頁（group）===== */
+.probe-group{background:var(--green-primary);}
+.probe-group .slide-frame{align-items:center;justify-content:center;text-align:center;gap:calc(1.8*var(--u));}
+.probe-group .page-label,.probe-group .page-label__num{color:rgba(255,255,255,0.9);}
+.probe-group .page-label__num{background:rgba(255,255,255,0.25);color:#fff;}
+.probe-group .page-label__bar{background:rgba(255,255,255,0.45);}
+.probe-group .brand-footer .brand-logo{color:rgba(255,255,255,0.72);}
+.probe-group__eyebrow{font-size:calc(1.7*var(--u));font-weight:900;letter-spacing:0.28em;color:#fff;background:rgba(0,0,0,0.2);padding:calc(0.5*var(--u)) calc(2.2*var(--u));border-radius:calc(100*var(--u));}
+.probe-group__head{font-size:calc(4.4*var(--u));font-weight:900;color:#fff;line-height:1.25;max-width:90%;}
+.probe-group__list{list-style:none;display:flex;flex-direction:column;gap:calc(1*var(--u));width:74%;}
+.probe-group__list li{font-size:calc(2.2*var(--u));font-weight:700;color:#fff;background:rgba(255,255,255,0.15);border-radius:var(--radius-sm);padding:calc(0.7*var(--u)) calc(2.2*var(--u));text-align:left;}
+.probe-group__timer{font-size:calc(2.7*var(--u));font-weight:900;color:var(--ink);background:var(--hi-yellow);padding:calc(0.6*var(--u)) calc(2.6*var(--u));border-radius:calc(100*var(--u));}
+.probe-group__url{font-size:calc(2*var(--u));font-weight:700;color:rgba(255,255,255,0.92);}
+.probe-breather__chip{font-size:calc(1.7*var(--u));font-weight:900;letter-spacing:0.22em;color:var(--green-dark);background:var(--hi-yellow);padding:calc(0.5*var(--u)) calc(2.2*var(--u));border-radius:calc(100*var(--u));margin-bottom:calc(2*var(--u));}
+/* bleed：分組時間頁綠底延伸 */
+body:has(.deck .slide.active.probe-group){background:var(--green-primary);}
+
+/* ===== 分組時間「統一樣板」(.probe-group--std)：深綠底＋黃色時間徽章＋白字 =====
+   pilot 設計：之後套到全部分組頁。配色固定＝深綠底(--green-dark) + 黃色時間徽章(--hi-yellow) + 白字。
+   結構固定：大標「分組時間」→ 活動名(逐頁換) → 黃色時間徽章(時鐘 SVG + 時長) → 1–2 句白字說明 → 網址。
+   全部 scoped 在 --std 下，不影響沿用舊 .probe-group 的其他分組頁。 */
+.probe-group--std{background:var(--green-dark);}
+.probe-group--std .slide-frame{gap:calc(2.2*var(--u));}
+.probe-group--std .probe-group__title{font-size:calc(6*var(--u));font-weight:900;color:#fff;line-height:1.08;letter-spacing:0.04em;}
+.probe-group--std .probe-group__title::after{content:"";display:block;width:calc(7*var(--u));height:calc(0.5*var(--u));background:rgba(255,255,255,0.5);border-radius:calc(100*var(--u));margin:calc(1.4*var(--u)) auto 0;}
+.probe-group--std .probe-group__activity{display:inline-block;font-size:calc(3*var(--u));font-weight:900;color:#fff;background:rgba(255,255,255,0.12);border:2px solid rgba(255,255,255,0.5);border-radius:calc(100*var(--u));padding:calc(0.5*var(--u)) calc(3*var(--u));min-height:0;overflow:hidden;}
+.probe-group--std .probe-group__timer,.probe-group--live .probe-group__timer{display:inline-flex;align-items:center;gap:calc(1.3*var(--u));font-size:calc(3.8*var(--u));font-weight:900;color:var(--green-dark);background:var(--hi-yellow);border-radius:calc(100*var(--u));padding:calc(1*var(--u)) calc(3.4*var(--u));box-shadow:0 calc(0.6*var(--u)) calc(2*var(--u)) rgba(0,0,0,0.28);min-height:0;overflow:hidden;}
+.probe-group--std .probe-group__clock,.probe-group--live .probe-group__clock{width:calc(5*var(--u));height:calc(5*var(--u));flex:0 0 auto;color:var(--green-dark);}
+.probe-group--std .probe-group__desc{font-size:calc(2.3*var(--u));font-weight:500;color:rgba(255,255,255,0.95);line-height:1.6;max-width:80%;}
+.probe-group--std .probe-group__url{display:inline-block;font-size:calc(2*var(--u));font-weight:700;color:#fff;background:rgba(0,0,0,0.22);border-radius:var(--radius-sm);padding:calc(0.45*var(--u)) calc(1.8*var(--u));min-height:0;overflow:hidden;}
+/* bleed：統一樣板分組頁深綠底延伸（置於 green-primary 規則後 → 只對 --std 頁生效，舊分組頁仍 green-primary）*/
+body:has(.deck .slide.active.probe-group--std){background:var(--green-dark);}
+
+/* ===== 分組「進行中」頁（.probe-group--live）：與 --std 同深綠識別＋黃色時間徽章＋白字，
+   但保留各自功能內容（計時/目標/提示）。結構：頂部統一標頭「分組進行中」(黃膠囊) → 目標 headline → 黃色時間徽章(時鐘 SVG + 時長) → 一句白字提示。 */
+.probe-group--live{background:var(--green-dark);}
+.probe-group--live .slide-frame{gap:calc(2.2*var(--u));}
+.probe-group--live .probe-group__chip{font-size:calc(2*var(--u));font-weight:900;letter-spacing:0.2em;color:var(--green-dark);background:var(--hi-yellow);padding:calc(0.5*var(--u)) calc(2.4*var(--u));border-radius:calc(100*var(--u));min-height:0;overflow:hidden;}
+.probe-group--live .probe-group__headline{font-size:calc(4.2*var(--u));font-weight:900;color:#fff;line-height:1.3;max-width:88%;}
+.probe-group--live .probe-group__headline .hi{color:var(--green-dark);}
+.probe-group--live .probe-group__sub{font-size:calc(2.1*var(--u));font-weight:500;color:rgba(255,255,255,0.85);line-height:1.6;max-width:78%;}
+/* bleed：進行中分組頁深綠底延伸（同 --std 置於 green-primary 規則後）*/
+body:has(.deck .slide.active.probe-group--live){background:var(--green-dark);}
+
+/* ===== P2 線上課默契：四欄卡片垂直置中＋放大（scoped，不影響其他 grid 頁）===== */
+.meet4{align-content:center;}
+.meet4 .dx-ico{width:calc(5.6*var(--u));height:calc(5.6*var(--u));margin-bottom:calc(1.4*var(--u));}
+.meet4 .probe-grid__label{font-size:calc(1.3*var(--u));}
+.meet4 .probe-grid__title{font-size:calc(2.4*var(--u));}
+.meet4 .probe-grid__body{font-size:calc(2.2*var(--u));}
+/* ===== P5 什麼是 2048：左側規則字放大，平衡右側盤面（scoped）===== */
+.def2048 .probe-split__list li{font-size:calc(2.5*var(--u));line-height:1.8;margin-bottom:calc(1.2*var(--u));}
+/* ===== P17 總數揭曉：深藍強調頁 #0E2A47（非分組綠）。白字＋黃色大數，letterbox 同步覆寫（同 probe-breather 做法）===== */
+.probe-bignum{background:#0E2A47;}
+body:has(.deck .slide.active.probe-bignum){background:#0E2A47;}
+.probe-bignum .page-label,.probe-bignum .page-label__num{color:rgba(255,255,255,0.72);}
+.probe-bignum .page-label__num{background:rgba(255,255,255,0.24);color:#fff;}
+.probe-bignum .page-label__bar{background:rgba(255,255,255,0.4);}
+.probe-bignum .brand-footer .brand-logo{color:rgba(255,255,255,0.55);}
+.probe-bignum .probe-grid__hero{color:#fff;border-top-color:var(--hi-yellow);margin-bottom:calc(1.4*var(--u));}
+.probe-bignum .hi{color:var(--ink);}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="nl-logo" viewBox="0 0 162.16 45.83"><g id="c"><path d="M45.83,22.92c0-3.53-2.56-6.46-5.93-7.03.32-.45.59-.93.79-1.43.35-.86.52-1.77.52-2.69,0-.23-.01-.46-.03-.68-.04-.46-.13-.91-.26-1.35-.33-1.1-.93-2.15-1.8-3.02-1.4-1.4-3.22-2.09-5.05-2.09-1.45,0-2.89.44-4.12,1.32,0,0,0,0,0,0-.58-3.37-3.5-5.93-7.03-5.93s-6.46,2.56-7.03,5.93c-.45-.32-.93-.59-1.43-.79-.86-.35-1.77-.52-2.69-.52-.46,0-.91.04-1.36.13-1.35.26-2.64.92-3.69,1.96-2.5,2.5-2.75,6.38-.78,9.17-3.37.58-5.93,3.5-5.93,7.03s2.56,6.46,5.93,7.03c-.32.45-.59.93-.79,1.43-.09.22-.16.43-.23.65-.13.44-.22.89-.26,1.35-.02.23-.03.46-.03.68,0,1.83.7,3.66,2.09,5.05.83.83,1.81,1.4,2.85,1.74.1.03.2.06.3.09.37.1.75.18,1.13.22.26.03.51.05.77.05s.53-.02.8-.05c.34-.04.68-.1,1.02-.19.15-.04.3-.08.45-.13.65-.22,1.28-.53,1.85-.93.58,3.36,3.5,5.93,7.03,5.93s6.46-2.56,7.03-5.93c0,0,0,0,0,0,1.23.87,2.67,1.31,4.12,1.31,1.83,0,3.66-.7,5.05-2.09,2.5-2.5,2.75-6.38.78-9.17,3.37-.58,5.93-3.5,5.93-7.03ZM16.31,38.61c-1.21,1.21-2.83,1.88-4.54,1.88s-3.33-.67-4.54-1.88c-1.21-1.21-1.88-2.83-1.88-4.54,0-1.48.5-2.89,1.42-4.03.13,0,.26.02.39.02,2.11,0,4.01-.92,5.31-2.38,1.45.16,2.8.79,3.85,1.84,1.21,1.21,1.88,2.83,1.88,4.54s-.67,3.33-1.88,4.54ZM40.49,34.07c0,1.72-.67,3.33-1.88,4.54-1.21,1.21-2.83,1.88-4.54,1.88s-3.31-.66-4.52-1.86l-.02-.02-15.25-15.25c0-.15.02-.29.02-.44,0-3.95-3.2-7.15-7.15-7.15-.13,0-.26.01-.39.02-.92-1.14-1.42-2.54-1.42-4.03,0-1.72.67-3.33,1.88-4.54,1.21-1.21,2.83-1.88,4.54-1.88s3.31.66,4.53,1.86l.03.04.02.02,15.22,15.22c0,.15-.02.29-.02.44,0,3.95,3.2,7.15,7.15,7.15.13,0,.26-.01.39-.02.92,1.14,1.42,2.54,1.42,4.03ZM39.07,15.79c-.13,0-.26-.02-.39-.02-2.11,0-4.01.92-5.31,2.38-1.45-.16-2.8-.79-3.85-1.84-1.21-1.21-1.88-2.83-1.88-4.54s.67-3.33,1.88-4.54,2.83-1.88,4.54-1.88,3.33.67,4.54,1.88,1.88,2.83,1.88,4.54c0,1.48-.5,2.89-1.42,4.03Z" fill="currentColor" stroke-width="0"/><path d="M59.1,17.51h5.55v1.13h-1.86c-.47.85-.98,1.57-1.54,2.13.91.35,1.83.72,2.74,1.11l-.74,1.2c-1.03-.49-2.07-.95-3.12-1.38-.08.04-.15.08-.23.14-1.27.72-2.95,1.13-5.06,1.22l-.34-1.32c1.67.01,3.04-.2,4.11-.64-.89-.34-1.78-.65-2.68-.93.41-.49.78-1,1.12-1.53h-2.43v-1.13h3.1c.21-.39.41-.79.59-1.2h-3.19v-3.49h3.78v-.97h-3.44v-2.25h-.91v-1.05h.91v-2.35h3.44v-1.05h1.33v1.05h3.44v2.35h1.2v1.05h-1.2v2.25h-3.44v.97h3.8v3.49h-4.26c-.21.43-.44.83-.67,1.2ZM58.89,13.86h-2.49v1.4h2.49v-1.4ZM56.72,8.54h2.17v-1.3h-2.17v1.3ZM58.89,9.59h-2.17v1.2h2.17v-1.2ZM61.4,18.63h-3c-.23.32-.46.63-.68.93.73.23,1.48.48,2.22.74.53-.44,1.02-1,1.46-1.67ZM60.22,8.54h2.17v-1.3h-2.17v1.3ZM62.39,9.59h-2.17v1.2h2.17v-1.2ZM62.73,13.86h-2.51v1.4h2.51v-1.4ZM64.12,12.91c1.37-1.8,2.31-4.42,2.83-7.86l1.39.1c-.19,1.05-.41,2.03-.65,2.93h4.54v1.42h-1.12v1.59c0,2.81-.61,5.32-1.84,7.53.75,1.14,1.76,2.26,3.02,3.38l-1.03,1.09c-1.12-1.07-2.04-2.14-2.78-3.2-.81,1.16-1.81,2.24-3,3.22l-.95-1.18c1.29-1,2.35-2.11,3.16-3.36-.2-.38-.38-.75-.53-1.13-.52-1.25-.91-2.88-1.16-4.89-.29.56-.61,1.07-.95,1.53l-.93-1.16ZM68.47,17.2c.9-1.81,1.35-3.85,1.35-6.11v-1.59h-2.57c-.1.31-.2.61-.3.89.27,2.86.74,5.04,1.41,6.56.04.09.08.17.11.25Z" fill="currentColor" stroke-width="0"/><path d="M80.03,7.13h9.2v-1.98h1.37v1.98h3.95v1.26h-3.95c.03,2.39.12,4.44.29,6.13,1.17-1.22,2.03-2.63,2.59-4.23l1.18.52c-.7,2.1-1.88,3.91-3.54,5.45.09.57.18,1.08.29,1.53.53,2.28,1.03,3.41,1.5,3.41.37,0,.72-1,1.06-3.01l1.05,1.01c-.51,2.48-1.21,3.73-2.11,3.73-1.08,0-1.97-1.43-2.66-4.29-.11-.44-.22-.91-.3-1.4-.38.28-.79.56-1.22.83l-.91-1.14c.67-.4,1.29-.83,1.86-1.3-.28-2.08-.43-4.5-.44-7.26h-9.2v2.87c0,2.3-.58,4.44-1.73,6.4l-1.16-.83c1.01-1.71,1.52-3.56,1.52-5.57v-4.13h1.37ZM78,22.2c.48-1.24.83-2.52,1.05-3.84l1.24.19c-.19,1.36-.52,2.66-.99,3.92l-1.29-.27ZM81.08,9.77h6.98v1.2h-6.98v-1.2ZM81.08,21.08v-2.99h1.37v2.89c0,.34.17.5.51.5h2.28c.42,0,.63-.21.63-.62v-1.4l1.25.35v1.26c0,1.15-.52,1.73-1.56,1.73h-2.93c-1.04,0-1.56-.58-1.56-1.73ZM82.69,12.23h4.89v4.15h-6.14v-4.15h1.25ZM86.32,13.4h-3.63v1.82h3.63v-1.82ZM82.94,17.45l1.03-.66c.65.67,1.2,1.35,1.67,2.04l-1.1.66c-.41-.66-.94-1.34-1.6-2.04ZM87.41,18.44l1.2-.27c.56,1.27,1,2.49,1.31,3.67l-1.29.25c-.24-1.14-.65-2.35-1.22-3.65ZM91.48,5.65l.95-.58c.53.48.98.94,1.35,1.4l-1.03.64c-.28-.41-.7-.9-1.27-1.45Z" fill="currentColor" stroke-width="0"/><path d="M100.01,23.08l-.4-1.22c2.33-.14,4.58-.45,6.73-.91l.57,1.07c-2.21.53-4.51.89-6.9,1.07ZM114.08,13.3h-11.31v-2h-3.06v-1.07h3.06v-1.92h11.31v1.92h3.08v1.07h-3.08v2ZM115.26,7.42h-13.69v1.88h-1.39v-3.01h7.49c-.06-.41-.17-.85-.3-1.32l1.39-.1c.14.49.24.96.3,1.42h7.59v3.07h-1.39v-1.94ZM103.28,14.09h11.71v6.65h-13.1v-6.65h1.39ZM103.28,16.03h10.33v-.97h-10.33v.97ZM103.28,17.91h10.33v-.97h-10.33v.97ZM113.61,18.83h-10.33v.95h10.33v-.95ZM107.83,10.23v-.95h-3.69v.95h3.69ZM107.83,12.33v-1.03h-3.69v1.03h3.69ZM109.14,9.28v.95h3.57v-.95h-3.57ZM109.14,11.3v1.03h3.57v-1.03h-3.57ZM110.05,22.03l.61-.95c2,.15,4.24.46,6.71.91l-.61,1.2c-2.29-.52-4.53-.91-6.71-1.16Z" fill="currentColor" stroke-width="0"/><path d="M123.25,17.33c-.11,1.77-.27,3.53-.46,5.26l-.82-.08c.21-2.07.39-3.81.51-5.22l.76.04ZM122.7,14.75V5.83h6.39v1.18h-2.21v1.84h1.92v1.14h-1.92v1.77h1.92v1.14h-1.92v1.84h2.24v3.41c0,1.45-.04,2.45-.11,3.01-.06.62-.28,1.07-.65,1.36-.34.28-.94.43-1.79.43h-1.1l-.34-1.36h1.33c.48,0,.82-.09,1.03-.27.19-.15.31-.45.36-.87.05-.45.08-1.29.08-2.5v-2.02h-5.23v-1.18ZM124.43,17.22c.1,1.59.18,3.18.23,4.75l-.74.04c-.05-1.87-.11-3.45-.17-4.73l.69-.06ZM125.7,8.85v-1.84h-1.77v1.84h1.77ZM125.7,10h-1.77v1.77h1.77v-1.77ZM123.93,12.91v1.84h1.77v-1.84h-1.77ZM125.74,17.02c.16,1.22.32,2.42.46,3.63l-.74.08c-.14-1.42-.27-2.62-.38-3.59l.67-.12ZM127.03,16.87c.22.98.41,1.97.59,2.95l-.67.12c-.18-1.15-.34-2.12-.49-2.91l.57-.16ZM132.39,19.12c.63.5,1.21,1.05,1.73,1.65l-.87,1.01c-.39-.54-.82-1.05-1.27-1.53-.47,1.02-1.16,1.97-2.07,2.85l-1.03-.87c1.51-1.33,2.4-2.9,2.68-4.71l1.12.27c-.05.47-.15.91-.29,1.34ZM137.49,10.66h-5.95v-1.03c-.52.4-1.06.77-1.63,1.11l-.91-1.11c2.23-1.2,4.01-2.79,5.34-4.77l1.31.41c-.14.21-.29.41-.44.62,1.47,1.44,3.08,2.6,4.83,3.49l-.82,1.2c-.6-.34-1.17-.7-1.73-1.11v1.18ZM133.91,12.19v5.12h-3.9v-5.12h3.9ZM131.12,13.45v2.6h1.69v-2.6h-1.69ZM131.82,9.42h5.59c-1.07-.75-2.05-1.6-2.95-2.56-.8.94-1.68,1.8-2.64,2.56ZM137.22,19.39c1,.75,1.92,1.6,2.76,2.54l-.89,1.05c-.7-.91-1.47-1.74-2.32-2.5-.48.96-1.16,1.85-2.03,2.68l-1.01-.87c1.53-1.35,2.45-2.94,2.76-4.77l1.1.29c-.08.54-.2,1.07-.36,1.59ZM138.99,12.19v5.12h-3.86v-5.12h3.86ZM136.23,13.45v2.6h1.65v-2.6h-1.65Z" fill="currentColor" stroke-width="0"/><path d="M147.6,10.04h11.9v1.34h-6.96c-1.2,1.07-2.3,1.95-3.29,2.62,2.52-.1,5.31-.19,8.37-.27-.47-.44-.99-.89-1.56-1.36l1.03-.74c1.61,1.28,2.98,2.54,4.11,3.76l-1.16.83c-.33-.41-.72-.85-1.16-1.3-1.62.03-3.19.06-4.7.1v2.35h6.96v1.3h-6.96v2.23h7.95v1.4h-17.21v-1.4h7.83v-2.23h-6.81v-1.3h6.81v-2.29c-2.02.08-3.93.18-5.74.31l-.27-1.3c.68-.25,1.48-.73,2.4-1.45.52-.41,1.02-.83,1.5-1.26h-3.04v-1.34ZM160.21,8.41h-13.44v2.68h-1.41v-4.05h7.49c-.1-.56-.24-1.14-.42-1.77l1.41-.12c.15.65.28,1.27.38,1.88h7.4v4.05h-1.41v-2.68Z" fill="currentColor" stroke-width="0"/><path d="M56.02,32.13h1.88l3.7,5.97h.02v-5.97h1.42v7.97h-1.8l-3.78-6.16h-.02v6.16h-1.42v-7.97Z" fill="currentColor" stroke-width="0"/><path d="M73.01,37.17c0,.48-.08.91-.25,1.3-.17.39-.39.71-.68.99-.29.27-.62.48-1.01.62s-.81.22-1.27.22-.88-.07-1.27-.22c-.39-.15-.73-.35-1.02-.62-.29-.27-.51-.6-.68-.99-.16-.39-.24-.82-.24-1.3v-5.04h1.42v4.99c0,.23.03.46.09.69.06.23.16.43.3.61.14.18.32.33.55.44.23.11.51.17.85.17s.62-.06.85-.17c.23-.11.41-.26.55-.44.14-.18.24-.38.3-.61.06-.23.09-.46.09-.69v-4.99h1.42v5.04Z" fill="currentColor" stroke-width="0"/><path d="M76.56,32.13h2.22l2.07,5.66h.03l2.05-5.66h2.23v7.97h-1.41v-6.41h-.02l-2.42,6.41h-.99l-2.39-6.41h-.02v6.41h-1.35v-7.97Z" fill="currentColor" stroke-width="0"/><path d="M88.77,32.13h5.28v1.24h-3.86v2.03h3.66v1.19h-3.66v2.25h4.06v1.26h-5.48v-7.97Z" fill="currentColor" stroke-width="0"/><path d="M97.5,32.13h2.77c.38,0,.74.04,1.09.12.35.08.67.21.94.39.27.18.49.42.66.71.16.29.25.65.25,1.07,0,.58-.16,1.05-.49,1.41-.33.36-.77.61-1.33.74l2.13,3.54h-1.71l-1.85-3.38h-1.04v3.38h-1.42v-7.97ZM100.08,35.56c.2,0,.41-.01.61-.04.2-.03.38-.09.55-.17.16-.08.29-.2.4-.35.11-.15.16-.35.16-.59,0-.22-.05-.4-.15-.53s-.22-.25-.37-.33c-.15-.08-.32-.14-.51-.17-.19-.03-.38-.04-.56-.04h-1.28v2.24h1.16Z" fill="currentColor" stroke-width="0"/><path d="M108.94,32.13h1.23l3.43,7.97h-1.62l-.74-1.82h-3.46l-.72,1.82h-1.59l3.47-7.97ZM110.74,37.06l-1.23-3.24-1.25,3.24h2.48Z" fill="currentColor" stroke-width="0"/><path d="M121.79,33.99c-.21-.29-.48-.49-.82-.62-.34-.13-.67-.2-.99-.2-.41,0-.79.07-1.13.22-.34.15-.63.36-.87.62-.24.26-.43.57-.56.92-.13.35-.2.74-.2,1.15,0,.44.06.83.19,1.19.13.36.31.67.55.93.24.26.52.46.85.6.33.14.7.21,1.11.21s.81-.08,1.14-.25c.33-.17.6-.39.8-.67l1.14.8c-.35.44-.78.79-1.29,1.03-.51.24-1.11.37-1.79.37-.62,0-1.19-.1-1.72-.31-.52-.21-.97-.5-1.35-.87-.37-.37-.67-.81-.88-1.33-.21-.51-.31-1.08-.31-1.71s.11-1.21.33-1.73c.22-.51.53-.95.91-1.31.39-.36.84-.64,1.37-.83.53-.19,1.1-.29,1.71-.29.25,0,.52.02.8.07.28.05.54.12.8.23.26.1.5.23.72.38s.42.33.57.54l-1.08.86Z" fill="currentColor" stroke-width="0"/><path d="M127.52,36.64l-2.99-4.51h1.73l2,3.36,2.03-3.36h1.64l-2.99,4.51v3.46h-1.42v-3.46Z" fill="currentColor" stroke-width="0"/><path d="M138.86,32.13h1.42v6.71h3.39v1.26h-4.81v-7.97Z" fill="currentColor" stroke-width="0"/><path d="M148.97,32.13h1.23l3.43,7.97h-1.62l-.74-1.82h-3.46l-.72,1.82h-1.59l3.47-7.97ZM150.77,37.06l-1.23-3.24-1.25,3.24h2.48Z" fill="currentColor" stroke-width="0"/><path d="M156.28,32.13h3.11c.3,0,.6.04.89.11.29.07.55.19.78.35.23.16.41.37.56.62.14.26.21.56.21.92,0,.45-.13.82-.38,1.11-.25.29-.59.5-1,.63v.02c.5.07.91.26,1.24.59s.48.75.48,1.29c0,.44-.09.8-.26,1.1-.17.3-.4.53-.68.71-.28.18-.6.31-.97.39-.36.08-.73.12-1.11.12h-2.87v-7.97ZM157.7,35.37h1.26c.47,0,.83-.09,1.08-.28.25-.19.37-.45.37-.8s-.13-.62-.38-.77c-.26-.15-.65-.23-1.19-.23h-1.14v2.07ZM157.7,38.9h1.27c.18,0,.38-.01.59-.04.21-.03.4-.08.58-.16.18-.08.32-.2.44-.36.12-.16.17-.37.17-.63,0-.42-.14-.71-.43-.88-.29-.17-.72-.25-1.29-.25h-1.33v2.32Z" fill="currentColor" stroke-width="0"/></g></symbol></svg>
+<div class="deck">
+<section class="slide probe-cover" style="background:#FFFFFF;">
+  <div class="probe-cover__visual"><img src="assets/l1-cover-typhoon-2048.png" alt="颱風天親子在家一起玩 2048 主視覺" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+  <div class="probe-cover__bottom">
+    <div class="probe-cover__title"><small>颱風天線上限定課 · 第 1 節</small>認識 2048 與成長的祕密</div>
+    <div class="probe-cover__right">
+      <div class="probe-cover__subtitle">原版 2048 · 玩出指數與線性<br>中高年級 · 40 分鐘 · 在家動手玩</div>
+      <svg class="probe-cover__logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg>
+    </div>
+  </div>
+</section>
+<section class="slide" style="background:#FFFFFF;">
+  <div class="page-label"><span class="page-label__num">02</span><span class="page-label__bar"></span><span>線上課默契</span></div><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div>
+  <div class="slide-frame">
+    <div class="probe-grid__hero">上課前，先約好四件事</div>
+    <div class="probe-grid__grid meet4" style="grid-template-columns:repeat(4,1fr);grid-template-rows:auto auto auto;column-gap:calc(2.4*var(--u));row-gap:calc(1.2*var(--u));">
+      <div class="probe-grid__card"><div class="probe-grid__label">默契一</div><div class="probe-grid__title"><svg class="dx-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 8-6 4 6 4V8Z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>開鏡頭、關麥克風</div><div class="probe-grid__body">看得到你，但先靜音。</div></div>
+      <div class="probe-grid__card"><div class="probe-grid__label">默契二</div><div class="probe-grid__title"><svg class="dx-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>答案打留言區</div><div class="probe-grid__body">老師問問題，就打進聊天室。</div></div>
+      <div class="probe-grid__card"><div class="probe-grid__label">默契三</div><div class="probe-grid__title"><svg class="dx-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m4.9 4.9 14.2 14.2"/></svg>先收表情貼圖</div><div class="probe-grid__body">貼圖會洗版，這節先收起來。</div></div>
+      <div class="probe-grid__card"><div class="probe-grid__label">默契四</div><div class="probe-grid__title"><svg class="dx-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 11V6a2 2 0 0 0-2-2 2 2 0 0 0-2 2"/><path d="M14 10V4a2 2 0 0 0-2-2 2 2 0 0 0-2 2v2"/><path d="M10 10.5V6a2 2 0 0 0-2-2 2 2 0 0 0-2 2v8"/><path d="M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg>發言先舉手</div><div class="probe-grid__body">老師點到你，再開麥。</div></div>
+    </div>
+  </div>
+  <aside class="plan-note"><div class="plan-note__source"><b>逐字口白</b>上課囉！先跟大家約好四件事。第一，把鏡頭打開、麥克風關起來，老師看得到你，但聲音先靜音。第二，老師等一下會一直問問題，你就把答案打在留言區。第三，表情貼圖很好玩，可是會洗版，這節課先收起來。第四，想發言就先舉手，老師點到你再開麥克風。準備好了嗎？</div><div class="plan-note__meta"><b>這頁要</b>建立線上課秩序，後面所有互動都靠這四條　｜　<b>版型</b>grid 四欄　｜　<b>素材</b>純文字，無待補圖</div></aside>
+</section>
+<section class="slide probe-split" style="background:#FFFFFF;">
+  <div class="page-label"><span class="page-label__num">03</span><span class="page-label__bar"></span><span>給家長的話</span></div><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div>
+  <div class="slide-frame">
+    <div class="probe-split__hero">給爸爸媽媽的話</div>
+    <div class="probe-split__grid">
+      <div class="probe-split__body">
+        <div class="probe-split__desc">孩子會一直盯著螢幕玩遊戲，先別擔心。2048 看起來在玩，其實藏著很多數學。</div>
+        <div class="probe-split__list-label">您可以這樣陪</div>
+        <ul class="probe-split__list">
+          <li>讓孩子自己玩，卡關也沒關係</li>
+          <li>晚上一起挑戰，看誰先合出 1024</li>
+        </ul>
+      </div>
+      <div class="probe-split__visual"><img src="assets/l1-p3-family-typhoon.png" alt="颱風天孩子在家用平板玩數字方塊遊戲、家長在旁微笑陪伴" style="width:100%;height:100%;object-fit:cover;display:block;"></div>
+    </div>
+  </div>
+  <aside class="plan-note"><div class="plan-note__source"><b>逐字口白</b>特別跟在旁邊的爸爸媽媽說一聲：颱風天不能出門，等一下孩子會一直在螢幕上玩遊戲，請別擔心，他看起來在玩，其實藏著很多數學。玩著玩著，他就會自己發現「翻倍」這個很厲害的數學。您只要讓他放手玩，卡關也沒關係；今天晚上還可以親子一起挑戰，看誰先合出 1024。</div><div class="plan-note__meta"><b>這頁要</b>安撫家長、把「在玩遊戲」翻譯成「在學數學」　｜　<b>版型</b>split 左文右圖　｜　<b>素材</b>AI 親子插畫一張</div></aside>
+</section>
+<section class="slide probe-chapter" style="background:#FEF4E8;">
+  <div class="probe-chapter__left"><div class="probe-chapter__num">01</div></div>
+  <div class="probe-chapter__right">
+    <div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div>
+    <div class="probe-chapter__label">先認識它</div>
+    <div class="probe-chapter__title">2048<br>到底怎麼玩？</div>
+    <div class="probe-chapter__sub">先搞懂規則，等一下就換你親手玩。</div>
+  </div>
+</section>
+<section class="slide probe-split def2048" style="background:#FFFFFF;">
+  <div class="page-label"><span class="page-label__num">05</span><span class="page-label__bar"></span><span>什麼是 2048</span></div><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div>
+  <div class="slide-frame">
+    <div class="probe-split__hero">2048 的玩法</div>
+    <div class="probe-split__grid">
+      <div class="probe-split__body">
+        <ul class="probe-split__list">
+          <li><b>4×4 盤面</b>：16 格的小棋盤。</li>
+          <li><b>滑一下</b>：兩個一樣的數字相撞就合併。</li>
+          <li><b>目標</b>：一路合併，拼出 2048。</li>
+        </ul>
+      </div>
+      <div class="probe-split__visual" style="background:var(--paper-warm);display:flex;align-items:center;justify-content:center;padding:calc(1.4*var(--u));min-height:0;overflow:hidden;">
+        <svg viewBox="0 0 432 552" preserveAspectRatio="xMidYMid meet" role="img" aria-label="原版 2048 的 4x4 盤面：彩色數字方塊 2、4、8、16、32；下方示意兩個一樣的 2 相撞，合併成一個 4" style="width:100%;height:100%;">
+          <rect x="0" y="0" width="432" height="432" rx="18" fill="#F4EEE2"/>
+          <rect x="8" y="8" width="416" height="416" rx="14" fill="#DAD3C6"/>
+          <g fill="#ECE6DC">
+            <rect x="20" y="20" width="92" height="92" rx="12"/><rect x="120" y="20" width="92" height="92" rx="12"/><rect x="220" y="20" width="92" height="92" rx="12"/><rect x="320" y="20" width="92" height="92" rx="12"/>
+            <rect x="20" y="120" width="92" height="92" rx="12"/><rect x="120" y="120" width="92" height="92" rx="12"/><rect x="220" y="120" width="92" height="92" rx="12"/><rect x="320" y="120" width="92" height="92" rx="12"/>
+            <rect x="20" y="220" width="92" height="92" rx="12"/><rect x="120" y="220" width="92" height="92" rx="12"/><rect x="220" y="220" width="92" height="92" rx="12"/><rect x="320" y="220" width="92" height="92" rx="12"/>
+            <rect x="20" y="320" width="92" height="92" rx="12"/><rect x="120" y="320" width="92" height="92" rx="12"/><rect x="220" y="320" width="92" height="92" rx="12"/><rect x="320" y="320" width="92" height="92" rx="12"/>
+          </g>
+          <rect x="20" y="20" width="92" height="92" rx="12" fill="#DCEFD8"/>
+          <rect x="120" y="20" width="92" height="92" rx="12" fill="#8FD08C"/>
+          <rect x="320" y="20" width="92" height="92" rx="12" fill="#D26A1C"/>
+          <rect x="120" y="120" width="92" height="92" rx="12" fill="#0093B8"/>
+          <rect x="20" y="220" width="92" height="92" rx="12" fill="#2F9140"/>
+          <rect x="220" y="320" width="92" height="92" rx="12" fill="#8FD08C"/>
+          <rect x="320" y="320" width="92" height="92" rx="12" fill="#DCEFD8"/>
+          <g font-family="'Noto Sans TC',sans-serif" font-weight="900" text-anchor="middle">
+            <text x="66" y="66" dominant-baseline="central" font-size="46" fill="#1A5C2E">2</text>
+            <text x="166" y="66" dominant-baseline="central" font-size="46" fill="#134A22">4</text>
+            <text x="366" y="66" dominant-baseline="central" font-size="46" fill="#FFFFFF">8</text>
+            <text x="166" y="166" dominant-baseline="central" font-size="42" fill="#FFFFFF">16</text>
+            <text x="66" y="266" dominant-baseline="central" font-size="42" fill="#FFFFFF">32</text>
+            <text x="266" y="366" dominant-baseline="central" font-size="46" fill="#134A22">4</text>
+            <text x="366" y="366" dominant-baseline="central" font-size="46" fill="#1A5C2E">2</text>
+          </g>
+          <line x1="24" y1="470" x2="408" y2="470" stroke="#D8CFBC" stroke-width="3" stroke-linecap="round"/>
+          <g>
+            <rect x="64" y="488" width="66" height="66" rx="10" fill="#DCEFD8"/>
+            <rect x="140" y="488" width="66" height="66" rx="10" fill="#DCEFD8"/>
+            <rect x="290" y="488" width="66" height="66" rx="10" fill="#8FD08C"/>
+            <line x1="220" y1="521" x2="256" y2="521" stroke="#2F9140" stroke-width="7" stroke-linecap="round"/>
+            <polygon points="276,521 256,509 256,533" fill="#2F9140"/>
+            <g font-family="'Noto Sans TC',sans-serif" font-weight="900" text-anchor="middle">
+              <text x="97" y="521" dominant-baseline="central" font-size="40" fill="#1A5C2E">2</text>
+              <text x="173" y="521" dominant-baseline="central" font-size="40" fill="#1A5C2E">2</text>
+              <text x="323" y="521" dominant-baseline="central" font-size="40" fill="#134A22">4</text>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+  <aside class="plan-note"><div class="plan-note__source"><b>逐字口白</b>先花十秒搞懂這款遊戲怎麼玩。2048 的畫面是一張 4×4、總共 16 格的小棋盤。你往上下左右滑，所有方塊就往那個方向滑過去；只要兩個一樣的數字撞在一起，它們就會合併成一個。從 2 開始，2 和 2 合成 4，4 和 4 合成 8……你的任務，就是一路合併，拼出一格 2048。規則就這麼簡單，等一下就換你玩。</div><div class="plan-note__meta"><b>這頁要</b>講清楚遊戲規則，後面動手玩才有基礎　｜　<b>版型</b>split 左規則右盤面　｜　<b>素材</b>inline SVG：4×4 盤面＋合併示意</div></aside>
+</section>
+<section class="slide" style="background:#FFFFFF;">
+  <div class="page-label"><span class="page-label__num">06</span><span class="page-label__bar"></span><span>操作說明</span></div><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div>
+  <div class="slide-frame">
+    <div class="probe-grid__hero">怎麼動？兩種裝置都會</div>
+    <div class="probe-grid__grid" style="grid-template-columns:repeat(2,1fr);">
+      <div class="probe-grid__card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:calc(1.4*var(--u));">
+        <svg viewBox="0 0 100 70" role="img" aria-label="鍵盤上下左右方向鍵" style="height:calc(9*var(--u));width:auto;color:var(--green-primary);" fill="none">
+          <rect x="36" y="2" width="28" height="28" rx="6" stroke="currentColor" stroke-width="3"/><polygon points="50,9 43,20 57,20" fill="currentColor"/>
+          <rect x="4" y="36" width="28" height="28" rx="6" stroke="currentColor" stroke-width="3"/><polygon points="11,50 22,43 22,57" fill="currentColor"/>
+          <rect x="36" y="36" width="28" height="28" rx="6" stroke="currentColor" stroke-width="3"/><polygon points="50,57 43,46 57,46" fill="currentColor"/>
+          <rect x="68" y="36" width="28" height="28" rx="6" stroke="currentColor" stroke-width="3"/><polygon points="89,50 78,43 78,57" fill="currentColor"/>
+        </svg>
+        <div class="probe-grid__label">電腦版</div>
+        <div class="probe-grid__title" style="font-size:calc(3*var(--u));">用鍵盤方向鍵</div>
+        <div class="probe-grid__body" style="font-size:calc(2.3*var(--u));">按上下左右，方塊就往那邊滑。</div>
+      </div>
+      <div class="probe-grid__card" style="display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:calc(1.4*var(--u));">
+        <svg viewBox="0 0 80 80" role="img" aria-label="手指在螢幕上滑動" style="height:calc(9*var(--u));width:auto;color:var(--green-primary);" fill="none">
+          <rect x="22" y="6" width="36" height="68" rx="8" stroke="currentColor" stroke-width="3"/>
+          <path d="M28 40 H52" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><polygon points="58,40 47,34 47,46" fill="currentColor"/>
+          <circle cx="29" cy="40" r="5" fill="currentColor"/>
+        </svg>
+        <div class="probe-grid__label">手機 / 平板版</div>
+        <div class="probe-grid__title" style="font-size:calc(3*var(--u));">用手指滑</div>
+        <div class="probe-grid__body" style="font-size:calc(2.3*var(--u));">手指往上下左右滑，方塊就移動。兩個一樣的相撞，就合併成它們的和。</div>
+      </div>
+    </div>
+  </div>
+  <aside class="plan-note"><div class="plan-note__source"><b>逐字口白</b>先教大家怎麼操作。用電腦的同學，按鍵盤的上下左右方向鍵，往哪邊按，盤面上所有方塊就往那邊滑。用手機或平板的同學，就用手指往上下左右滑一下。最重要的規則只有一句：兩個一樣的數字撞在一起，就會合併成它們相加的結果。每滑一步，盤面還會再冒出一顆新的方塊。先試兩下，抓一下手感。</div><div class="plan-note__meta"><b>這頁要</b>兩種載具都照顧到、講清楚唯一規則　｜　<b>版型</b>grid 兩欄　｜　<b>素材</b>無待補圖</div></aside>
+</section>
+<section class="slide probe-split" style="background:#FFFFFF;">
+  <div class="page-label"><span class="page-label__num">07</span><span class="page-label__bar"></span><span>留言區即時問答</span></div><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div>
+  <div class="slide-frame">
+    <div class="probe-split__hero">這一步，你會往哪滑？</div>
+    <div class="probe-split__grid">
+      <div class="probe-split__visual" style="background:var(--paper-warm);display:flex;align-items:center;justify-content:center;padding:calc(1.4*var(--u));">
+        <svg viewBox="0 0 424 424" preserveAspectRatio="xMidYMid meet" role="img" aria-label="一個 4x4 的 2048 盤面：底排有兩個可以合併的綠色 2、右下角橘色 4、上面藍色 8，盤面四邊標示滑動方向 上1 下2 左3 右4，問這一步要往哪滑" style="width:100%;height:100%;">
+          <g transform="translate(82,82)">
+            <rect x="0" y="0" width="260" height="260" rx="16" fill="#F4EEE2"/>
+            <rect x="8" y="8" width="244" height="244" rx="14" fill="#DAD3C6"/>
+            <rect x="18" y="18" width="50" height="50" rx="8" fill="#ECE6DC"/><rect x="76" y="18" width="50" height="50" rx="8" fill="#ECE6DC"/><rect x="134" y="18" width="50" height="50" rx="8" fill="#ECE6DC"/><rect x="192" y="18" width="50" height="50" rx="8" fill="#ECE6DC"/>
+            <rect x="18" y="76" width="50" height="50" rx="8" fill="#ECE6DC"/><rect x="76" y="76" width="50" height="50" rx="8" fill="#ECE6DC"/><rect x="134" y="76" width="50" height="50" rx="8" fill="#ECE6DC"/><rect x="192" y="76" width="50" height="50" rx="8" fill="#ECE6DC"/>
+            <rect x="18" y="134" width="50" height="50" rx="8" fill="#ECE6DC"/><rect x="76" y="134" width="50" height="50" rx="8" fill="#ECE6DC"/><rect x="134" y="134" width="50" height="50" rx="8" fill="#ECE6DC"/><rect x="192" y="134" width="50" height="50" rx="8" fill="#0093B8"/>
+            <rect x="18" y="192" width="50" height="50" rx="8" fill="#379C39"/><rect x="76" y="192" width="50" height="50" rx="8" fill="#ECE6DC"/><rect x="134" y="192" width="50" height="50" rx="8" fill="#379C39"/><rect x="192" y="192" width="50" height="50" rx="8" fill="#D26A1C"/>
+            <line x1="43" y1="217" x2="159" y2="217" stroke="#379C39" stroke-opacity="0.55" stroke-width="4" stroke-dasharray="2 8" stroke-linecap="round"/>
+            <g font-family="'Noto Sans TC',sans-serif" text-anchor="middle" font-weight="900" font-size="30" fill="#FFFFFF">
+              <text x="43" y="228">2</text>
+              <text x="159" y="228">2</text>
+              <text x="217" y="228">4</text>
+              <text x="217" y="170">8</text>
+            </g>
+          </g>
+          <polygon points="212,14 199,40 225,40" fill="#379C39"/>
+          <text x="212" y="72" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-weight="900"><tspan font-size="30" fill="#004B24">1</tspan><tspan font-size="24" fill="#0A0A0A" dx="6">上</tspan></text>
+          <text x="212" y="374" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-weight="900"><tspan font-size="30" fill="#004B24">2</tspan><tspan font-size="24" fill="#0A0A0A" dx="6">下</tspan></text>
+          <polygon points="212,412 199,388 225,388" fill="#379C39"/>
+          <polygon points="56,212 78,199 78,225" fill="#379C39"/>
+          <text x="28" y="221" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-weight="900"><tspan font-size="30" fill="#004B24">3</tspan><tspan font-size="24" fill="#0A0A0A" dx="6">左</tspan></text>
+          <polygon points="368,212 346,199 346,225" fill="#379C39"/>
+          <text x="396" y="221" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-weight="900"><tspan font-size="30" fill="#004B24">4</tspan><tspan font-size="24" fill="#0A0A0A" dx="6">右</tspan></text>
+        </svg>
+      </div>
+      <div class="probe-split__body">
+        <div class="probe-split__desc">先別動手，看這個盤面：往哪邊滑最好？打在留言區。</div>
+        <div class="probe-split__list-label">留言區打 1 / 2 / 3 / 4</div>
+        <ul class="probe-split__list">
+          <li>1 ＝ 上　　2 ＝ 下</li>
+          <li>3 ＝ 左　　4 ＝ 右</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <aside class="plan-note"><div class="plan-note__source"><b>逐字口白</b>來看這個盤面。先不要動手，動腦想一下：這一步往哪邊滑最好？想往上的打 1，往下打 2，往左打 3，往右打 4，全部打在留言區。為什麼問你方向？因為往不同方向滑，會合併到不一樣的方塊，盤面就會完全不同。我們先收集大家的答案，再一起看哪一步比較聰明。</div><div class="plan-note__meta"><b>這頁要</b>把「玩」變成有意識的選擇、練留言區互動　｜　<b>版型</b>split 左盤面右選項　｜　<b>素材</b>網路：2048 盤面截圖</div></aside>
+</section>
+<section class="slide probe-group probe-group--std" style="background:#004B24;">
+  <div class="page-label"><span class="page-label__num">08</span><span class="page-label__bar"></span><span>分組時間</span></div><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div>
+  <div class="slide-frame">
+    <div class="probe-group__title">分組時間</div>
+    <div class="probe-group__activity">試玩 2048</div>
+    <div class="probe-group__timer"><svg class="probe-group__clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.2V12l3.4 2"/></svg><span>10 分鐘</span></div>
+    <div class="probe-group__desc">進各組實際玩原版 2048，留言區回報你拼到多少分。</div>
+    <div class="probe-group__url">打開：numeracy-learn-kit.web.app</div>
+  </div>
+  <aside class="plan-note"><div class="plan-note__source"><b>逐字口白</b>現在進到你的小組，第一次玩 2048。每個人先打開原版遊戲自己玩，網址是 numeracy-learn-kit 點 web 點 app。組內可以互相看看，別人都怎麼滑的？玩到多少，就打在留言區告訴大家。給大家十分鐘，先別急著往下噢。時間到我們回來。</div><div class="plan-note__meta"><b>這頁要</b>明確宣告分組開始、給任務與時間　｜　<b>版型</b>group 分組時間大字　｜　<b>素材</b>色塊，無 emoji；老師端開原版 2048 與計時器</div></aside>
+</section>
+<section class="slide probe-group probe-group--live" style="background:#004B24;">
+  <div class="page-label"><span class="page-label__num">09</span><span class="page-label__bar"></span><span>試玩計時挑戰</span></div><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div>
+  <div class="slide-frame">
+    <div class="probe-group__chip">分組進行中</div>
+    <div class="probe-group__headline">目標：合出 <span class="hi">64 或 128</span></div>
+    <div class="probe-group__timer"><svg class="probe-group__clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.2V12l3.4 2"/></svg><span>10 分鐘</span></div>
+    <div class="probe-group__sub">在自己的裝置上玩，先別急著往下噢。組內比比看誰拼最大。</div>
+  </div>
+  <aside class="plan-note"><div class="plan-note__source"><b>逐字口白</b>計時開始！這十分鐘，目標是合出 64 或 128，能合越大越厲害。在自己的平板或電腦上玩，先別急著看老師的畫面。老師會一個一個問：你現在最大的方塊是多少了？組內也可以比比看，誰拼得最大。加油！</div><div class="plan-note__meta"><b>這頁要</b>固定計時挑戰、動手為主　｜　<b>版型</b>breather 深綠＋分組進行標記　｜　<b>素材</b>無待補圖；老師端開計時器與原版 2048</div></aside>
+</section>
+<section class="slide probe-chapter" style="background:#FEF4E8;">
+  <div class="probe-chapter__left"><div class="probe-chapter__num">02</div></div>
+  <div class="probe-chapter__right">
+    <div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div>
+    <div class="probe-chapter__label">成長的祕密</div>
+    <div class="probe-chapter__title">為什麼<br>越玩越大？</div>
+    <div class="probe-chapter__sub">你剛剛撞到的，是一個叫「翻倍」的魔法。</div>
+  </div>
+</section>
+<section class="slide" style="background:#FFFFFF;">
+  <div class="page-label"><span class="page-label__num">11</span><span class="page-label__bar"></span><span>合併＝相加</span></div><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div>
+  <div class="slide-frame">
+    <div class="probe-rows__hero">你玩到的：合併＝相加，而且一路翻倍</div>
+    <div style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center;margin:calc(0.6*var(--u)) 0;">
+      <svg viewBox="0 0 813.6 294.0" preserveAspectRatio="xMidYMid meet" role="img" aria-label="加倍樓梯：五個由小到大的綠色方塊 2、4、8、16、32 由左下往右上排成階梯，每個方塊的面積都是前一個的兩倍；方塊下方標示 2加2、4加4、8加8、16加16" style="width:100%;height:100%;">
+        <line x1="24.0" y1="242.0" x2="789.6" y2="242.0" stroke="#D8CFBC" stroke-width="3" stroke-linecap="round"/>
+        <rect x="36.0" y="186.0" width="56.0" height="56.0" rx="10" fill="#C0E5BD"/>
+        <rect x="120.0" y="162.8" width="79.2" height="79.2" rx="10" fill="#8FD08C"/>
+        <rect x="227.2" y="130.0" width="112.0" height="112.0" rx="10" fill="#5BB85C"/>
+        <rect x="367.2" y="83.6" width="158.4" height="158.4" rx="10" fill="#2F9140"/>
+        <rect x="553.6" y="18.0" width="224.0" height="224.0" rx="10" fill="#0E5E2A"/>
+        <g font-family="'Noto Sans TC',sans-serif" font-weight="900" text-anchor="middle">
+          <text x="64.0" y="214.0" dominant-baseline="central" font-size="38" fill="#1A5C2E">2</text>
+          <text x="159.6" y="202.4" dominant-baseline="central" font-size="38" fill="#134A22">4</text>
+          <text x="283.2" y="186.0" dominant-baseline="central" font-size="38" fill="#FFFFFF">8</text>
+          <text x="446.4" y="162.8" dominant-baseline="central" font-size="38" fill="#FFFFFF">16</text>
+          <text x="665.6" y="130.0" dominant-baseline="central" font-size="38" fill="#FFFFFF">32</text>
+        </g>
+        <g font-family="'Noto Sans TC',sans-serif" font-weight="700" text-anchor="middle" font-size="26">
+          <text x="64.0" y="282.0" fill="#9AA39D">起點</text>
+          <text x="159.6" y="282.0" fill="#5A6660">2＋2</text>
+          <text x="283.2" y="282.0" fill="#5A6660">4＋4</text>
+          <text x="446.4" y="282.0" fill="#5A6660">8＋8</text>
+          <text x="665.6" y="282.0" fill="#5A6660">16＋16</text>
+        </g>
+      </svg>
+    </div>
+    <div style="text-align:center;font-size:calc(2.7*var(--u));font-weight:900;color:var(--ink);line-height:1.3;">每一步，都是上一步的<span class="hi">兩倍</span>。</div>
+  </div>
+  <aside class="plan-note"><div class="plan-note__source"><b>逐字口白</b>玩完了，我們來幫你剛剛玩到的東西取個名字。有沒有發現，每次合併其實就是「相加」：兩個 2 合成 4，兩個 4 合成 8，兩個 8 合成 16。而且每一次，數字都正好變兩倍，這就叫「翻倍」。所以盤面上的數字才會一路 2、4、8、16、32 越疊越大。</div><div class="plan-note__meta"><b>這頁要</b>把遊戲現象命名成「相加＋翻倍」　｜　<b>版型</b>rows 左算式右結果　｜　<b>素材</b>無待補圖</div></aside>
+</section>
+<section class="slide" style="background:#FFFFFF;">
+  <div class="page-label"><span class="page-label__num">12</span><span class="page-label__bar"></span><span>存錢大挑戰</span></div><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div>
+  <div class="slide-frame">
+    <div class="probe-grid__hero" style="margin-bottom:calc(1.8*var(--u));">存錢大挑戰：10 天後，哪個撲滿比較多？</div>
+    <div style="flex:1;min-height:0;display:grid;grid-template-columns:1fr 1fr;gap:calc(4*var(--u));align-items:stretch;">
+      <div style="border-top:4px solid #9AA0A0;background:var(--paper-warm);border-radius:var(--radius-md);box-shadow:var(--shadow-card);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:calc(0.9*var(--u));padding:calc(1.7*var(--u));text-align:center;">
+        <svg viewBox="0 0 140 120" role="img" aria-label="存錢筒" style="height:calc(9*var(--u));width:auto;display:block;">
+          <ellipse cx="74" cy="66" rx="46" ry="33" fill="#9AA0A0"/>
+          <polygon points="90,40 108,30 103,54" fill="#7E8585"/>
+          <path d="M118 58 q15 1 11 16" fill="none" stroke="#7E8585" stroke-width="5" stroke-linecap="round"/>
+          <ellipse cx="26" cy="70" rx="14" ry="16" fill="#7E8585"/>
+          <ellipse cx="22" cy="64" rx="2.2" ry="3" fill="#FEF4E8"/>
+          <ellipse cx="22" cy="76" rx="2.2" ry="3" fill="#FEF4E8"/>
+          <circle cx="52" cy="56" r="5" fill="#FFFFFF"/>
+          <circle cx="52" cy="56" r="2.6" fill="#0A0A0A"/>
+          <rect x="46" y="95" width="12" height="19" rx="4" fill="#7E8585"/>
+          <rect x="88" y="95" width="12" height="19" rx="4" fill="#7E8585"/>
+          <rect x="66" y="43" width="26" height="6" rx="3" fill="#0A0A0A" opacity="0.32"/>
+          <circle cx="80" cy="16" r="12" fill="#E8FF3A" stroke="#0A0A0A" stroke-width="2"/>
+          <circle cx="80" cy="16" r="6.5" fill="none" stroke="#0A0A0A" stroke-width="1.5" opacity="0.5"/>
+        </svg>
+        <div style="font-size:calc(2.4*var(--u));font-weight:900;color:#5F6463;letter-spacing:0.12em;">方案 A</div>
+        <div style="font-size:calc(2.7*var(--u));font-weight:900;color:var(--ink);line-height:1.25;">每天存 10 元</div>
+        <div style="font-size:calc(2.1*var(--u));font-weight:700;color:var(--mid-gray);">穩穩地加</div>
+      </div>
+      <div style="border-top:4px solid var(--green-primary);background:var(--paper-warm);border-radius:var(--radius-md);box-shadow:var(--shadow-card);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:calc(0.9*var(--u));padding:calc(1.7*var(--u));text-align:center;">
+        <svg viewBox="0 0 140 120" role="img" aria-label="存錢筒" style="height:calc(9*var(--u));width:auto;display:block;">
+          <ellipse cx="74" cy="66" rx="46" ry="33" fill="#379C39"/>
+          <polygon points="90,40 108,30 103,54" fill="#2A7D2C"/>
+          <path d="M118 58 q15 1 11 16" fill="none" stroke="#2A7D2C" stroke-width="5" stroke-linecap="round"/>
+          <ellipse cx="26" cy="70" rx="14" ry="16" fill="#2A7D2C"/>
+          <ellipse cx="22" cy="64" rx="2.2" ry="3" fill="#FEF4E8"/>
+          <ellipse cx="22" cy="76" rx="2.2" ry="3" fill="#FEF4E8"/>
+          <circle cx="52" cy="56" r="5" fill="#FFFFFF"/>
+          <circle cx="52" cy="56" r="2.6" fill="#0A0A0A"/>
+          <rect x="46" y="95" width="12" height="19" rx="4" fill="#2A7D2C"/>
+          <rect x="88" y="95" width="12" height="19" rx="4" fill="#2A7D2C"/>
+          <rect x="66" y="43" width="26" height="6" rx="3" fill="#0A0A0A" opacity="0.3"/>
+          <circle cx="80" cy="16" r="12" fill="#E8FF3A" stroke="#0A0A0A" stroke-width="2"/>
+          <circle cx="80" cy="16" r="6.5" fill="none" stroke="#0A0A0A" stroke-width="1.5" opacity="0.5"/>
+        </svg>
+        <div style="font-size:calc(2.4*var(--u));font-weight:900;color:var(--green-primary);letter-spacing:0.12em;">方案 B</div>
+        <div style="font-size:calc(2.7*var(--u));font-weight:900;color:var(--ink);line-height:1.25;">第 1 天存 1 元，之後每天存兩倍</div>
+        <div style="font-size:calc(2.4*var(--u));font-weight:900;color:var(--green-primary);">1 → 2 → 4 → 8 → …</div>
+      </div>
+    </div>
+    <div style="margin-top:calc(2*var(--u));text-align:center;">
+      <span style="display:inline-block;font-size:calc(2.4*var(--u));font-weight:900;color:var(--ink);background:var(--hi-yellow);padding:calc(0.75*var(--u)) calc(2.8*var(--u));border-radius:calc(100*var(--u));">在留言區打：你猜哪個多？A 還是 B</span>
+    </div>
+  </div>
+  <aside class="plan-note"><div class="plan-note__source"><b>逐字口白</b>我們來玩一個存錢大挑戰。看這兩個撲滿：方案 A，每天固定存 10 元，穩穩地加；方案 B 比較特別，第一天只存 1 元，可是之後每天都存前一天的兩倍——1、2、4、8 這樣翻上去。問題來了：一樣存十天，最後哪一個撲滿裡的錢比較多？先別急著算，憑感覺猜猜看，把你的答案打在留言區，猜 A 還是 B。下一頁我們就揭曉。</div><div class="plan-note__meta"><b>這頁要</b>用存錢情境重做「翻倍 vs 每天固定」、先猜不揭曉答案　｜　<b>版型</b>兩張方案卡＋撲滿圖示＋留言互動　｜　<b>素材</b>inline SVG 撲滿，無待補圖</div></aside>
+</section>
+<section class="slide" style="background:#FFFFFF;">
+  <div class="page-label"><span class="page-label__num">13</span><span class="page-label__bar"></span><span>翻倍反超</span></div><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div>
+  <div class="slide-frame">
+    <div class="probe-rows__hero">第 6 天，翻倍反超！</div>
+    <div style="display:flex;gap:calc(3.5*var(--u));justify-content:center;align-items:center;margin-bottom:calc(0.4*var(--u));">
+      <span style="display:inline-flex;align-items:center;gap:calc(0.8*var(--u));font-size:calc(2*var(--u));font-weight:900;color:var(--ink);"><span style="display:inline-block;width:calc(1.8*var(--u));height:calc(1.8*var(--u));background:var(--green-primary);border-radius:calc(0.3*var(--u));"></span>方案 B（翻倍）</span>
+      <span style="display:inline-flex;align-items:center;gap:calc(0.8*var(--u));font-size:calc(2*var(--u));font-weight:900;color:var(--ink);"><span style="display:inline-block;width:calc(1.8*var(--u));height:calc(1.8*var(--u));background:#9AA0A0;border-radius:calc(0.3*var(--u));"></span>方案 A（每天 10 元）</span>
+    </div>
+    <div style="flex:1;min-height:0;display:flex;align-items:center;justify-content:center;">
+      <svg viewBox="0 0 960 480" preserveAspectRatio="xMidYMid meet" role="img" aria-label="方案 A（每天存 10 元，累積 10 到 70，灰色）與方案 B（翻倍，累積 1、3、7、15、31、63、127，綠色）的七天累積長條圖，每根柱子上方標出數字：前五天灰色 A 領先，第 6 天綠色 B 以 63 反超 60，第 7 天 B 衝到 127、A 才 70" style="width:100%;height:100%;">
+        <g font-family="'Noto Sans TC',sans-serif">
+          <line x1="56" y1="408" x2="952" y2="408" stroke="#686968" stroke-width="2.5" stroke-linecap="round"/>
+          <rect x="82" y="381" width="44" height="27" rx="4" fill="#9AA0A0"/>
+          <rect x="134" y="405.3" width="44" height="2.7" rx="4" fill="#379C39"/>
+          <text x="104" y="373" text-anchor="middle" font-size="22" font-weight="900" fill="#5F6463">10</text>
+          <text x="156" y="397" text-anchor="middle" font-size="22" font-weight="900" fill="#1A7A33">1</text>
+          <text x="130" y="436" text-anchor="middle" font-size="21" font-weight="700" fill="#5F6463">第1天</text>
+          <rect x="208" y="354" width="44" height="54" rx="4" fill="#9AA0A0"/>
+          <rect x="260" y="399.9" width="44" height="8.1" rx="4" fill="#379C39"/>
+          <text x="230" y="346" text-anchor="middle" font-size="22" font-weight="900" fill="#5F6463">20</text>
+          <text x="282" y="392" text-anchor="middle" font-size="22" font-weight="900" fill="#1A7A33">3</text>
+          <text x="256" y="436" text-anchor="middle" font-size="21" font-weight="700" fill="#5F6463">第2天</text>
+          <rect x="334" y="327" width="44" height="81" rx="4" fill="#9AA0A0"/>
+          <rect x="386" y="389.1" width="44" height="18.9" rx="4" fill="#379C39"/>
+          <text x="356" y="319" text-anchor="middle" font-size="22" font-weight="900" fill="#5F6463">30</text>
+          <text x="408" y="381" text-anchor="middle" font-size="22" font-weight="900" fill="#1A7A33">7</text>
+          <text x="382" y="436" text-anchor="middle" font-size="21" font-weight="700" fill="#5F6463">第3天</text>
+          <rect x="460" y="300" width="44" height="108" rx="4" fill="#9AA0A0"/>
+          <rect x="512" y="367.5" width="44" height="40.5" rx="4" fill="#379C39"/>
+          <text x="482" y="292" text-anchor="middle" font-size="22" font-weight="900" fill="#5F6463">40</text>
+          <text x="534" y="360" text-anchor="middle" font-size="22" font-weight="900" fill="#1A7A33">15</text>
+          <text x="508" y="436" text-anchor="middle" font-size="21" font-weight="700" fill="#5F6463">第4天</text>
+          <rect x="586" y="273" width="44" height="135" rx="4" fill="#9AA0A0"/>
+          <rect x="638" y="324.3" width="44" height="83.7" rx="4" fill="#379C39"/>
+          <text x="608" y="265" text-anchor="middle" font-size="22" font-weight="900" fill="#5F6463">50</text>
+          <text x="660" y="316" text-anchor="middle" font-size="22" font-weight="900" fill="#1A7A33">31</text>
+          <text x="634" y="436" text-anchor="middle" font-size="21" font-weight="700" fill="#5F6463">第5天</text>
+          <rect x="712" y="246" width="44" height="162" rx="4" fill="#9AA0A0"/>
+          <rect x="764" y="237.9" width="44" height="170.1" rx="4" fill="#379C39"/>
+          <text x="734" y="238" text-anchor="middle" font-size="22" font-weight="900" fill="#5F6463">60</text>
+          <text x="786" y="230" text-anchor="middle" font-size="22" font-weight="900" fill="#004B24">63</text>
+          <text x="760" y="436" text-anchor="middle" font-size="21" font-weight="700" fill="#5F6463">第6天</text>
+          <rect x="838" y="219" width="44" height="189" rx="4" fill="#9AA0A0"/>
+          <rect x="890" y="65.1" width="44" height="342.9" rx="4" fill="#379C39"/>
+          <text x="860" y="211" text-anchor="middle" font-size="22" font-weight="900" fill="#5F6463">70</text>
+          <text x="912" y="57" text-anchor="middle" font-size="22" font-weight="900" fill="#004B24">127</text>
+          <text x="886" y="436" text-anchor="middle" font-size="21" font-weight="700" fill="#5F6463">第7天</text>
+          <line x1="760" y1="408" x2="760" y2="185" stroke="#379C39" stroke-width="2.5" stroke-dasharray="3 7" stroke-linecap="round" opacity="0.7"/>
+          <text x="760" y="170" text-anchor="middle" font-size="20" font-weight="900" fill="#379C39">第 6 天反超</text>
+        </g>
+      </svg>
+    </div>
+    <div style="text-align:center;font-size:calc(2.4*var(--u));font-weight:900;color:var(--ink);line-height:1.3;margin-top:calc(0.4*var(--u));">一開始翻倍輸很多，但不到「一個禮拜」就反超——這就是<span class="hi">「指數」</span>的力量。</div>
+  </div>
+  <aside class="plan-note"><div class="plan-note__source"><b>逐字口白</b>來揭曉。前五天，方案 A 一路領先，因為翻倍一開始真的很小，第一天才 1 元而已。可是看第六天，方案 B 累積到 63 元，剛好超過方案 A 的 60 元，從這裡開始反超。再往後，翻倍就像踩了油門：到第七天，方案 A 才存到 70 元，方案 B 已經追到 127 元——不到一個禮拜就超車。一開始翻倍輸很多，後面卻一路狂飆，這就是「指數」的力量，也就是你在 2048 裡看到的同一件事。</div><div class="plan-note__meta"><b>這頁要</b>揭曉反超、扣回指數　｜　<b>版型</b>inline SVG 分組長條圖（撲滿累積總額）＋收束句　｜　<b>素材</b>SVG：A 灰等差、B 綠翻倍，第 6 天反超、第 7 天 127 超車（只畫到第 7 天）</div></aside>
+</section>
+
+<section class="slide probe-hero probe-hero--bg" style="background:linear-gradient(180deg,rgba(0,40,21,0.58),rgba(0,40,21,0.80)),url('assets/rice-chessboard-legend.png') center/cover no-repeat;">
+  <div class="page-label"><span class="page-label__num">14</span><span class="page-label__bar"></span><span>米粒傳說 · 預測</span></div><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div>
+  <div class="slide-frame probe-hero">
+    <div class="probe-hero__headline">棋盤 64 格，第 1 格 1 粒、每格翻倍，最後一格要幾粒？</div>
+    <div class="probe-hero__middle">
+      <div class="probe-hero__opts">
+        <div class="probe-hero__opt"><b>1</b>　一碗飯</div>
+        <div class="probe-hero__opt"><b>2</b>　一卡車</div>
+        <div class="probe-hero__opt"><b>3</b>　一座山</div>
+        <div class="probe-hero__opt"><b>4</b>　比一座城市還多</div>
+      </div>
+      <div class="probe-hero__bubble">在留言區打你猜的數字</div>
+    </div>
+    <div class="probe-hero__desc">傳說裡，國王覺得「不過幾粒米」就答應了。你覺得呢？</div>
+  </div>
+  <aside class="plan-note"><div class="plan-note__source"><b>逐字口白</b>講一個古老的傳說。發明西洋棋的人去跟國王要賞賜，他說：第一格放 1 粒米，第二格 2 粒，第三格 4 粒，每一格都是前一格的兩倍，放滿 64 格就好。國王心想「不過是幾粒米」，就答應了。問題來了：放到最後一格，大概要幾粒米？一碗飯打 1，一卡車打 2，一座山打 3，比一座城市還多打 4。先猜，再揭曉。</div><div class="plan-note__meta"><b>這頁要</b>POE 預測、製造落差　｜　<b>版型</b>hero ＋ 四選項　｜　<b>素材</b>無待補圖</div></aside>
+</section>
+<section class="slide probe-split" style="background:#FFFFFF;">
+  <div class="page-label"><span class="page-label__num">15</span><span class="page-label__bar"></span><span>米粒傳說 · 一把尺</span></div><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div>
+  <div class="slide-frame">
+    <div class="probe-split__hero">這麼大的數，怎麼想像？先找一把尺。</div>
+    <div class="probe-split__grid">
+      <div class="probe-split__visual" style="background:var(--paper-warm);display:flex;align-items:center;justify-content:center;padding:calc(2*var(--u));min-height:0;overflow:hidden;">
+        <svg viewBox="0 0 380 344" preserveAspectRatio="xMidYMid meet" role="img" aria-label="一碗白飯，碗裡約兩千多粒米，相當於棋盤的第十二格" style="width:100%;height:100%;">
+          <g fill="#E7DCC6">
+            <ellipse cx="46" cy="306" rx="10" ry="4.5" transform="rotate(22 46 306)"/>
+            <ellipse cx="80" cy="318" rx="10" ry="4.5" transform="rotate(-18 80 318)"/>
+            <ellipse cx="334" cy="308" rx="10" ry="4.5" transform="rotate(32 334 308)"/>
+            <ellipse cx="302" cy="320" rx="10" ry="4.5" transform="rotate(-24 302 320)"/>
+          </g>
+          <path d="M62 170 Q190 356 318 170 Z" fill="#379C39"/>
+          <path d="M74 170 C96 106 284 106 306 170 Q190 208 74 170 Z" fill="#FBF7EE" stroke="#E7DCC6" stroke-width="2.5"/>
+          <g fill="#E2D5BB">
+            <ellipse cx="120" cy="150" rx="7" ry="3.2" transform="rotate(20 120 150)"/>
+            <ellipse cx="150" cy="138" rx="7" ry="3.2" transform="rotate(-15 150 138)"/>
+            <ellipse cx="185" cy="130" rx="7" ry="3.2" transform="rotate(10 185 130)"/>
+            <ellipse cx="218" cy="136" rx="7" ry="3.2" transform="rotate(-22 218 136)"/>
+            <ellipse cx="250" cy="148" rx="7" ry="3.2" transform="rotate(18 250 148)"/>
+            <ellipse cx="135" cy="160" rx="7" ry="3.2" transform="rotate(-12 135 160)"/>
+            <ellipse cx="170" cy="152" rx="7" ry="3.2" transform="rotate(25 170 152)"/>
+            <ellipse cx="205" cy="154" rx="7" ry="3.2" transform="rotate(-8 205 154)"/>
+            <ellipse cx="238" cy="162" rx="7" ry="3.2" transform="rotate(14 238 162)"/>
+            <ellipse cx="160" cy="124" rx="7" ry="3.2" transform="rotate(-20 160 124)"/>
+            <ellipse cx="200" cy="120" rx="7" ry="3.2" transform="rotate(8 200 120)"/>
+            <ellipse cx="104" cy="158" rx="7" ry="3.2" transform="rotate(28 104 158)"/>
+            <ellipse cx="272" cy="158" rx="7" ry="3.2" transform="rotate(-26 272 158)"/>
+          </g>
+          <path d="M62 170 Q190 208 318 170" fill="none" stroke="#2A7D2C" stroke-width="7" stroke-linecap="round"/>
+          <path d="M150 272 Q190 290 230 272" fill="none" stroke="#2A7D2C" stroke-width="8" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="probe-split__body">
+        <div class="probe-split__list-label">先立一把尺</div>
+        <div style="font-size:calc(3.1*var(--u));font-weight:900;color:var(--ink);line-height:1.3;">一碗飯 ≈ <span class="hi">2,000 多粒米</span></div>
+        <div style="font-size:calc(2.1*var(--u));font-weight:700;color:var(--green-primary);margin-top:calc(0.9*var(--u));line-height:1.5;">差不多就是棋盤的第 12 格</div>
+        <div style="font-size:calc(2.2*var(--u));font-weight:900;color:var(--ink);margin-top:calc(0.5*var(--u));line-height:1.35;letter-spacing:0.01em;">2×2×2×2×2×2×2×2×2×2×2</div>
+        <div style="font-size:calc(2.1*var(--u));font-weight:900;color:var(--ink);margin-top:calc(0.2*var(--u));">＝ 2,048　<span style="font-weight:700;color:var(--green-primary);">（11 個 2 連乘）</span></div>
+        <div class="probe-split__desc" style="margin-top:calc(1.4*var(--u));">記住這把尺——往後我們就用「幾碗飯、幾年的米」來感覺這些大得誇張的數字。</div>
+      </div>
+    </div>
+  </div>
+  <aside class="plan-note"><div class="plan-note__source"><b>逐字口白</b>放到最後一格，到底是多少米？這麼大的數字，我們的腦袋很難想像，所以先幫它立一把尺。你家裡吃飯那個碗，盛一碗白飯，大概是兩千多粒米——剛剛好就是棋盤的第十二格，也就是 2 的 11 次方、2048 粒。記住這把尺，往後我們就用「幾碗飯、幾年的米」來感覺這些大得誇張的數字。</div><div class="plan-note__meta"><b>這頁要</b>給一個可想像的基準單位（一碗飯＝第12格）　｜　<b>版型</b>split 左碗圖右尺　｜　<b>素材</b>inline SVG：一碗飯</div></aside>
+</section>
+<section class="slide probe-split" style="background:#FFFFFF;">
+  <div class="page-label"><span class="page-label__num">16</span><span class="page-label__bar"></span><span>米粒傳說 · 第 47 格</span></div><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div>
+  <div class="slide-frame">
+    <div class="probe-split__hero">才到第 47 格，就等於全台灣一整年的稻米！</div>
+    <div class="probe-split__grid">
+      <div class="probe-split__visual" style="background:var(--paper-warm);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:calc(1.2*var(--u));padding:calc(1.6*var(--u));min-height:0;overflow:hidden;">
+        <svg viewBox="0 0 200 300" preserveAspectRatio="xMidYMid meet" role="img" aria-label="台灣島輪廓，代表全台灣一整年種的稻米" style="height:100%;max-height:calc(34*var(--u));width:auto;">
+          <path d="M128 24 C140 36 145 60 147 92 C150 130 147 168 138 204 C130 234 118 260 104 274 C99 279 93 283 89 279 C84 273 82 258 79 240 C73 204 64 170 61 134 C59 102 64 66 82 42 C95 26 114 18 128 24 Z" fill="#379C39" stroke="#2A7D2C" stroke-width="3"/>
+          <path d="M118 58 C130 112 126 180 110 236" fill="none" stroke="#2A7D2C" stroke-width="4" stroke-linecap="round" opacity="0.4"/>
+        </svg>
+        <div style="font-size:calc(2*var(--u));font-weight:700;color:var(--ink);text-align:center;line-height:1.45;">全台灣一年種的米 ≈ <b style="color:var(--green-primary);">140 萬公噸</b> ≈ 這一格</div>
+      </div>
+      <div class="probe-split__body">
+        <div class="probe-split__list-label">棋盤才走到第 47 格</div>
+        <div style="font-size:calc(2.2*var(--u));font-weight:700;color:var(--ink);line-height:1.3;">第 47 格的米粒 ＝</div>
+        <div style="align-self:flex-start;text-align:center;margin:calc(0.5*var(--u)) 0;">
+          <div style="font-size:calc(3*var(--u));font-weight:900;color:var(--ink);line-height:1.1;letter-spacing:0.06em;">2×2×2×…×2</div>
+          <svg viewBox="0 0 220 26" preserveAspectRatio="none" aria-hidden="true" style="width:100%;height:calc(1.7*var(--u));display:block;color:var(--green-primary);"><path d="M6 3 Q6 13 20 13 L96 13 Q110 13 110 24 Q110 13 124 13 L200 13 Q214 13 214 3" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg>
+          <div style="font-size:calc(2*var(--u));font-weight:900;color:var(--green-primary);margin-top:calc(0.2*var(--u));">46 個 2 連乘</div>
+        </div>
+        <div style="font-size:calc(4.6*var(--u));font-weight:900;color:var(--green-primary);line-height:1.1;margin:calc(0.4*var(--u)) 0;">≈ 70 兆 粒</div>
+        <div class="probe-split__desc" style="margin-top:calc(0.8*var(--u));">第 12 格才一碗飯，只過了 <span class="hi">35 格</span>，就變成全台灣一整年的米。</div>
+      </div>
+    </div>
+  </div>
+  <div style="position:absolute;left:var(--safe-x);bottom:calc(1.7*var(--u));font-size:calc(1.2*var(--u));color:var(--mid-gray);">假設：每粒米 ≈ 0.022 克、台灣稻米年產約 140 萬公噸。</div>
+  <aside class="plan-note"><div class="plan-note__source"><b>逐字口白</b>我們順著棋盤往後走。才走到第 47 格，這一格要放的米，是 2 的 46 次方，大約 70 兆粒。70 兆粒有多少？差不多就是全台灣一整年種出來的稻米，140 萬公噸。想想看，第 12 格才一碗飯，只不過再過了 35 格，就從一碗飯變成全台灣一整年的米。翻倍，就是這麼可怕。</div><div class="plan-note__meta"><b>這頁要</b>用「全台灣一年」當第二把尺、放大落差　｜　<b>版型</b>split 左台灣島右大數　｜　<b>素材</b>inline SVG：台灣島輪廓</div></aside>
+</section>
+<section class="slide probe-bignum" style="background:#0E2A47;">
+  <div class="page-label"><span class="page-label__num">17</span><span class="page-label__bar"></span><span>米粒傳說 · 總數揭曉</span></div><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div>
+  <div class="slide-frame">
+    <div class="probe-grid__hero">64 格全部加起來……</div>
+    <div style="flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:calc(1.2*var(--u));">
+      <div style="text-align:center;min-height:0;overflow:hidden;">
+        <div style="display:inline-block;text-align:center;margin-bottom:calc(0.4*var(--u));">
+          <div style="font-size:calc(2.6*var(--u));font-weight:900;color:#fff;line-height:1.1;letter-spacing:0.1em;">2×2×…×2</div>
+          <svg viewBox="0 0 220 26" preserveAspectRatio="none" aria-hidden="true" style="width:100%;height:calc(1.6*var(--u));display:block;color:var(--hi-yellow);"><path d="M6 3 Q6 13 20 13 L96 13 Q110 13 110 24 Q110 13 124 13 L200 13 Q214 13 214 3" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" vector-effect="non-scaling-stroke"/></svg>
+          <div style="font-size:calc(2*var(--u));font-weight:900;color:var(--hi-yellow);">64 個 2 連乘</div>
+        </div>
+        <div style="font-size:calc(6.8*var(--u));font-weight:900;color:#fff;line-height:1.04;">約 <span style="color:var(--hi-yellow);">1,845 京</span> 粒</div>
+        <div style="font-size:calc(2*var(--u));font-weight:700;color:rgba(255,255,255,0.82);letter-spacing:0.03em;margin-top:calc(0.6*var(--u));">＝ 18,446,744,073,709,551,615 粒米</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:calc(3*var(--u));width:100%;min-height:0;">
+        <div style="background:rgba(255,255,255,0.08);border-radius:var(--radius-md);border-top:4px solid var(--hi-yellow);box-shadow:var(--shadow-card);padding:calc(1.7*var(--u));text-align:center;min-height:0;overflow:hidden;">
+          <div style="font-size:calc(4.4*var(--u));font-weight:900;color:var(--hi-yellow);line-height:1.05;">約 500 萬倍</div>
+          <div style="font-size:calc(2*var(--u));font-weight:700;color:#fff;margin-top:calc(0.8*var(--u));line-height:1.45;">花蓮一整年種的稻米，要這麼多倍才夠</div>
+        </div>
+        <div style="background:rgba(255,255,255,0.08);border-radius:var(--radius-md);border-top:4px solid var(--hi-yellow);box-shadow:var(--shadow-card);padding:calc(1.7*var(--u));text-align:center;min-height:0;overflow:hidden;">
+          <div style="font-size:calc(4.4*var(--u));font-weight:900;color:var(--hi-yellow);line-height:1.05;">約 39 萬年</div>
+          <div style="font-size:calc(2*var(--u));font-weight:700;color:#fff;margin-top:calc(0.8*var(--u));line-height:1.45;">夠全台灣人從現在一直吃這麼久</div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;font-size:calc(2.4*var(--u));font-weight:900;color:#fff;line-height:1.3;">這就是「一直翻倍」的力量——<span class="hi">連國王都賠不起</span>。</div>
+  </div>
+  <div style="position:absolute;left:var(--safe-x);bottom:calc(1.7*var(--u));font-size:calc(1.2*var(--u));color:rgba(255,255,255,0.6);">假設：每粒米 ≈ 0.022 克、台灣稻米年產約 140 萬公噸。</div>
+  <aside class="plan-note"><div class="plan-note__source"><b>逐字口白</b>現在把 64 格全部加起來。答案是 2 的 64 次方再減 1，大約 1845 京粒米——寫出來就是這一長串數字。這有多誇張？花蓮一整年種的稻米，要差不多 500 萬倍才夠賠；或者換個說法，這些米夠全台灣人從現在開始，一直吃大約 39 萬年。這就是「一直翻倍」的力量，連國王都賠不起。而這，跟你剛剛玩的 2048 是同一個數學。</div><div class="plan-note__meta"><b>這頁要</b>用超大數字給驚喜時刻、兩張比喻卡落地、扣回指數　｜　<b>版型</b>stats 深綠大數＋兩比喻卡　｜　<b>素材</b>無待補圖</div></aside>
+</section>
+<section class="slide probe-chapter" style="background:#FEF4E8;">
+  <div class="probe-chapter__left"><div class="probe-chapter__num">03</div></div>
+  <div class="probe-chapter__right">
+    <div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div>
+    <div class="probe-chapter__label">換你找訣竅</div>
+    <div class="probe-chapter__title">怎麼玩<br>才能拼更大？</div>
+    <div class="probe-chapter__sub">再玩一次，這次邊玩邊找：有沒有什麼訣竅？</div>
+  </div>
+</section>
+<section class="slide probe-group probe-group--std" style="background:#004B24;">
+  <div class="page-label"><span class="page-label__num">19</span><span class="page-label__bar"></span><span>分組時間</span></div><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div>
+  <div class="slide-frame">
+    <div class="probe-group__title">分組時間</div>
+    <div class="probe-group__activity">第二次玩・找訣竅</div>
+    <div class="probe-group__timer"><svg class="probe-group__clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.2V12l3.4 2"/></svg><span>5 分鐘</span></div>
+    <div class="probe-group__desc">回到原版再玩一場，組內討論怎樣拼更大，訣竅打留言區。</div>
+    <div class="probe-group__url">打開：numeracy-learn-kit.web.app</div>
+  </div>
+  <aside class="plan-note"><div class="plan-note__source"><b>逐字口白</b>再進一次小組，第二次玩 2048。這次不一樣，邊玩邊想一件事：怎樣才能拼得更大？有沒有什麼訣竅？組內一起討論，把你們發現的方法打在留言區。給大家五分鐘，等一下回來，我們看看各組找到了什麼。</div><div class="plan-note__meta"><b>這頁要</b>宣告第二次分組、任務是找訣竅　｜　<b>版型</b>group 分組時間大字　｜　<b>素材</b>色塊，無 emoji；老師端開原版 2048 與計時器</div></aside>
+</section>
+<section class="slide probe-group probe-group--live" style="background:#004B24;">
+  <div class="page-label"><span class="page-label__num">20</span><span class="page-label__bar"></span><span>第二次玩 · 找訣竅</span></div><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div>
+  <div class="slide-frame">
+    <div class="probe-group__chip">分組進行中</div>
+    <div class="probe-group__headline">邊玩邊想：<br>有什麼<span class="hi">訣竅</span>能拼更大？</div>
+    <div class="probe-group__timer"><svg class="probe-group__clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7.2V12l3.4 2"/></svg><span>5 分鐘</span></div>
+    <div class="probe-group__sub">試試看：固定往幾個方向滑？大的數字放哪裡？5 分鐘後回來分享。</div>
+  </div>
+  <aside class="plan-note"><div class="plan-note__source"><b>逐字口白</b>計時五分鐘，開始。這次邊玩邊動腦：有什麼訣竅能拼更大？給你們兩個提示可以試試看——是不是固定往某幾個方向滑比較好？最大的那個數字，放在哪裡比較不會卡住？玩的時候多注意盤面，五分鐘後我們回來，每一組分享你發現的訣竅。</div><div class="plan-note__meta"><b>這頁要</b>第二次計時、帶著「找訣竅」的眼睛玩　｜　<b>版型</b>breather 深綠＋分組進行標記　｜　<b>素材</b>無待補圖；老師端開計時器與原版 2048</div></aside>
+</section>
+<section class="slide" style="background:#FFFFFF;">
+  <div class="page-label"><span class="page-label__num">21</span><span class="page-label__bar"></span><span>總結訣竅</span></div><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div>
+  <div class="slide-frame">
+    <div class="probe-grid__hero">玩完，一起歸納出兩個訣竅</div>
+    <div style="flex:1;min-height:0;display:grid;grid-template-columns:0.92fr 1fr;gap:calc(4*var(--u));align-items:center;">
+      <div style="height:100%;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden;">
+        <svg viewBox="0 0 432 432" preserveAspectRatio="xMidYMid meet" role="img" aria-label="4x4 盤面示意兩個訣竅：左上角最大的 256 被黃框釘在角落，數字由大到小 256、128、64、32、16、8、4、2 沿蛇形路線排好" style="width:100%;height:100%;">
+          <rect x="0" y="0" width="432" height="432" rx="18" fill="#F4EEE2"/>
+          <rect x="8" y="8" width="416" height="416" rx="14" fill="#DAD3C6"/>
+          <g fill="#ECE6DC">
+            <rect x="20" y="20" width="92" height="92" rx="12"/><rect x="120" y="20" width="92" height="92" rx="12"/><rect x="220" y="20" width="92" height="92" rx="12"/><rect x="320" y="20" width="92" height="92" rx="12"/>
+            <rect x="20" y="120" width="92" height="92" rx="12"/><rect x="120" y="120" width="92" height="92" rx="12"/><rect x="220" y="120" width="92" height="92" rx="12"/><rect x="320" y="120" width="92" height="92" rx="12"/>
+            <rect x="20" y="220" width="92" height="92" rx="12"/><rect x="120" y="220" width="92" height="92" rx="12"/><rect x="220" y="220" width="92" height="92" rx="12"/><rect x="320" y="220" width="92" height="92" rx="12"/>
+            <rect x="20" y="320" width="92" height="92" rx="12"/><rect x="120" y="320" width="92" height="92" rx="12"/><rect x="220" y="320" width="92" height="92" rx="12"/><rect x="320" y="320" width="92" height="92" rx="12"/>
+          </g>
+          <rect x="20" y="20" width="92" height="92" rx="12" fill="#0E5E2A"/>
+          <rect x="120" y="20" width="92" height="92" rx="12" fill="#2A7D2C"/>
+          <rect x="220" y="20" width="92" height="92" rx="12" fill="#379C39"/>
+          <rect x="320" y="20" width="92" height="92" rx="12" fill="#5BB85C"/>
+          <rect x="20" y="120" width="92" height="92" rx="12" fill="#DCEFD8"/>
+          <rect x="120" y="120" width="92" height="92" rx="12" fill="#B6E2B2"/>
+          <rect x="220" y="120" width="92" height="92" rx="12" fill="#8FD08C"/>
+          <rect x="320" y="120" width="92" height="92" rx="12" fill="#5BB85C"/>
+          <polyline points="66,66 166,66 266,66 366,66 366,166 266,166 166,166 66,166" fill="none" stroke="#E8FF3A" stroke-width="14" stroke-opacity="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <polygon points="42,166 64,154 64,178" fill="#E8FF3A" fill-opacity="0.9"/>
+          <rect x="13" y="13" width="106" height="106" rx="16" fill="none" stroke="#E8FF3A" stroke-width="7"/>
+          <circle cx="24" cy="24" r="12" fill="#E8FF3A" stroke="#0A0A0A" stroke-width="2"/>
+          <g font-family="'Noto Sans TC',sans-serif" font-weight="900" text-anchor="middle">
+            <text x="66" y="66" dominant-baseline="central" font-size="34" fill="#FFFFFF">256</text>
+            <text x="166" y="66" dominant-baseline="central" font-size="34" fill="#FFFFFF">128</text>
+            <text x="266" y="66" dominant-baseline="central" font-size="42" fill="#FFFFFF">64</text>
+            <text x="366" y="66" dominant-baseline="central" font-size="42" fill="#FFFFFF">32</text>
+            <text x="66" y="166" dominant-baseline="central" font-size="46" fill="#1A5C2E">2</text>
+            <text x="166" y="166" dominant-baseline="central" font-size="46" fill="#134A22">4</text>
+            <text x="266" y="166" dominant-baseline="central" font-size="46" fill="#FFFFFF">8</text>
+            <text x="366" y="166" dominant-baseline="central" font-size="42" fill="#FFFFFF">16</text>
+          </g>
+        </svg>
+      </div>
+      <div style="display:flex;flex-direction:column;justify-content:center;gap:calc(2*var(--u));min-height:0;">
+        <div style="border-top:4px solid var(--green-primary);background:var(--paper-warm);border-radius:var(--radius-md);box-shadow:var(--shadow-card);padding:calc(1.8*var(--u));min-height:0;overflow:hidden;">
+          <div style="display:flex;align-items:center;gap:calc(1*var(--u));margin-bottom:calc(0.5*var(--u));">
+            <svg viewBox="0 0 24 24" style="width:calc(3*var(--u));height:calc(3*var(--u));flex:0 0 auto;color:var(--green-primary);" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2.5"/><rect x="3" y="3" width="8.5" height="8.5" rx="1.5" fill="currentColor" stroke="none"/></svg>
+            <span style="font-size:calc(1.1*var(--u));font-weight:700;letter-spacing:0.25em;color:var(--green-primary);">訣竅一</span>
+          </div>
+          <div style="font-size:calc(2.6*var(--u));font-weight:900;color:var(--ink);margin-bottom:calc(0.6*var(--u));line-height:1.25;">把最大的放角落</div>
+          <div style="font-size:calc(2*var(--u));line-height:1.55;color:var(--ink);">整局把最大的數字鎖在同一個角，別讓它被推走。角落只有兩邊會動，最穩。</div>
+        </div>
+        <div style="border-top:4px solid var(--green-primary);background:var(--paper-warm);border-radius:var(--radius-md);box-shadow:var(--shadow-card);padding:calc(1.8*var(--u));min-height:0;overflow:hidden;">
+          <div style="display:flex;align-items:center;gap:calc(1*var(--u));margin-bottom:calc(0.5*var(--u));">
+            <svg viewBox="0 0 24 24" style="width:calc(3*var(--u));height:calc(3*var(--u));flex:0 0 auto;color:var(--green-primary);" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h18v6H3v6h15"/><polyline points="15 14 19 17 15 20"/></svg>
+            <span style="font-size:calc(1.1*var(--u));font-weight:700;letter-spacing:0.25em;color:var(--green-primary);">訣竅二</span>
+          </div>
+          <div style="font-size:calc(2.6*var(--u));font-weight:900;color:var(--ink);margin-bottom:calc(0.6*var(--u));line-height:1.25;">由大到小排好</div>
+          <div style="font-size:calc(2*var(--u));line-height:1.55;color:var(--ink);">從那個角開始，讓數字由大到小排成一排，別讓大的卡在中間，隨時都有得合併。</div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:calc(1.4*var(--u));font-size:calc(2*var(--u));font-weight:700;color:var(--green-primary);">今天先記這兩個。下一節，還有更厲害的高手訣竅。</div>
+  </div>
+  <aside class="plan-note"><div class="plan-note__source"><b>逐字口白</b>時間到，我們來收集各組玩出來的發現。歸納起來，今天最好用的有兩個訣竅。第一個，把最大的數字整局鎖在同一個角落，別讓它被推走——角落只有兩邊會動，最穩。第二個，讓數字從那個角開始，由大到小排成一排，別讓大的卡在中間，這樣隨時都有得合併。先把這兩個練熟，下一節，我們還會學到更厲害的高手訣竅。</div><div class="plan-note__meta"><b>這頁要</b>歸納 L1 兩個核心訣竅（角落＋由大到小排）、預告 L2　｜　<b>版型</b>左盤面示意＋右兩卡＋結語　｜　<b>素材</b>inline SVG：訣竅盤面（角落釘＋蛇形）</div></aside>
+</section>
+<section class="slide probe-breather" style="background:#0E2A47;">
+  <div class="page-label"><span class="page-label__num">22</span><span class="page-label__bar"></span><span>伏筆 · 接下一節</span></div><div class="brand-footer"><svg class="brand-logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg></div>
+  <div class="slide-frame">
+    <div class="probe-breather__quote">可是 16 格<br>一下就<span class="hi">塞滿</span>了……</div>
+    <div class="probe-breather__sub">一顆 2048 底下藏著好多顆 2、要合併上千次。光靠運氣夠嗎？下一節，談高手的訣竅。</div>
+  </div>
+  <aside class="plan-note"><div class="plan-note__source"><b>逐字口白</b>今天你看到翻倍有多猛，可是有沒有發現一個問題：盤面只有小小的 16 格，常常還沒合幾下就塞滿、動不了了。其實要拼出一顆 2048，底下藏著好多好多顆 2，要合併上千次。那到底要怎麼贏？光靠運氣夠嗎？這個問題，我們留到下一節課，來談談高手是怎麼用訣竅贏的。</div><div class="plan-note__meta"><b>這頁要</b>埋伏筆、銜接 L2 訣竅　｜　<b>版型</b>breather 深綠金句　｜　<b>素材</b>無待補圖</div></aside>
+</section>
+<section class="slide probe-thanks" style="background:#FEF4E8;">
+  <div class="probe-thanks__title">第一節課，我們看到了遊戲裡的數學</div>
+  <div class="probe-thanks__body">合併＝相加、一路翻倍，這就是「指數成長」。下課時間，休息一下。<br>下一節，我們來看高手怎麼贏。</div>
+  <svg class="probe-thanks__logo" viewBox="0 0 162.16 45.83" role="img" aria-label="數感實驗室 NUMERACY LAB"><use href="#nl-logo"/></svg>
+</section>
+</div>
+<script src="presenter.js"></script>
+<script src="slide-audit.js"></script>
+</body>
+</html>
