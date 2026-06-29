@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>2048 教學目標（每節 1 預設 ＋ 2 替代方向）｜2048 數學課・數感實驗室</title>
+<style>
+:root{--green:#009b6b;--dark:#004B24;--paper:#FEF8EE;--line:#e7e2d6;--zebra:#f3faf6;}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0;font-family:"PingFang TC","Noto Sans TC",system-ui,-apple-system,"Segoe UI",sans-serif;
+  background:var(--paper);color:#1f2421;line-height:1.85;-webkit-font-smoothing:antialiased;word-break:break-word;}
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;padding:10px clamp(16px,4vw,28px);background:rgba(254,248,238,.92);
+  backdrop-filter:saturate(1.4) blur(8px);border-bottom:1px solid var(--line);}
+.topbar a.back{color:var(--green);text-decoration:none;font-weight:700;font-size:clamp(13px,2.6vw,15px);
+  display:inline-flex;align-items:center;gap:.35em;}
+.topbar a.back:hover{color:var(--dark);}
+.topbar .site{color:#9a9a8e;font-size:clamp(11px,2.4vw,13px);font-weight:700;letter-spacing:.08em;}
+.wrap{max-width:880px;margin:0 auto;padding:clamp(20px,5vw,40px) clamp(16px,5vw,40px) 12px;}
+header.doc{margin-bottom:1.6em;padding-bottom:1.1em;border-bottom:3px solid var(--green);}
+header.doc .eyebrow{color:var(--green);font-weight:700;letter-spacing:.14em;font-size:clamp(12px,2.4vw,14px);}
+header.doc h1{margin:.25em 0 0;color:var(--dark);font-size:clamp(24px,5.4vw,36px);line-height:1.25;}
+article{background:#fff;border:1px solid var(--line);border-radius:16px;
+  padding:clamp(20px,4.5vw,44px);box-shadow:0 3px 18px rgba(0,0,0,.05);}
+article h1{font-size:clamp(22px,4.8vw,30px);color:var(--dark);margin:1.7em 0 .5em;
+  padding-bottom:.25em;border-bottom:2px solid var(--line);}
+article h2{font-size:clamp(19px,4vw,25px);color:var(--green);margin:1.6em 0 .5em;
+  padding-left:.5em;border-left:6px solid var(--green);}
+article h3{font-size:clamp(17px,3.4vw,21px);color:var(--dark);margin:1.4em 0 .4em;}
+article h4{font-size:clamp(15px,3vw,18px);color:#33564a;margin:1.2em 0 .3em;}
+article h1:first-child,article h2:first-child,article h3:first-child{margin-top:0;}
+article p{margin:.7em 0;}
+article a{color:var(--green);text-decoration:none;border-bottom:1px solid rgba(0,155,107,.35);}
+article a:hover{color:var(--dark);border-bottom-color:var(--dark);}
+article ul,article ol{padding-left:1.5em;margin:.6em 0;}
+article li{margin:.3em 0;}
+article strong{color:var(--dark);}
+article hr{border:none;border-top:1px dashed var(--line);margin:2em 0;}
+article img{max-width:100%;height:auto;border-radius:10px;border:1px solid var(--line);margin:.4em 0;}
+article sub{display:inline-block;color:#8a8a7e;font-size:.82em;line-height:1.5;}
+blockquote{margin:1em 0;padding:.7em 1.1em;background:var(--zebra);
+  border-left:4px solid var(--green);border-radius:0 8px 8px 0;color:#3a463f;}
+blockquote p{margin:.35em 0;}
+blockquote p:first-child{margin-top:0;}blockquote p:last-child{margin-bottom:0;}
+code{background:#f0efe7;padding:.12em .4em;border-radius:5px;font-size:.9em;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#3a463f;}
+pre{background:#1f2421;color:#e9efe9;padding:1em 1.2em;border-radius:10px;overflow-x:auto;}
+pre code{background:none;color:inherit;padding:0;}
+.table-wrap{overflow-x:auto;margin:1.1em 0;-webkit-overflow-scrolling:touch;
+  border:1px solid var(--line);border-radius:10px;}
+table{border-collapse:collapse;width:100%;font-size:clamp(13px,2.6vw,15px);min-width:520px;}
+table th,table td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top;line-height:1.6;}
+table th{background:var(--green);color:#fff;font-weight:700;white-space:nowrap;}
+table tr:nth-child(even) td{background:var(--zebra);}
+table td strong{color:var(--dark);}
+footer.doc{max-width:880px;margin:0 auto;padding:2em clamp(16px,5vw,40px) 3em;
+  text-align:center;color:#a9a99c;font-size:clamp(12px,2.4vw,13px);}
+footer.doc .rule{width:46px;height:3px;background:var(--green);border-radius:3px;margin:0 auto 1em;}
+@media(max-width:600px){article{border-radius:12px;}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="back" href="index.html">&larr; 回課程首頁</a>
+  <span class="site">2048 數學課・備課文件</span>
+</div>
+<div class="wrap">
+  <header class="doc">
+    <div class="eyebrow">2048 數學課・颱風雨備線上限定</div>
+    <h1>2048 教學目標（每節 1 預設 ＋ 2 替代方向）</h1>
+  </header>
+  <article>
+<blockquote>
+<p><strong>執行指南</strong>：<code>30_教學設計指南.md</code> §二.5｜<strong>主檔</strong>：<code>3_2048_教學流程.md</code><br />
+<strong>用途</strong>：教學流程像科普書（共用內容），教學目標是「老師的詮釋」——同樣流程、不同目標 → 不同提問設計（階段四簡報 §2.6 權重依據）。<br />
+<strong>怎麼用</strong>：每節 AI 提 1 預設＋2 替代，<strong>老師選定 1–2 個</strong>（硬規則上限 2，最佳 1 個聚焦更強），可自寫。AI 不主動改老師選定的版本。<br />
+<strong>格式</strong>：學生能 ＋ 可觀察動詞 ＋ 對象 ＋ 量詞（中高年級 Bloom：解釋／預測／轉換／計算／推論／比較／分類／判斷／設計）。</p>
+</blockquote>
+<p><strong>課程理念（三節共同帶走）</strong>：①遊戲裡的思考策略能遷移到生活 ②「一直翻倍」的指數震撼 ③好奇「遊戲背後藏著數學」。</p>
+<hr />
+<h2>第一節　認識 2048 與成長的祕密（指數 vs 線性）</h2>
+<p><strong>本節知識點</strong>：合併＝相加、每步翻倍｜指數成長 vs 線性成長｜米粒傳說（棋盤翻倍到天文數字）｜初步訣竅（角落、有序）</p>
+<p><strong>【AI 預設目標】</strong>（最扣「指數震撼」理念）</p>
+<blockquote>
+<p>學生能舉一個例子，<strong>說明</strong>「每次翻倍（指數）」為什麼長期會遠遠超過「每次固定多加（線性）」。<br />
+- 包含知識點：指數 vs 線性成長<br />
+- 回扣理念：②指數震撼——把抽象差距變成可說明的對比</p>
+</blockquote>
+<p><strong>【替代方向 A】</strong>（玩中學・規律歸納）</p>
+<blockquote>
+<p>學生能在 2048 盤面上<strong>指出</strong>「合併＝相加、每步翻倍」的規律，並<strong>說出</strong>拼到第 n 格是「2 連乘幾次」。<br />
+- 包含知識點：合併＝相加、每步翻倍<br />
+- 回扣理念：③遊戲背後藏數學</p>
+</blockquote>
+<p><strong>【替代方向 B】</strong>（大數想像・數感）</p>
+<blockquote>
+<p>學生能<strong>估算</strong>「64 格一路翻倍」的量級，並<strong>說明</strong>為什麼國王賠不起（米粒傳說）。<br />
+- 包含知識點：米粒傳說、指數成長<br />
+- 回扣理念：②指數震撼</p>
+</blockquote>
+<hr />
+<h2>第二節　翻倍的威力與高手訣竅（次方 ＋ 角落）</h2>
+<p><strong>本節知識點</strong>（≤4）：次方＝連乘（2048＝11 個 2 連乘）｜個十百千萬…＝10 的次方｜高手訣竅（最大磚釘角落、由大到小排樓梯／蛇形，含玩家集體發現的啟發式）｜塊數與合成次數（最大數字÷2＝塊數、塊數−1＝合成次數）　※開場 hook：世界紀錄 65536（不單獨計）</p>
+<p><strong>【AI 預設目標】</strong>（最扣「次方表示法」核心知識）</p>
+<blockquote>
+<p>學生能把「一個數一直乘 2」<strong>轉換</strong>成「N 個 2 連乘」的寫法，並說出 2048 ＝ 11 個 2 連乘。<br />
+- 包含知識點：次方＝連乘、2048＝2¹¹<br />
+- 回扣理念：③遊戲背後藏數學——用更短的寫法表示巨大的數</p>
+</blockquote>
+<p><strong>【替代方向 A】</strong>（策略遷移）</p>
+<blockquote>
+<p>學生能<strong>說出</strong>至少 2 個拼出大數字的訣竅（最大磚釘角落、由大到小排成樓梯），並<strong>解釋</strong>為什麼大磚不能擺中間。<br />
+- 包含知識點：角落／蛇形訣竅<br />
+- 回扣理念：①思考策略遷移生活</p>
+</blockquote>
+<p><strong>【替代方向 B】</strong>（數量推理）</p>
+<blockquote>
+<p>學生能用「最大數字 ÷ 2 ＝ 塊數、塊數 − 1 ＝ 合成次數」<strong>計算</strong>出拼出某個數需要幾塊「2」、要合成幾次。<br />
+- 包含知識點：次方＝連乘、塊數與合成次數<br />
+- 回扣理念：②指數震撼（量化）</p>
+</blockquote>
+<hr />
+<h2>第三節　2048 大變身與 AI（費氏／維度／AI）</h2>
+<p><strong>本節知識點</strong>（≤4）：費氏數列（前兩數相加）｜黃金比例 1.618（費氏比值、自然界）｜維度（2D 看不懂 3D）｜AI 玩法（想好幾步＋算機率）　※變形遊戲（費氏／立體／貪食蛇）為遊戲載體，不單獨計</p>
+<p><strong>【AI 預設目標】</strong>（最扣「遊戲背後藏數學的好奇」）</p>
+<blockquote>
+<p>學生能<strong>說明</strong>費氏數列的規律（每個數是前兩個相加），並<strong>舉出</strong>一個自然界或遊戲中出現費氏數的例子。<br />
+- 包含知識點：費氏數列、黃金比例（自然界）<br />
+- 回扣理念：③遊戲背後藏數學</p>
+</blockquote>
+<p><strong>【替代方向 A】</strong>（變形比較・變因思考）</p>
+<blockquote>
+<p>學生能<strong>比較</strong>原版、費氏版、立體 3D 版三種 2048 在「合併規則或維度」上的差異各 1 點。<br />
+- 包含知識點：費氏合併規則、維度<br />
+- 回扣理念：①思考策略遷移（看出「改一個規則就變一款遊戲」）</p>
+</blockquote>
+<p><strong>【替代方向 B】</strong>（AI 與策略極致）</p>
+<blockquote>
+<p>學生能用白話<strong>說明</strong> AI 玩 2048 的兩個關鍵（往前想好幾步、算機率挑最好的），並說出 AI 為什麼玩得比人強。<br />
+- 包含知識點：AI 玩法、訣竅規則化<br />
+- 回扣理念：①思考策略遷移生活</p>
+</blockquote>
+<hr />
+<blockquote>
+<p>✅ <strong>請老師每節勾選／改寫 1–2 個</strong>（上限 2）。選定後，回頭看教學流程：最扣合目標的段落＝簡報提問權重最高（階段四 §2.6 依據）。</p>
+</blockquote>
+  </article>
+</div>
+<footer class="doc">
+  <div class="rule"></div>
+  數感實驗室 ・ 2048：玩出數學腦（教師備課文件）
+</footer>
+</body>
+</html>

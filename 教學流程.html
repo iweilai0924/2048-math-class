@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>教學流程｜2048 數學課・數感實驗室</title>
+<style>
+:root{--green:#009b6b;--dark:#004B24;--paper:#FEF8EE;--line:#e7e2d6;--zebra:#f3faf6;}
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{margin:0;font-family:"PingFang TC","Noto Sans TC",system-ui,-apple-system,"Segoe UI",sans-serif;
+  background:var(--paper);color:#1f2421;line-height:1.85;-webkit-font-smoothing:antialiased;word-break:break-word;}
+.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
+  gap:12px;padding:10px clamp(16px,4vw,28px);background:rgba(254,248,238,.92);
+  backdrop-filter:saturate(1.4) blur(8px);border-bottom:1px solid var(--line);}
+.topbar a.back{color:var(--green);text-decoration:none;font-weight:700;font-size:clamp(13px,2.6vw,15px);
+  display:inline-flex;align-items:center;gap:.35em;}
+.topbar a.back:hover{color:var(--dark);}
+.topbar .site{color:#9a9a8e;font-size:clamp(11px,2.4vw,13px);font-weight:700;letter-spacing:.08em;}
+.wrap{max-width:880px;margin:0 auto;padding:clamp(20px,5vw,40px) clamp(16px,5vw,40px) 12px;}
+header.doc{margin-bottom:1.6em;padding-bottom:1.1em;border-bottom:3px solid var(--green);}
+header.doc .eyebrow{color:var(--green);font-weight:700;letter-spacing:.14em;font-size:clamp(12px,2.4vw,14px);}
+header.doc h1{margin:.25em 0 0;color:var(--dark);font-size:clamp(24px,5.4vw,36px);line-height:1.25;}
+article{background:#fff;border:1px solid var(--line);border-radius:16px;
+  padding:clamp(20px,4.5vw,44px);box-shadow:0 3px 18px rgba(0,0,0,.05);}
+article h1{font-size:clamp(22px,4.8vw,30px);color:var(--dark);margin:1.7em 0 .5em;
+  padding-bottom:.25em;border-bottom:2px solid var(--line);}
+article h2{font-size:clamp(19px,4vw,25px);color:var(--green);margin:1.6em 0 .5em;
+  padding-left:.5em;border-left:6px solid var(--green);}
+article h3{font-size:clamp(17px,3.4vw,21px);color:var(--dark);margin:1.4em 0 .4em;}
+article h4{font-size:clamp(15px,3vw,18px);color:#33564a;margin:1.2em 0 .3em;}
+article h1:first-child,article h2:first-child,article h3:first-child{margin-top:0;}
+article p{margin:.7em 0;}
+article a{color:var(--green);text-decoration:none;border-bottom:1px solid rgba(0,155,107,.35);}
+article a:hover{color:var(--dark);border-bottom-color:var(--dark);}
+article ul,article ol{padding-left:1.5em;margin:.6em 0;}
+article li{margin:.3em 0;}
+article strong{color:var(--dark);}
+article hr{border:none;border-top:1px dashed var(--line);margin:2em 0;}
+article img{max-width:100%;height:auto;border-radius:10px;border:1px solid var(--line);margin:.4em 0;}
+article sub{display:inline-block;color:#8a8a7e;font-size:.82em;line-height:1.5;}
+blockquote{margin:1em 0;padding:.7em 1.1em;background:var(--zebra);
+  border-left:4px solid var(--green);border-radius:0 8px 8px 0;color:#3a463f;}
+blockquote p{margin:.35em 0;}
+blockquote p:first-child{margin-top:0;}blockquote p:last-child{margin-bottom:0;}
+code{background:#f0efe7;padding:.12em .4em;border-radius:5px;font-size:.9em;
+  font-family:"SF Mono",Menlo,Consolas,monospace;color:#3a463f;}
+pre{background:#1f2421;color:#e9efe9;padding:1em 1.2em;border-radius:10px;overflow-x:auto;}
+pre code{background:none;color:inherit;padding:0;}
+.table-wrap{overflow-x:auto;margin:1.1em 0;-webkit-overflow-scrolling:touch;
+  border:1px solid var(--line);border-radius:10px;}
+table{border-collapse:collapse;width:100%;font-size:clamp(13px,2.6vw,15px);min-width:520px;}
+table th,table td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top;line-height:1.6;}
+table th{background:var(--green);color:#fff;font-weight:700;white-space:nowrap;}
+table tr:nth-child(even) td{background:var(--zebra);}
+table td strong{color:var(--dark);}
+footer.doc{max-width:880px;margin:0 auto;padding:2em clamp(16px,5vw,40px) 3em;
+  text-align:center;color:#a9a99c;font-size:clamp(12px,2.4vw,13px);}
+footer.doc .rule{width:46px;height:3px;background:var(--green);border-radius:3px;margin:0 auto 1em;}
+@media(max-width:600px){article{border-radius:12px;}}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="back" href="index.html">&larr; 回課程首頁</a>
+  <span class="site">2048 數學課・備課文件</span>
+</div>
+<div class="wrap">
+  <header class="doc">
+    <div class="eyebrow">2048 數學課・颱風雨備線上限定</div>
+    <h1>教學流程</h1>
+  </header>
+  <article>
+<blockquote>
+<p><strong>執行指南</strong>：<code>30_教學設計指南.md</code><br />
+<strong>核心原則</strong>：<code>00_課程設計原則.md</code><br />
+<strong>教學形式</strong>：<code>00_教學形式清單.md</code><br />
+<strong>前一階段</strong>：<code>2_2048_課程題材.md</code><br />
+<strong>教師手冊模板</strong>：<code>32_教師手冊輸出模板.md</code>（每節各一檔：<code>3_2048_教師手冊_第1/2/3節.md</code>）</p>
+<p><strong>鎖定項</strong>（來自階段一＋二，不可修改）：節主題、順序、知識點、題材、脈絡表<br />
+<strong>本階段調整</strong>：活動設計、時間分配、教學策略、素材選用、教師手冊內容</p>
+<p><strong>本版說明</strong>：依 <code>31_教學流程輸出模板.md</code> 重做，內容沿用老師 2026-06-28 重排定稿（次方→L2、費氏→L3、貪食蛇移入 L3 正課、L3 末加課程回顧；L2 重排為 5 段 10/5/10/10/5）。舊自訂版備份於 <code>備份/3_2048_教學流程_v2_自訂版.md</code>、舊結構備份於 <code>備份/3_2048_教學流程_v1_舊結構.md</code>。<br />
+<strong>🔵 分組時間</strong>：標 🔵 的段落＝學生進各組實際玩／討論。線上以 <strong>Google Meet breakout 分組房間</strong>進行：每組 3–4 人、各組開鏡頭討論／試玩，老師輪流巡房，時間到收回主房間口頭或留言分享。</p>
+</blockquote>
+<hr />
+<h2>基本資訊</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>項目</th>
+<th>內容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>課程名稱</strong></td>
+<td>2048：玩出數學腦（暫定）</td>
+</tr>
+<tr>
+<td><strong>課程類型</strong></td>
+<td>暑期雨備（颱風天）線上限定課程・3 節 × 40 分鐘</td>
+</tr>
+<tr>
+<td><strong>適合年級</strong></td>
+<td>中高年級（3–6 年級）</td>
+</tr>
+<tr>
+<td><strong>節數</strong></td>
+<td>3 節</td>
+</tr>
+<tr>
+<td><strong>分組方式</strong></td>
+<td>Google Meet 開 breakout 分組房間、各組開鏡頭討論、老師巡房、回主房間分享</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>課程敘事線</h2>
+<p>（從階段一沿用）</p>
+<p><strong>1. 課程理念</strong>：很多孩子玩過 2048，卻沒想過它其實是一座數學遊樂場。這門颱風天線上課想做的，是讓孩子在「自己動手玩」的過程裡，親身撞見藏在遊戲裡的數學——而不是被講解。我們希望孩子下課後帶走三件事：對「翻倍／指數」的震撼、「原來小遊戲藏這麼多數學」的好奇，以及能用到生活裡的思考策略。</p>
+<p><strong>2. 核心提問</strong>：一個用一個週末寫出來、作者自己都沒破過關的小遊戲，為什麼能讓全世界上癮？它背後到底藏了哪些數學，又為什麼這麼難贏——難到最後要請 AI 出馬？</p>
+<p><strong>3. 推進邏輯（三節故事弧）</strong>：三節用「三款不同的 2048」當骨幹，一節揭一款，難度與視野層層升級，走完一條「體驗 → 策略 → 視野」的弧線。</p>
+<ul>
+<li><strong>L1 認識 2048 與成長的祕密</strong>：從最熟悉的<strong>原版</strong>入手，先玩熟，再從盤面「2→4→8→16」的翻倍，命名出「指數成長 vs 線性成長」的天差地別，並用西洋棋米粒傳說放大這份震撼。這是最低地板、人人有感的起點，結尾埋下「16 格一下就塞滿、光靠運氣贏不了」的伏筆。</li>
+<li><strong>L2 翻倍的威力與高手訣竅</strong>：先用世界紀錄 65536（2¹⁶）與《摺紙上月球》把翻倍的威力推到極致，帶出「連加→乘法、連乘→次方」的縮寫階梯（2048＝2¹¹）；再讓學生帶著新眼光重玩，最後交出高手的角落／蛇形／連鎖訣竅，點明這是玩家玩出的「啟發式」，並預告下一節的三款變形。</li>
+<li><strong>L3 2048 大變身與 AI</strong>：用「換數字（費氏 2584 連到黃金比例）、換維度（立體 3D）、換對手（AI）」三種變身收尾。看 AI 怎麼把人類的訣竅變成評分規則、「想幾步＋算機率」玩到人類做不到的高分，最後昇華到「好策略 ＞ 蠻力」「數學是一種超能力」。</li>
+</ul>
+<hr />
+<h2>課程脈絡表</h2>
+<p>（從階段二沿用、依重排定稿整理；知識點之間以 ↓ 寫銜接邏輯，節與節之間用 ABT 標籤）</p>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>節主題</th>
+<th>段</th>
+<th>內容／銜接說明</th>
+<th>數學主軸</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>L1 認識 2048 與成長的祕密</strong></td>
+<td>↓</td>
+<td>颱風天在家開課：先立線上默契、對家長喊話，再用「2048 是什麼、怎麼玩」帶大家進場</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>1-2 認識遊戲與玩法</td>
+<td>4×4 盤面、滑動讓相同數字相撞合併、目標拼出 2048</td>
+<td>合併＝相加、遊戲規則</td>
+</tr>
+<tr>
+<td></td>
+<td>↓</td>
+<td>規則懂了就急著玩——先親手玩，讓盤面 2→4→8 自己跳出來</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>1-3 親手玩、撞見「翻倍」</td>
+<td>同數一撞合併、數字一路翻倍</td>
+<td>2 的次方、指數成長</td>
+</tr>
+<tr>
+<td></td>
+<td>↓</td>
+<td>幫剛玩到的現象命名：翻倍跟「慢慢加」差在哪？</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>1-4 成長規律（指數 vs 線性）</td>
+<td>每次×2 ≠ 每次+k；指數前段溫和、後段爆衝（存錢 POE）</td>
+<td>等比 vs 等差</td>
+</tr>
+<tr>
+<td></td>
+<td>↓</td>
+<td>翻倍到底多猛？放大到一個古老傳說看清楚</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>1-5 西洋棋米粒傳說</td>
+<td>64 格每格翻倍＝2⁶⁴−1 粒米，全世界米都不夠賠——與 2048 同機制</td>
+<td>幾何級數、2ⁿ</td>
+</tr>
+<tr>
+<td></td>
+<td>↓</td>
+<td>回到遊戲：再玩一次、自己找訣竅，收斂成原則</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>1-6／1-7 找訣竅＋收斂</td>
+<td>最大磚鎖角落、由大到小排樓梯；湊一個 2048 要 1024 顆 2</td>
+<td>單調性雛形、滿二元樹</td>
+</tr>
+<tr>
+<td></td>
+<td>↓ ABT</td>
+<td><strong>AND</strong> 玩熟原版、嚐到翻倍威力　<strong>BUT</strong> 16 格一下塞滿、光靠運氣贏不了 → 銜接 L2</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>L2 翻倍的威力與高手訣竅</strong></td>
+<td>↓</td>
+<td>既然翻倍這麼猛——先看世界紀錄與摺紙上月球，把威力看到極致</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>2-1 世界紀錄＋摺紙到月球</td>
+<td>真實紀錄 65536（2¹⁶）；「需要幾個 2」≠「合幾次（淘汰賽）」</td>
+<td>2ⁿ、合併次數 2ⁿ⁻¹−1</td>
+</tr>
+<tr>
+<td></td>
+<td>↓</td>
+<td>這些數字都是 2 的次方，有沒有更精簡的寫法？</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>2-2 次方是連乘、乘法是連加</td>
+<td>連加→乘法、連乘→次方；個十百千萬＝10 的次方；2048＝2¹¹</td>
+<td>次方、位值</td>
+</tr>
+<tr>
+<td></td>
+<td>↓</td>
+<td>帶著「翻倍／次方」的眼光再玩一次，先親身卡關</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>2-3 大家玩第二次 🔵</td>
+<td>挑戰拼更高的磚、互報最大磚是 2 的幾次方</td>
+<td>2 的次方（應用）</td>
+</tr>
+<tr>
+<td></td>
+<td>↓</td>
+<td>為什麼會卡住？高手怎麼讓盤面不塞滿？</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>2-4 角落的重要訣竅</td>
+<td>最大磚釘角落、蛇形單調排列、少用一個方向、連鎖合併＝啟發式</td>
+<td>單調性、有序排列、heuristic</td>
+</tr>
+<tr>
+<td></td>
+<td>↓</td>
+<td>這個遊戲還能怎麼變？換你當設計師</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>2-5 發想新玩法＋變形預告 🔵</td>
+<td>換數字規則／換盤面形狀／加道具；預告費氏 2584／立體 3D／貪食蛇</td>
+<td>設計思維、開源衍生</td>
+</tr>
+<tr>
+<td></td>
+<td>↓ ABT</td>
+<td><strong>AND</strong> 學會角落／蛇形／連鎖　<strong>BUT</strong> 人腦能預想的步數有限、立體版又更複雜　<strong>THEREFORE</strong> 請 AI 出馬</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>L3 2048 大變身與 AI</strong></td>
+<td>↓</td>
+<td>換一套數字規則，遊戲就變身——先認識費氏數列</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>3-1／3-2 費氏數列＋費氏版試玩 🔵</td>
+<td>1,1,2,3,5,8…前兩數相加；費氏 2584 改「相鄰費氏數相加」、磚不跟自己合</td>
+<td>費氏數列、相加規則</td>
+</tr>
+<tr>
+<td></td>
+<td>↓</td>
+<td>換規則的小遊戲，居然連到花和貝殼？</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>3-3 黃金比例</td>
+<td>相鄰費氏數相除→1.618；費氏螺旋藏在向日葵／鸚鵡螺／松果</td>
+<td>黃金比例 φ</td>
+</tr>
+<tr>
+<td></td>
+<td>↓</td>
+<td>換數字之後，換維度看看——升一維有多難想像？</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>3-4／3-5 維度＋立體版試玩 🔵</td>
+<td>平面國：2D 看不懂 3D；立體 3D 2048＝3×3×3、6 方向、可旋轉看截面</td>
+<td>維度＝可移動方向數</td>
+</tr>
+<tr>
+<td></td>
+<td>↓</td>
+<td>人腦顧不了這麼多——電腦怎麼玩得動？</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>3-6 AI 怎麼玩（expectimax）</td>
+<td>想好幾步＋把冒磚機率（90/10）算進去挑期望最好那步；訣竅變評分規則</td>
+<td>決策樹、期望值、評估函數</td>
+</tr>
+<tr>
+<td></td>
+<td>↓</td>
+<td>換你親自跟 AI 對戰，再回頭看走過的三節</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>3-7／3-8 貪食蛇對 AI＋課程回顧</td>
+<td>跟內建 AI 對手對戰、÷2 是 ×2 的逆；昇華「數學是一種超能力」</td>
+<td>乘除互逆、好策略＞蠻力</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h1>教學流程表</h1>
+<hr />
+<h2>第 1 節課：認識 2048 與成長的祕密（指數 vs 線性）</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: center;">時長</th>
+<th>教學內容（約 100 字，供共同教師備課）</th>
+<th>分段時間</th>
+<th>方式</th>
+<th>備註（材料）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">5'</td>
+<td><strong>1-1 開場默契</strong><br>立線上課四默契（開鏡關麥／留言區回答／不洗表情貼圖／舉手發言）；對家長喊話——孩子在玩遊戲，其實在學數學，颱風天放心讓他盡情玩。</td>
+<td>5' 講述／互動</td>
+<td>講述／互動</td>
+<td>[投影] p01–03 ｜四默契圖、給家長 AI 親子插畫</td>
+</tr>
+<tr>
+<td style="text-align: center;">5'</td>
+<td><strong>1-2 介紹 2048 遊戲與玩法</strong><br>什麼是 2048：4×4 盤面、滑動讓相同數字相撞合併、目標拼出 2048；電腦用方向鍵、手機平板用手指滑。p07 丟「這步往哪滑」開放題收留言區。</td>
+<td>5' 講述（含 p07 留言預測）</td>
+<td>講述</td>
+<td>[開啟] 原版 2048 ｜[投影] p04–07 操作說明、留言預測</td>
+</tr>
+<tr>
+<td style="text-align: center;">10'</td>
+<td><strong>1-3 試玩 2048</strong> 🔵<br>進 breakout 分組房間（3–4 人）開鏡頭一起玩原版，組內互看怎麼滑，計時挑戰合出 64／128；老師巡房，時間到收回主房間分享拼到多少。</td>
+<td>10' 分組試玩（🔵）</td>
+<td>玩</td>
+<td>[開啟] 原版 2048（breakout 分組）｜[投影] p08–09 分組頁 ｜計時器</td>
+</tr>
+<tr>
+<td style="text-align: center;">5'</td>
+<td><strong>1-4 數學討論：成長規律</strong><br>從玩到的 2→4→8→16 命名「翻倍＝指數成長」；用存錢 POE（每天 +10 元 vs 每天翻倍）對比線性，揭曉第 6 天反超、第 7 天爆衝。</td>
+<td>5' 互動討論（含存錢 POE）</td>
+<td>互動討論</td>
+<td>[投影] p10–13 翻倍 vs 線性折線（SVG 自畫）、存錢 POE</td>
+</tr>
+<tr>
+<td style="text-align: center;">5'</td>
+<td><strong>1-5 印度稻米的故事</strong><br>西洋棋米粒傳說：每格翻倍、最後 2⁶⁴−1 全世界米都不夠賠；POE 預測＋三把 SVG 尺（一碗飯／全台一年／總數）量化大數，強化指數震撼。</td>
+<td>5' 講述／POE 預測</td>
+<td>講述／預測</td>
+<td>[投影] p14–17 米粒 POE＋SVG 量化系列（米粒影片僅備課參考，課堂不播）</td>
+</tr>
+<tr>
+<td style="text-align: center;">5'</td>
+<td><strong>1-6 第二次玩・找訣竅</strong> 🔵<br>再進分組房間玩一次，邊玩邊想「怎樣拼更大、有沒有訣竅」，組內開鏡頭討論、老師巡房，時間到收回主房間分享方法。</td>
+<td>5' 分組試玩＋討論（🔵）</td>
+<td>玩＋討論</td>
+<td>[開啟] 原版 2048（breakout 分組）｜[投影] p18–20 分組頁 ｜計時器</td>
+</tr>
+<tr>
+<td style="text-align: center;">5'</td>
+<td><strong>1-7 總結一些訣竅</strong><br>各組分享發現的訣竅，老師收斂兩條（最大磚鎖角落／由大到小排樓梯），順帶「湊一個 2048 要 1024 顆 2」；埋伏筆——16 格易塞滿、光靠運氣夠嗎，銜接 L2。</td>
+<td>5' 互動總結</td>
+<td>互動總結</td>
+<td>[投影] p21–23 訣竅留言牆、伏筆與結尾頁</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>時間統計</strong>：講述／結構 15'（1-1、1-2、1-5）／非講述 25'（1-3 試玩 10'、1-4 互動討論 5'、1-6 第二次玩 5'、1-7 互動總結 5'）</p>
+<blockquote>
+<p>⚠️ 颱風天線上限定課每節 40'，講述比重略高於一般數學實驗課；本節非講述 <strong>25'</strong>，未嚴格 &gt; 25'，屬線上課例外（照實標，見 🔍 建議確認 #2）。另 1-1 留言區約定、1-5 米粒 POE 預測皆含互動成分。</p>
+</blockquote>
+<p><strong>非講述活動數</strong>：4 個（1-3、1-4、1-6、1-7），≥ 2 個 ✓</p>
+<p><strong>彈性說明</strong></p>
+<ul>
+<li><strong>核心活動</strong>（建議保留）：1-3 試玩、1-6 第二次玩・找訣竅兩段 🔵 分組（先玩出親身經驗、再探索歸納，是本節動手骨架）；1-4 數學討論（本節知識點重心：指數 vs 線性）。</li>
+<li><strong>可替換活動</strong>：1-5 印度稻米故事是 1-4 的「放大版」，時間緊可只留「總數 2⁶⁴−1」一把尺、POE 直接揭曉，省去三把尺逐步放大；1-2 的 p07「這步往哪滑」為開放題，趕時間可改成老師口頭示範一步、不收留言。</li>
+<li><strong>時間不足時</strong>（優先刪減順序）：① 1-5 米粒只保留一把尺（總數），POE 不收答案直接揭曉 → ② 1-7 總結壓到 2–3 分鐘，只收斂一條訣竅（最大磚鎖角落）→ ③ 1-1「給爸爸媽媽的話」口頭一句帶過。切勿刪減兩段 🔵 分組（1-3、1-6）與 1-4 數學討論。</li>
+<li><strong>時間充裕時</strong>（可延長）：1-3 試玩可加時、回主房間多請幾組分享；1-4 可現場帶學生算方案 B 第 8、9、10 天的累積金額（255／511／1023 元），把「爆衝」一步步算給學生看；1-6 可多給幾組分享訣竅、老師多拋一兩個提示。</li>
+</ul>
+<hr />
+<h2>第 2 節課：翻倍的威力與高手訣竅（次方＋角落）</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: center;">時長</th>
+<th>教學內容（約 100 字，供共同教師備課）</th>
+<th>分段時間</th>
+<th>方式</th>
+<th>備註（材料）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">10'</td>
+<td><strong>2-1 開場：世界紀錄 ＋ 摺紙到月球</strong><br>留言區票選「2048 最高拼到多大」，揭曉真實紀錄 65536（2¹⁶）；用小數字 16 釐清「需要幾個 2」≠「合幾次（淘汰賽）」；播《摺紙上月球》關鍵片段感受翻倍威力。</td>
+<td>3' 互動估算<br>7' 講述（含 16 淘汰賽）＋影片片段</td>
+<td>互動票選＋影片</td>
+<td>[投影] p01–07 世界紀錄／票選／16 釐清／65536、阿信 65536 截圖 ｜[播放] 摺紙上月球（AmFMJC45f1Q，<strong>只播關鍵 2–3 分鐘片段</strong>／或看海報）</td>
+</tr>
+<tr>
+<td style="text-align: center;">5'</td>
+<td><strong>2-2 次方是連乘、乘法是連加</strong><br>建立「連加→乘法、連乘→次方」階梯：3+3+3+3＝3×4、2×2×2×2×2＝2⁵；個十百千萬＝10 的不同次方；金句 2048＝2¹¹，每合併一次次方加 1。</td>
+<td>5' 講述／互動</td>
+<td>講述／互動</td>
+<td>[投影] p08–10 次方階梯（SVG）（Math Antics -zUmvpkhvW8 課堂不播，僅備課參考）</td>
+</tr>
+<tr>
+<td style="text-align: center;">10'</td>
+<td><strong>2-3 大家玩第二次</strong> 🔵<br>進 breakout 分組房間帶「翻倍／次方」眼光再玩原版，先確認操作（方向鍵／手指滑），計時挑戰拼更高的磚，組內互報最大的磚是 2 的幾次方。</td>
+<td>10' 分組試玩（🔵）</td>
+<td>玩</td>
+<td>[開啟] 原版 2048（breakout 分組）｜[投影] p11–13 分組頁、玩到一半盤面 SVG ｜計時器</td>
+</tr>
+<tr>
+<td style="text-align: center;">10'</td>
+<td><strong>2-4 介紹角落的重要訣竅</strong><br>先講為什麼會卡住、大磚不能擺中間；依序三招（最大磚釘角落／由大到小排蛇形／少用會推走大磚的方向），進階補連鎖合併；點出這些是玩家玩出的啟發式（heuristic）。</td>
+<td>5' 講述<br>5' 示範／互動</td>
+<td>講述／互動＋示範</td>
+<td>[投影] p14–22 角落／蛇形示意、好 vs 壞盤面對照（SVG）｜[開啟] 原版 2048（可即時示範角落擺法）</td>
+</tr>
+<tr>
+<td style="text-align: center;">5'</td>
+<td><strong>2-5 發想新玩法（含下節變形預告）</strong> 🔵<br>進分組房間討論「2048 還能怎麼變」（換數字規則／換盤面形狀／加道具），各組分享一個最喜歡的新玩法；老師用 p25–26 預告下節三變形（費氏 2584／立體 3D／貪食蛇）。</td>
+<td>5' 分組討論（🔵）</td>
+<td>分組討論＋預告</td>
+<td>[投影] p23–26 發想留言牆、三個發想方向、三變形預告示意 SVG（變形連結僅展示，下節試玩）</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>時間統計</strong>：講述 22'（2-1 約 7'＋2-2 5'＋2-4 講述 5'＋2-4 示範 5'）／非講述 18'（2-3 玩第二次 10'＋2-5 發想討論 5'＋2-1 開場估算互動 3'）</p>
+<blockquote>
+<p>⚠️ 颱風天線上限定課每節 40'，講述比重略高；本節非講述 <strong>18'</strong>，未達一般 &gt; 25' 門檻，屬線上課例外（照實標，見 🔍 建議確認 #2）。兩段 🔵 分組（2-3、2-5）共 15' 為核心動手時段，務必保留。</p>
+</blockquote>
+<p><strong>非講述活動數</strong>：3 個（2-1 開場估算互動、2-3 玩第二次、2-5 發想討論），≥ 2 個 ✓</p>
+<p><strong>彈性說明</strong></p>
+<ul>
+<li><strong>核心活動</strong>（建議保留）：2-3 玩第二次（先卡關才有 2-4 的切身感）、2-4 角落訣竅（本節知識點重心）。</li>
+<li><strong>可替換活動</strong>：2-1 開場影片可改用第一節的「西洋棋米粒傳說」回扣指數，或單用阿信 65536 截圖＋估算（省略影片）；2-2 的 Math Antics 已定調課堂不播、純投影口白，無須額外處理。</li>
+<li><strong>時間不足時</strong>（優先刪減順序）：① 2-5 末段的下節變形預告壓到 1–2 分鐘口頭帶過 → ② 2-1 摺紙影片只看海報、不播片段 → ③ 2-4 進階「連鎖合併」略過、保留三招。切勿刪減兩段 🔵 分組（2-3、2-5）。</li>
+<li><strong>時間充裕時</strong>（可延長）：2-4 角落訣竅可現場用原版 2048 多示範一輪「角落＋蛇形」實際擺法；2-5 發想可多請幾組回主房間口頭或留言分享。</li>
+</ul>
+<hr />
+<h2>第 3 節課：2048 大變身與 AI（費氏／平面國／立體／貪食蛇／AI）</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: center;">時長</th>
+<th>教學內容（約 100 字，供共同教師備課）</th>
+<th>分段時間</th>
+<th>方式</th>
+<th>備註（材料）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">5'</td>
+<td><strong>3-1 費氏數列的介紹</strong><br>費氏數列 1,1,2,3,5,8,13…每數＝前兩數相加；費波那契兔子問題的由來；自然界的費氏數（向日葵／鸚鵡螺）。預告下一款 2048 用的就是這串數字。</td>
+<td>5' 講述</td>
+<td>講述</td>
+<td>[投影] p01–04 費氏數列鏈 SVG、費波那契兔子成長 SVG、費波那契肖像</td>
+</tr>
+<tr>
+<td style="text-align: center;">5'</td>
+<td><strong>3-2 費氏數列試玩</strong> 🔵<br>玩費氏版 2584：相同數字不合併，改成「相鄰費氏數相加」（1+1=2、1+2=3、2+3=5…），磚不能跟自己合；分組計時挑戰先合出 233。</td>
+<td>5' 分組試玩（🔵）</td>
+<td>玩（🔵 分組）</td>
+<td>[開啟] 費氏 2584（breakout 分組）｜[投影] p05–06 分組頁、相鄰費氏數相加 SVG</td>
+</tr>
+<tr>
+<td style="text-align: center;">5'</td>
+<td><strong>3-3 黃金比例介紹</strong><br>先用留言區收玩費氏版的觀察（55 要找誰合）；再揭曉相鄰費氏數相除越來越接近黃金比例 1.618，照費氏方塊畫弧連成螺旋，對照鸚鵡螺／向日葵／松果。</td>
+<td>5' 互動（留言）＋講述</td>
+<td>互動＋講述</td>
+<td>[投影] p07–08 留言牆、費氏螺旋 SVG、鸚鵡螺／向日葵／松果圖</td>
+</tr>
+<tr>
+<td style="text-align: center;">5'</td>
+<td><strong>3-4 平面國影片與維度介紹</strong><br>播平面國 TED-Ed 關鍵片段：2D 生物想像不出 3D；用「定位一點需幾個數」講維度，原版 16 格 4 方向→立體 27 格 6 方向，為立體版鋪路。</td>
+<td>5' 影片片段＋維度講述</td>
+<td>講述＋影片</td>
+<td>[播放] 平面國 TED-Ed（C6kn6nXMWF0，<strong>只播關鍵 2–3 分鐘片段</strong>）｜[投影] p09–11 升維對照 SVG</td>
+</tr>
+<tr>
+<td style="text-align: center;">5'</td>
+<td><strong>3-5 立體款 2048 的試玩</strong> 🔵<br>玩立體 3D 2048：3×3×3、可往六方向滑、能旋轉看截面；分組計時挑戰合出比平面版更高的磚，老師提醒卡關時旋轉看內層那一面。</td>
+<td>5' 分組試玩（🔵）</td>
+<td>玩（🔵 分組）</td>
+<td>[開啟] 立體 3D（breakout 分組）｜[投影] p12–13 分組頁、立體 3×3×3 SVG</td>
+</tr>
+<tr>
+<td style="text-align: center;">5'</td>
+<td><strong>3-6 AI 介紹＋現場看 AI 玩 2048</strong><br>白話講 AI 怎麼玩（想好幾步＋把 90/10 冒磚機率算進去挑期望最好那步＝expectimax）；現場開 ovolve 按 Auto-run 讓全班看 AI 破關，引出「跟 AI 比比看」。</td>
+<td>5' 講述＋現場 demo</td>
+<td>講述＋示範</td>
+<td>[連結] 現場開 AI（ovolve.github.io/2048-AI/，按 Auto-run）｜[投影] p14–16 AI 思考圖（不內嵌影片）</td>
+</tr>
+<tr>
+<td style="text-align: center;">5'</td>
+<td><strong>3-7 貪食蛇的試玩</strong> 🔵<br>玩方塊蛇 2048：即時競技場、跟內建 AI 對手對戰（接續上段 AI）；道具「÷2」是合併「×2」的逆運算（乘除互逆）；分組挑戰能不能打贏 AI。</td>
+<td>5' 分組試玩（🔵）</td>
+<td>玩（🔵 分組）</td>
+<td>[開啟] 貪食蛇（breakout 分組）｜[投影] p17–18 分組頁、數字蛇 vs AI 對手 SVG</td>
+</tr>
+<tr>
+<td style="text-align: center;">5'</td>
+<td><strong>3-8 課程回顧</strong><br>回顧三節：成長規律 → 次方／角落訣竅 → 變形 → AI；昇華「好策略 ＞ 蠻力、數學是一種超能力」，鼓勵回家揪爸媽再玩立體版、貪食蛇、挑戰打贏 AI。</td>
+<td>5' 互動回顧</td>
+<td>互動回顧</td>
+<td>[投影] p19–21 三節旅程回顧、昇華金句、結尾主視覺</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>時間統計</strong>：講述 10'（3-1、3-4）／非講述 30'（3-2、3-3、3-5、3-6、3-7、3-8，含分組試玩 ×3、留言互動、現場 AI demo、課程回顧）&gt; 25' ✓</p>
+<blockquote>
+<p>3-4、3-6 含講述成分，但主活動分別為「看影片」與「現場 demo＋留言互動」，計入非講述。本節非講述達標，無線上例外問題。</p>
+</blockquote>
+<p><strong>非講述活動數</strong>：6 個（3-2、3-3、3-5、3-6、3-7、3-8），≥ 2 個 ✓</p>
+<p><strong>彈性說明</strong></p>
+<ul>
+<li><strong>核心活動</strong>（建議保留）：3-2 費氏試玩（本節第一個「換規則就變一款新遊戲」的親身體驗）、3-6 AI demo（「好策略＞蠻力」與本節 AI 主軸的核心示範）。這兩段是本節骨幹，颱風天連線不穩也至少改老師單機示範、不可整段拿掉。</li>
+<li><strong>可替換活動</strong>：3-4 平面國影片只播關鍵 2–3 分鐘，時間緊時可改用 p11「升維對照」投影口頭帶過（不播影片）；3-5 立體試玩與 3-7 貪食蛇兩段擇一深玩即可，另一段改由老師單機示範一輪、口頭討論。</li>
+<li><strong>時間不足時</strong>（優先刪減順序）：① 3-8 課程回顧壓到 2 分鐘口頭收尾 → ② 3-5 立體試玩或 3-7 貪食蛇擇一改老師示範（保留另一段分組）→ ③ 3-4 影片改投影口白帶過。切勿同時刪掉 3-2 費氏試玩與 3-6 AI demo 兩個核心。</li>
+<li><strong>時間充裕時</strong>（可延長）：3-5、3-7 兩段分組試玩都保留並各延長 1–2 分鐘；3-6 AI demo 可多按幾次「Get Hint」，讓學生先在留言區猜下一步再揭曉，玩「跟 AI 比比看」。</li>
+</ul>
+<hr />
+<h2>影片與遊戲連結對照</h2>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th>用途</th>
+<th>連結／ID</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>原版 2048</td>
+<td>https://numeracy-learn-kit.web.app/game/2048-basic/</td>
+</tr>
+<tr>
+<td>費氏 2584</td>
+<td>https://numeracy-learn-kit.web.app/game/fibonacci-2584/</td>
+</tr>
+<tr>
+<td>立體 3D</td>
+<td>https://numeracy-learn-kit.web.app/game/2048-3d/</td>
+</tr>
+<tr>
+<td>貪食蛇</td>
+<td>https://numeracy-learn-kit.web.app/game/snake-2048/</td>
+</tr>
+<tr>
+<td>摺紙上月球（L2-1，只播 2–3 分鐘片段）</td>
+<td>TED-Ed <code>AmFMJC45f1Q</code></td>
+</tr>
+<tr>
+<td>平面國 Flatland（L3-4，只播 2–3 分鐘片段）</td>
+<td>TED-Ed <code>C6kn6nXMWF0</code></td>
+</tr>
+<tr>
+<td>AI 自動跑 2048（L3-6，課堂現場開、按 Auto-run）</td>
+<td>https://ovolve.github.io/2048-AI/</td>
+</tr>
+<tr>
+<td>米粒傳說（備課參考；課堂改用 POE＋SVG，不內嵌）</td>
+<td>Nas Daily <code>5xv3ESutQl0</code></td>
+</tr>
+<tr>
+<td>次方入門（備課參考，課堂不播）</td>
+<td>Math Antics <code>-zUmvpkhvW8</code></td>
+</tr>
+<tr>
+<td>AI 學玩 2048（備課參考，課堂不播）</td>
+<td>Code Bullet <code>1g1HCYTX3Rg</code></td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>四款遊戲皆數感自製（@numeracy-learn-kit）。<strong>原版已更新為新網址 <code>/game/2048-basic/</code></strong>（舊版為根目錄 <code>web.app/</code>）。</p>
+</blockquote>
+<hr />
+<h1>材料總覽</h1>
+<blockquote>
+<p>本課為颱風天線上限定課，學生在自己家中載具上操作，幾乎無實體耗材。</p>
+</blockquote>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: center;">節次</th>
+<th>材料</th>
+<th style="text-align: center;">每人數量</th>
+<th>備註</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">全課</td>
+<td>可上網載具（電腦／平板／手機，電腦或平板體驗較佳）</td>
+<td style="text-align: center;">每人 1 台</td>
+<td>學生端在家自備；用電腦者留言區與遊戲視窗要切換，用平板者可分割畫面</td>
+</tr>
+<tr>
+<td style="text-align: center;">全課</td>
+<td>Google Meet（含 breakout 分組房間）</td>
+<td style="text-align: center;">—</td>
+<td>老師端；課前先測分組房間能否順利分派／回收、螢幕分享</td>
+</tr>
+<tr>
+<td style="text-align: center;">全課</td>
+<td>遊戲連結（原版／費氏 2584／立體 3D／貪食蛇）</td>
+<td style="text-align: center;">—</td>
+<td>課堂現場開啟，見上方連結對照</td>
+</tr>
+<tr>
+<td style="text-align: center;">全課</td>
+<td>簡報 L1（23 頁）／L2（26 頁）／L3（21 頁）</td>
+<td style="text-align: center;">—</td>
+<td>老師端投影分享</td>
+</tr>
+<tr>
+<td style="text-align: center;">1、2</td>
+<td>計時器</td>
+<td style="text-align: center;">—</td>
+<td>老師端（分組試玩計時挑戰用）</td>
+</tr>
+<tr>
+<td style="text-align: center;">—</td>
+<td>實體材料</td>
+<td style="text-align: center;">—</td>
+<td>幾乎無（線上版省略紙本學習單，金字塔／淘汰賽改用簡報動畫）</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>每人總成本</strong>：約 0 元（線上課，無實體耗材）</p>
+<hr />
+<h2>🔍 建議確認</h2>
+<blockquote>
+<p>以下項目 AI 覺得值得你看一下。</p>
+</blockquote>
+<div class="table-wrap"><table>
+<thead>
+<tr>
+<th style="text-align: center;">#</th>
+<th>位置</th>
+<th>項目</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">1</td>
+<td>全課</td>
+<td>教學目標每節勾 1–2 個</td>
+<td>依 <code>30_</code> 指南 §二.5，教學流程完成後產出 <code>3_2048_教學目標.md</code>（每節 1 預設＋2 替代方向），請老師每節勾 1–2 個，作為階段四簡報提問權重依據</td>
+</tr>
+<tr>
+<td style="text-align: center;">2</td>
+<td>第 1、2 節</td>
+<td>非講述時間未嚴格 &gt; 25'（L1 為 25'、L2 為 18'）</td>
+<td>颱風天線上限定課每節僅 40'、講述比重略高，已照實標為線上課例外；兩節各保留兩段 🔵 分組為核心動手時段。請確認此例外可接受</td>
+</tr>
+<tr>
+<td style="text-align: center;">3</td>
+<td>第 1 節 1-1</td>
+<td>「開鏡關麥」默契與 breakout 小房間「開麥討論」的拿捏</td>
+<td>主房間要求關麥避免吵雜，但分組房間需開麥才能組內討論——請確認向學生說明的切換時機（進小房間開麥、回主房間關麥）</td>
+</tr>
+<tr>
+<td style="text-align: center;">4</td>
+<td>第 2 節 2-1</td>
+<td>五月天阿信 65536 臉書截圖的教育引用</td>
+<td>截圖用於佐證世界紀錄、屬教學引用；請確認此引用方式可接受，或改用無肖像的純紀錄數字呈現</td>
+</tr>
+<tr>
+<td style="text-align: center;">5</td>
+<td>全課</td>
+<td>颱風天斷線 Plan B 已內建</td>
+<td>各 🔵 分組段、影片段、AI demo 段的教師手冊皆已寫入「連線失靈→老師單機分享畫面帶全班看＋口頭討論」備援，供老師確認可行</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2>審閱意見</h2>
+<pre><code>
+</code></pre>
+<hr />
+<p><em>依模板 <code>31_教學流程輸出模板.md</code> v2.6 產出｜內容沿用 2026-06-28 重排定稿｜對應教師手冊：<code>3_2048_教師手冊_第1/2/3節.md</code>、簡報 <code>簡報/5_2048_L1/L2/L3_簡報.html</code></em></p>
+  </article>
+</div>
+<footer class="doc">
+  <div class="rule"></div>
+  數感實驗室 ・ 2048：玩出數學腦（教師備課文件）
+</footer>
+</body>
+</html>
