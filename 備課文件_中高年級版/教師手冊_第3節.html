@@ -1,76 +1,8 @@
-<!doctype html>
-<html lang="zh-Hant">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>教師手冊 — 第 3 節：2048 大變身與 AI｜2048 數學課・數感實驗室</title>
-<style>
-:root{--green:#009b6b;--dark:#004B24;--paper:#FEF8EE;--line:#e7e2d6;--zebra:#f3faf6;}
-*{box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{margin:0;font-family:"PingFang TC","Noto Sans TC",system-ui,-apple-system,"Segoe UI",sans-serif;
-  background:var(--paper);color:#1f2421;line-height:1.85;-webkit-font-smoothing:antialiased;word-break:break-word;}
-.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
-  gap:12px;padding:10px clamp(16px,4vw,28px);background:rgba(254,248,238,.92);
-  backdrop-filter:saturate(1.4) blur(8px);border-bottom:1px solid var(--line);}
-.topbar a.back{color:var(--green);text-decoration:none;font-weight:700;font-size:clamp(13px,2.6vw,15px);
-  display:inline-flex;align-items:center;gap:.35em;}
-.topbar a.back:hover{color:var(--dark);}
-.topbar .site{color:#9a9a8e;font-size:clamp(11px,2.4vw,13px);font-weight:700;letter-spacing:.08em;}
-.wrap{max-width:880px;margin:0 auto;padding:clamp(20px,5vw,40px) clamp(16px,5vw,40px) 12px;}
-header.doc{margin-bottom:1.6em;padding-bottom:1.1em;border-bottom:3px solid var(--green);}
-header.doc .eyebrow{color:var(--green);font-weight:700;letter-spacing:.14em;font-size:clamp(12px,2.4vw,14px);}
-header.doc h1{margin:.25em 0 0;color:var(--dark);font-size:clamp(24px,5.4vw,36px);line-height:1.25;}
-article{background:#fff;border:1px solid var(--line);border-radius:16px;
-  padding:clamp(20px,4.5vw,44px);box-shadow:0 3px 18px rgba(0,0,0,.05);}
-article h1{font-size:clamp(22px,4.8vw,30px);color:var(--dark);margin:1.7em 0 .5em;
-  padding-bottom:.25em;border-bottom:2px solid var(--line);}
-article h2{font-size:clamp(19px,4vw,25px);color:var(--green);margin:1.6em 0 .5em;
-  padding-left:.5em;border-left:6px solid var(--green);}
-article h3{font-size:clamp(17px,3.4vw,21px);color:var(--dark);margin:1.4em 0 .4em;}
-article h4{font-size:clamp(15px,3vw,18px);color:#33564a;margin:1.2em 0 .3em;}
-article h1:first-child,article h2:first-child,article h3:first-child{margin-top:0;}
-article p{margin:.7em 0;}
-article a{color:var(--green);text-decoration:none;border-bottom:1px solid rgba(0,155,107,.35);}
-article a:hover{color:var(--dark);border-bottom-color:var(--dark);}
-article ul,article ol{padding-left:1.5em;margin:.6em 0;}
-article li{margin:.3em 0;}
-article strong{color:var(--dark);}
-article hr{border:none;border-top:1px dashed var(--line);margin:2em 0;}
-article img{max-width:100%;height:auto;border-radius:10px;border:1px solid var(--line);margin:.4em 0;}
-article sub{display:inline-block;color:#8a8a7e;font-size:.82em;line-height:1.5;}
-blockquote{margin:1em 0;padding:.7em 1.1em;background:var(--zebra);
-  border-left:4px solid var(--green);border-radius:0 8px 8px 0;color:#3a463f;}
-blockquote p{margin:.35em 0;}
-blockquote p:first-child{margin-top:0;}blockquote p:last-child{margin-bottom:0;}
-code{background:#f0efe7;padding:.12em .4em;border-radius:5px;font-size:.9em;
-  font-family:"SF Mono",Menlo,Consolas,monospace;color:#3a463f;}
-pre{background:#1f2421;color:#e9efe9;padding:1em 1.2em;border-radius:10px;overflow-x:auto;}
-pre code{background:none;color:inherit;padding:0;}
-.table-wrap{overflow-x:auto;margin:1.1em 0;-webkit-overflow-scrolling:touch;
-  border:1px solid var(--line);border-radius:10px;}
-table{border-collapse:collapse;width:100%;font-size:clamp(13px,2.6vw,15px);min-width:520px;}
-table th,table td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top;line-height:1.6;}
-table th{background:var(--green);color:#fff;font-weight:700;white-space:nowrap;}
-table tr:nth-child(even) td{background:var(--zebra);}
-table td strong{color:var(--dark);}
-footer.doc{max-width:880px;margin:0 auto;padding:2em clamp(16px,5vw,40px) 3em;
-  text-align:center;color:#a9a99c;font-size:clamp(12px,2.4vw,13px);}
-footer.doc .rule{width:46px;height:3px;background:var(--green);border-radius:3px;margin:0 auto 1em;}
-@media(max-width:600px){article{border-radius:12px;}}
-</style>
-</head>
-<body>
-<div class="topbar">
-  <a class="back" href="index.html">&larr; 回課程首頁</a>
-  <span class="site">2048 數學課・備課文件</span>
-</div>
-<div class="wrap">
-  <header class="doc">
-    <div class="eyebrow">2048 數學課・颱風雨備線上限定</div>
-    <h1>教師手冊 — 第 3 節：2048 大變身與 AI</h1>
-  </header>
-  <article>
+<!DOCTYPE html><html lang="zh-Hant"><head><meta charset="utf-8"><title>教師手冊_第3節｜2048 課程</title><style>body{font-family:'Noto Sans TC',-apple-system,sans-serif;max-width:900px;margin:40px auto;padding:0 24px;line-height:1.75;color:#222;}
+h1,h2,h3{color:#004B24;} h1{border-bottom:3px solid #379C39;padding-bottom:8px;} h2{border-left:6px solid #379C39;padding-left:10px;margin-top:2em;}
+table{border-collapse:collapse;width:100%;margin:1em 0;font-size:15px;} th,td{border:1px solid #cbd5c0;padding:8px 10px;text-align:left;vertical-align:top;}
+th{background:#EAF3E7;} tr:nth-child(even){background:#FAFDF8;} code{background:#F4F1E8;padding:1px 5px;border-radius:4px;}
+blockquote{border-left:4px solid #C9BCA6;margin:1em 0;padding:4px 16px;color:#666;background:#FCF9F2;}</style></head><body><h1>教師手冊 — 第 3 節：2048 大變身與 AI</h1>
 <blockquote>
 <p><strong>主檔案</strong>：<code>3_2048_教學流程.md</code><br />
 <strong>執行指南</strong>：<code>30_教學設計指南.md</code><br />
@@ -84,7 +16,7 @@ footer.doc .rule{width:46px;height:3px;background:var(--green);border-radius:3px
 </blockquote>
 <hr />
 <h2>本節流程表</h2>
-<div class="table-wrap"><table>
+<table>
 <thead>
 <tr>
 <th style="text-align: center;">時長</th>
@@ -152,7 +84,7 @@ footer.doc .rule{width:46px;height:3px;background:var(--green);border-radius:3px
 <td>[投影] p19–21｜三節重點摘要</td>
 </tr>
 </tbody>
-</table></div>
+</table>
 <p><strong>時間統計</strong>：講述 10'（第 1、4 段）／ 非講述 30'（第 2、3、5、6、7、8 段，含分組試玩 ×3、留言互動、現場 AI demo、課程回顧；需 &gt; 25' ✓）<br />
 <strong>非講述活動數</strong>：6 個（需 ≥ 2 個 ✓）</p>
 <blockquote>
@@ -173,7 +105,7 @@ footer.doc .rule{width:46px;height:3px;background:var(--green);border-radius:3px
 <li>費氏數列鏈 SVG（簡報 p03 已內含，自畫：1 1 2 3 5 8 13 21＋相加弧線「每個數＝前面兩個相加」）</li>
 <li>費波那契兔子問題成長 SVG（簡報 p04 已內含，自畫：第 1～6 月兔子對數 1 1 2 3 5 8）</li>
 </ul>
-<p><img src="assets/fibonacci-portrait.jpg" alt="13 世紀數學家費波那契的版畫肖像" width="400">
+<p><img src="../assets/fibonacci-portrait.jpg" alt="13 世紀數學家費波那契的版畫肖像" width="400"><br />
 <br><sub>來源：費波那契（Leonardo Fibonacci）版畫肖像 · Wikimedia Commons，公有領域（簡報 p04 已內含）</sub></p>
 <p><strong>參考資料</strong></p>
 <ul>
@@ -219,10 +151,10 @@ footer.doc .rule{width:46px;height:3px;background:var(--green);border-radius:3px
 <li>留言區作答 SVG（簡報 p07 已內含，自畫：手上的 55＋三候選 ①34／②55／③89，正解 ①＋③）</li>
 <li>費氏螺旋 SVG（簡報 p08 已內含，自畫：1 1 2 3 5 8 方塊＋黃金螺旋弧線）</li>
 </ul>
-<p><img src="assets/golden-ratio-nautilus.jpg" alt="鸚鵡螺殼剖面的對數螺線，呼應黃金螺旋" width="400">
+<p><img src="../assets/golden-ratio-nautilus.jpg" alt="鸚鵡螺殼剖面的對數螺線，呼應黃金螺旋" width="400"><br />
 <br><sub>來源：鸚鵡螺殼剖面 · Chris 73 / Wikimedia Commons（CC BY-SA 3.0）（簡報 p08 已內含）</sub></p>
 <blockquote>
-<p>另備自然界素材於 <code>assets/</code>：向日葵 <code>golden-ratio-sunflower.jpg</code>、松果 <code>golden-ratio-pinecone.jpg</code>（如需多放幾張可取用）。</p>
+<p>另備自然界素材於 <code>簡報/assets/</code>：向日葵 <code>golden-ratio-sunflower.jpg</code>、松果 <code>golden-ratio-pinecone.jpg</code>（如需多放幾張可取用）。</p>
 </blockquote>
 <p><strong>參考資料</strong></p>
 <ul>
@@ -243,8 +175,9 @@ footer.doc .rule{width:46px;height:3px;background:var(--green);border-radius:3px
 <p><strong>簡報素材</strong></p>
 <p>對應簡報 p09–11（章節頁 p09「換一個方向 看世界」）。</p>
 <p>▶ <strong>影片</strong>：TED-Ed《探索其他維度》（Exploring other dimensions，全長 4:49，橫式 HD，已 MCP 驗證；<strong>只播關鍵 2–3 分鐘片段</strong>，保留維度講解時間）</p>
-<p><a href="https://www.youtube.com/watch?v=C6kn6nXMWF0"><img src="https://img.youtube.com/vi/C6kn6nXMWF0/0.jpg" alt="TED-Ed 探索其他維度（平面國）影片封面" width="400">
-</a>
+<p><a href="https://www.youtube.com/watch?v=C6kn6nXMWF0"><br />
+<img src="https://img.youtube.com/vi/C6kn6nXMWF0/0.jpg" alt="TED-Ed 探索其他維度（平面國）影片封面" width="400"><br />
+</a><br />
 <br><sub>來源：<a href="https://www.youtube.com/watch?v=C6kn6nXMWF0">TED-Ed – Exploring other dimensions</a>（簡報 p10 已內嵌）</sub></p>
 <ul>
 <li>平面→立體升維對照 SVG（簡報 p11 已內含，自畫：平面 16 格 4 方向 → 立體 27 格 6 方向）</li>
@@ -294,9 +227,9 @@ footer.doc .rule{width:46px;height:3px;background:var(--green);border-radius:3px
 </blockquote>
 <p><strong>簡報素材</strong></p>
 <p>對應簡報 p14–16（章節頁 p14「換 AI 來玩」）。本段為<strong>現場開 AI 自動跑 demo</strong>，搭配兩張已內含的 AI 示意圖，不內嵌影片：</p>
-<p><img src="assets/ai-plays-2048.png" alt="友善機器人一邊想好幾步一邊玩 2048" width="400">
+<p><img src="../assets/ai-plays-2048.png" alt="友善機器人一邊想好幾步一邊玩 2048" width="400"><br />
 <br><sub>來源：AI 玩 2048 示意圖 · 數感實驗室（AI 生成插圖，簡報 p15 已內含）｜現場連結：https://ovolve.github.io/2048-AI/</sub></p>
-<p><img src="assets/ai-thinking-power.png" alt="AI 深度運算示意圖" width="400">
+<p><img src="../assets/ai-thinking-power.png" alt="AI 深度運算示意圖" width="400"><br />
 <br><sub>來源：AI 深度運算示意圖 · 數感實驗室（AI 生成插圖，簡報 p16 整面背景）</sub></p>
 <blockquote>
 <p>不內嵌 Code Bullet 影片（<code>1g1HCYTX3Rg</code> 僅備課參考）。課堂主軸＝現場按「Auto-run」看 AI 自己玩。</p>
@@ -347,7 +280,7 @@ footer.doc .rule{width:46px;height:3px;background:var(--green);border-radius:3px
 <li>三節旅程回顧（簡報 p19，journey 三卡：成長規律／次方與角落訣竅／大變身與 AI，無圖）</li>
 <li>昇華金句頁（簡報 p20，深藍金句「數學，是一種超能力」，無圖）</li>
 </ul>
-<p><img src="assets/family-ai-2048.png" alt="一家人一起玩 2048 並與 AI 互動" width="400">
+<p><img src="../assets/family-ai-2048.png" alt="一家人一起玩 2048 並與 AI 互動" width="400"><br />
 <br><sub>來源：結尾「下次見」主視覺 · 數感實驗室（AI 生成插圖，簡報 p21 已內含）</sub></p>
 <p><strong>參考資料</strong></p>
 <ul>
@@ -369,12 +302,4 @@ footer.doc .rule{width:46px;height:3px;background:var(--green);border-radius:3px
 </code></pre>
 <hr />
 <p><em>模板版本：v1.2</em><br />
-<em>更新日期：2026-06-29</em></p>
-  </article>
-</div>
-<footer class="doc">
-  <div class="rule"></div>
-  數感實驗室 ・ 2048：玩出數學腦（教師備課文件）
-</footer>
-</body>
-</html>
+<em>更新日期：2026-06-29</em></p></body></html>

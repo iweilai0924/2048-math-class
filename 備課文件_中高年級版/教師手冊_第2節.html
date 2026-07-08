@@ -1,76 +1,8 @@
-<!doctype html>
-<html lang="zh-Hant">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>教師手冊 — 第 2 節：翻倍的威力與高手訣竅（次方＋角落）｜2048 數學課・數感實驗室</title>
-<style>
-:root{--green:#009b6b;--dark:#004B24;--paper:#FEF8EE;--line:#e7e2d6;--zebra:#f3faf6;}
-*{box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{margin:0;font-family:"PingFang TC","Noto Sans TC",system-ui,-apple-system,"Segoe UI",sans-serif;
-  background:var(--paper);color:#1f2421;line-height:1.85;-webkit-font-smoothing:antialiased;word-break:break-word;}
-.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
-  gap:12px;padding:10px clamp(16px,4vw,28px);background:rgba(254,248,238,.92);
-  backdrop-filter:saturate(1.4) blur(8px);border-bottom:1px solid var(--line);}
-.topbar a.back{color:var(--green);text-decoration:none;font-weight:700;font-size:clamp(13px,2.6vw,15px);
-  display:inline-flex;align-items:center;gap:.35em;}
-.topbar a.back:hover{color:var(--dark);}
-.topbar .site{color:#9a9a8e;font-size:clamp(11px,2.4vw,13px);font-weight:700;letter-spacing:.08em;}
-.wrap{max-width:880px;margin:0 auto;padding:clamp(20px,5vw,40px) clamp(16px,5vw,40px) 12px;}
-header.doc{margin-bottom:1.6em;padding-bottom:1.1em;border-bottom:3px solid var(--green);}
-header.doc .eyebrow{color:var(--green);font-weight:700;letter-spacing:.14em;font-size:clamp(12px,2.4vw,14px);}
-header.doc h1{margin:.25em 0 0;color:var(--dark);font-size:clamp(24px,5.4vw,36px);line-height:1.25;}
-article{background:#fff;border:1px solid var(--line);border-radius:16px;
-  padding:clamp(20px,4.5vw,44px);box-shadow:0 3px 18px rgba(0,0,0,.05);}
-article h1{font-size:clamp(22px,4.8vw,30px);color:var(--dark);margin:1.7em 0 .5em;
-  padding-bottom:.25em;border-bottom:2px solid var(--line);}
-article h2{font-size:clamp(19px,4vw,25px);color:var(--green);margin:1.6em 0 .5em;
-  padding-left:.5em;border-left:6px solid var(--green);}
-article h3{font-size:clamp(17px,3.4vw,21px);color:var(--dark);margin:1.4em 0 .4em;}
-article h4{font-size:clamp(15px,3vw,18px);color:#33564a;margin:1.2em 0 .3em;}
-article h1:first-child,article h2:first-child,article h3:first-child{margin-top:0;}
-article p{margin:.7em 0;}
-article a{color:var(--green);text-decoration:none;border-bottom:1px solid rgba(0,155,107,.35);}
-article a:hover{color:var(--dark);border-bottom-color:var(--dark);}
-article ul,article ol{padding-left:1.5em;margin:.6em 0;}
-article li{margin:.3em 0;}
-article strong{color:var(--dark);}
-article hr{border:none;border-top:1px dashed var(--line);margin:2em 0;}
-article img{max-width:100%;height:auto;border-radius:10px;border:1px solid var(--line);margin:.4em 0;}
-article sub{display:inline-block;color:#8a8a7e;font-size:.82em;line-height:1.5;}
-blockquote{margin:1em 0;padding:.7em 1.1em;background:var(--zebra);
-  border-left:4px solid var(--green);border-radius:0 8px 8px 0;color:#3a463f;}
-blockquote p{margin:.35em 0;}
-blockquote p:first-child{margin-top:0;}blockquote p:last-child{margin-bottom:0;}
-code{background:#f0efe7;padding:.12em .4em;border-radius:5px;font-size:.9em;
-  font-family:"SF Mono",Menlo,Consolas,monospace;color:#3a463f;}
-pre{background:#1f2421;color:#e9efe9;padding:1em 1.2em;border-radius:10px;overflow-x:auto;}
-pre code{background:none;color:inherit;padding:0;}
-.table-wrap{overflow-x:auto;margin:1.1em 0;-webkit-overflow-scrolling:touch;
-  border:1px solid var(--line);border-radius:10px;}
-table{border-collapse:collapse;width:100%;font-size:clamp(13px,2.6vw,15px);min-width:520px;}
-table th,table td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top;line-height:1.6;}
-table th{background:var(--green);color:#fff;font-weight:700;white-space:nowrap;}
-table tr:nth-child(even) td{background:var(--zebra);}
-table td strong{color:var(--dark);}
-footer.doc{max-width:880px;margin:0 auto;padding:2em clamp(16px,5vw,40px) 3em;
-  text-align:center;color:#a9a99c;font-size:clamp(12px,2.4vw,13px);}
-footer.doc .rule{width:46px;height:3px;background:var(--green);border-radius:3px;margin:0 auto 1em;}
-@media(max-width:600px){article{border-radius:12px;}}
-</style>
-</head>
-<body>
-<div class="topbar">
-  <a class="back" href="index.html">&larr; 回課程首頁</a>
-  <span class="site">2048 數學課・備課文件</span>
-</div>
-<div class="wrap">
-  <header class="doc">
-    <div class="eyebrow">2048 數學課・颱風雨備線上限定</div>
-    <h1>教師手冊 — 第 2 節：翻倍的威力與高手訣竅（次方＋角落）</h1>
-  </header>
-  <article>
+<!DOCTYPE html><html lang="zh-Hant"><head><meta charset="utf-8"><title>教師手冊_第2節｜2048 課程</title><style>body{font-family:'Noto Sans TC',-apple-system,sans-serif;max-width:900px;margin:40px auto;padding:0 24px;line-height:1.75;color:#222;}
+h1,h2,h3{color:#004B24;} h1{border-bottom:3px solid #379C39;padding-bottom:8px;} h2{border-left:6px solid #379C39;padding-left:10px;margin-top:2em;}
+table{border-collapse:collapse;width:100%;margin:1em 0;font-size:15px;} th,td{border:1px solid #cbd5c0;padding:8px 10px;text-align:left;vertical-align:top;}
+th{background:#EAF3E7;} tr:nth-child(even){background:#FAFDF8;} code{background:#F4F1E8;padding:1px 5px;border-radius:4px;}
+blockquote{border-left:4px solid #C9BCA6;margin:1em 0;padding:4px 16px;color:#666;background:#FCF9F2;}</style></head><body><h1>教師手冊 — 第 2 節：翻倍的威力與高手訣竅（次方＋角落）</h1>
 <blockquote>
 <p><strong>主檔案</strong>：<code>3_2048_教學流程.md</code><br />
 <strong>執行指南</strong>：<code>30_教學設計指南.md</code><br />
@@ -83,7 +15,7 @@ footer.doc .rule{width:46px;height:3px;background:var(--green);border-radius:3px
 </blockquote>
 <hr />
 <h2>本節流程表</h2>
-<div class="table-wrap"><table>
+<table>
 <thead>
 <tr>
 <th style="text-align: center;">時長</th>
@@ -130,7 +62,7 @@ footer.doc .rule{width:46px;height:3px;background:var(--green);border-radius:3px
 <td>[投影] 發想留言牆／三個發想方向；下節三變形示意 SVG</td>
 </tr>
 </tbody>
-</table></div>
+</table>
 <p><strong>時間統計</strong>：講述 22' / 非講述 18'（玩第二次 10' ＋ 發想討論 5' ＋ 開場估算互動 3'）<br />
 <strong>非講述活動數</strong>：3 個（開場估算互動、玩第二次、發想討論）</p>
 <blockquote>
@@ -147,11 +79,12 @@ footer.doc .rule{width:46px;height:3px;background:var(--green);border-radius:3px
 <p>先丟懸念（p03）當現場互動：「你覺得 2048 全世界最厲害的人最高能拼到多大？把答案打在留言區：1＝2048、2＝4096、3＝一萬多、4＝六萬多。」收幾個答案後揭曉（p04）：「答案是 65536，也就是 2 連乘 16 次，真的有人做到！」<strong>摺紙影片只播片段、把省下的時間留給這裡</strong>——用 16 把「需要幾個 2」和「合幾次」分清楚（p05）：「把每個 2 想成選手，要拼出 16 得先湊 8 個 2，這是『需要幾個』；但合併像淘汰賽，8 強打成 4 強、4 強打成 2 強、再打出冠軍，只要 4＋2＋1＝7 場，這是『合幾次』。需要的 2 永遠比合併次數多 1。」再放大到紀錄（p06，講述帶出）：「同樣道理，拼 65536 要 32768 塊 2、卻只合 32767 次。」最後播《摺紙上月球》關鍵片段（p07，只播 2–3 分鐘或看海報）：「猜猜對摺幾次能到月球？大約 42 次——跟玩 2048 一樣，前面輕鬆、後面數字大得嚇人。」</p>
 <p><strong>簡報素材</strong></p>
 <p>對應簡報 p01–07（不另下載新圖；以下為已內含素材）。</p>
-<p><img src="assets/ashin-2048-65536.jpeg" alt="五月天阿信臉書貼文：2048 玩到 65536、得分約 57 萬" width="400">
+<p><img src="../assets/ashin-2048-65536.jpeg" alt="五月天阿信臉書貼文：2048 玩到 65536、得分約 57 萬" width="400"><br />
 <br><sub>來源：五月天 阿信 Facebook 貼文截圖（2048 紀錄 65536）</sub></p>
 <p>▶ <strong>影片</strong>：摺紙上月球（指數成長，全長 3:49；課堂<strong>只播關鍵 2–3 分鐘片段／或改看海報選看</strong>，省下的時間給 p05「16 淘汰賽」）</p>
-<p><a href="https://www.youtube.com/watch?v=AmFMJC45f1Q"><img src="https://img.youtube.com/vi/AmFMJC45f1Q/0.jpg" alt="摺紙上月球：指數成長" width="400">
-</a>
+<p><a href="https://www.youtube.com/watch?v=AmFMJC45f1Q"><br />
+<img src="https://img.youtube.com/vi/AmFMJC45f1Q/0.jpg" alt="摺紙上月球：指數成長" width="400"><br />
+</a><br />
 <br><sub>來源：<a href="https://www.youtube.com/watch?v=AmFMJC45f1Q">TED-Ed - Exponential growth: How folding paper can get you to the Moon</a></sub></p>
 <blockquote>
 <p>另：p03 投票、p05「拼 16 的淘汰賽合併金字塔」、p06「兩個問題」皆為簡報內已完成的 inline SVG／純文字版型，課堂直接投影即可。</p>
@@ -179,8 +112,9 @@ footer.doc .rule{width:46px;height:3px;background:var(--green);border-radius:3px
 <li>p10 深藍呼吸頁金句：2048＝2¹¹（2 連乘 11 次）</li>
 </ul>
 <p>📖 <strong>備課參考（課堂不播）</strong>：Math Antics 次方入門（英文，全長 10:05）。本段定調<strong>課堂不播、純投影口白</strong>——老師可課前看此片掌握「次方＝重複相乘」的講法，課堂上用 p08–10 投影帶口白即可。</p>
-<p><a href="https://www.youtube.com/watch?v=-zUmvpkhvW8"><img src="https://img.youtube.com/vi/-zUmvpkhvW8/0.jpg" alt="Math Antics - Intro To Exponents（備課參考，課堂不播）" width="400">
-</a>
+<p><a href="https://www.youtube.com/watch?v=-zUmvpkhvW8"><br />
+<img src="https://img.youtube.com/vi/-zUmvpkhvW8/0.jpg" alt="Math Antics - Intro To Exponents（備課參考，課堂不播）" width="400"><br />
+</a><br />
 <br><sub>來源：<a href="https://www.youtube.com/watch?v=-zUmvpkhvW8">Math Antics - Intro To Exponents (aka Indices)</a>（英文，老師備課參考，課堂不播放）</sub></p>
 <p><strong>參考資料</strong></p>
 <ul>
@@ -263,8 +197,8 @@ footer.doc .rule{width:46px;height:3px;background:var(--green);border-radius:3px
 <li>p26 收尾頁「下一節，2048 大變身」</li>
 </ul>
 <p>[開啟／投影] 三款變體連結（下一節試玩用，本段僅展示）：<br />
-- 費氏 2584：<a href="https://numeracy-learn-kit.web.app/game/fibonacci-2584/">https://numeracy-learn-kit.web.app/game/fibonacci-2584/</a>
-- 立體 3D：<a href="https://numeracy-learn-kit.web.app/game/2048-3d/">https://numeracy-learn-kit.web.app/game/2048-3d/</a>
+- 費氏 2584：<a href="https://numeracy-learn-kit.web.app/game/fibonacci-2584/">https://numeracy-learn-kit.web.app/game/fibonacci-2584/</a><br />
+- 立體 3D：<a href="https://numeracy-learn-kit.web.app/game/2048-3d/">https://numeracy-learn-kit.web.app/game/2048-3d/</a><br />
 - 貪食蛇：<a href="https://numeracy-learn-kit.web.app/game/snake-2048/">https://numeracy-learn-kit.web.app/game/snake-2048/</a></p>
 <p><strong>參考資料</strong></p>
 <ul>
@@ -285,12 +219,4 @@ footer.doc .rule{width:46px;height:3px;background:var(--green);border-radius:3px
 <pre><code>【用戶填寫針對本節的意見】
 </code></pre>
 <hr />
-<p><em>依模板 <code>32_教師手冊輸出模板.md</code> v1.2 產出｜對應簡報 <code>簡報/5_2048_L2_簡報.html</code>（p01–26）｜口白逐字取自簡報 plan-note__source</em></p>
-  </article>
-</div>
-<footer class="doc">
-  <div class="rule"></div>
-  數感實驗室 ・ 2048：玩出數學腦（教師備課文件）
-</footer>
-</body>
-</html>
+<p><em>依模板 <code>32_教師手冊輸出模板.md</code> v1.2 產出｜對應簡報 <code>簡報/5_2048_L2_簡報.html</code>（p01–26）｜口白逐字取自簡報 plan-note__source</em></p></body></html>

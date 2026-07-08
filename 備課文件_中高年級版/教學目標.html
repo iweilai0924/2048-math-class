@@ -1,76 +1,8 @@
-<!doctype html>
-<html lang="zh-Hant">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>2048 教學目標（每節 1 預設 ＋ 2 替代方向）｜2048 數學課・數感實驗室</title>
-<style>
-:root{--green:#009b6b;--dark:#004B24;--paper:#FEF8EE;--line:#e7e2d6;--zebra:#f3faf6;}
-*{box-sizing:border-box;}
-html{scroll-behavior:smooth;}
-body{margin:0;font-family:"PingFang TC","Noto Sans TC",system-ui,-apple-system,"Segoe UI",sans-serif;
-  background:var(--paper);color:#1f2421;line-height:1.85;-webkit-font-smoothing:antialiased;word-break:break-word;}
-.topbar{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;
-  gap:12px;padding:10px clamp(16px,4vw,28px);background:rgba(254,248,238,.92);
-  backdrop-filter:saturate(1.4) blur(8px);border-bottom:1px solid var(--line);}
-.topbar a.back{color:var(--green);text-decoration:none;font-weight:700;font-size:clamp(13px,2.6vw,15px);
-  display:inline-flex;align-items:center;gap:.35em;}
-.topbar a.back:hover{color:var(--dark);}
-.topbar .site{color:#9a9a8e;font-size:clamp(11px,2.4vw,13px);font-weight:700;letter-spacing:.08em;}
-.wrap{max-width:880px;margin:0 auto;padding:clamp(20px,5vw,40px) clamp(16px,5vw,40px) 12px;}
-header.doc{margin-bottom:1.6em;padding-bottom:1.1em;border-bottom:3px solid var(--green);}
-header.doc .eyebrow{color:var(--green);font-weight:700;letter-spacing:.14em;font-size:clamp(12px,2.4vw,14px);}
-header.doc h1{margin:.25em 0 0;color:var(--dark);font-size:clamp(24px,5.4vw,36px);line-height:1.25;}
-article{background:#fff;border:1px solid var(--line);border-radius:16px;
-  padding:clamp(20px,4.5vw,44px);box-shadow:0 3px 18px rgba(0,0,0,.05);}
-article h1{font-size:clamp(22px,4.8vw,30px);color:var(--dark);margin:1.7em 0 .5em;
-  padding-bottom:.25em;border-bottom:2px solid var(--line);}
-article h2{font-size:clamp(19px,4vw,25px);color:var(--green);margin:1.6em 0 .5em;
-  padding-left:.5em;border-left:6px solid var(--green);}
-article h3{font-size:clamp(17px,3.4vw,21px);color:var(--dark);margin:1.4em 0 .4em;}
-article h4{font-size:clamp(15px,3vw,18px);color:#33564a;margin:1.2em 0 .3em;}
-article h1:first-child,article h2:first-child,article h3:first-child{margin-top:0;}
-article p{margin:.7em 0;}
-article a{color:var(--green);text-decoration:none;border-bottom:1px solid rgba(0,155,107,.35);}
-article a:hover{color:var(--dark);border-bottom-color:var(--dark);}
-article ul,article ol{padding-left:1.5em;margin:.6em 0;}
-article li{margin:.3em 0;}
-article strong{color:var(--dark);}
-article hr{border:none;border-top:1px dashed var(--line);margin:2em 0;}
-article img{max-width:100%;height:auto;border-radius:10px;border:1px solid var(--line);margin:.4em 0;}
-article sub{display:inline-block;color:#8a8a7e;font-size:.82em;line-height:1.5;}
-blockquote{margin:1em 0;padding:.7em 1.1em;background:var(--zebra);
-  border-left:4px solid var(--green);border-radius:0 8px 8px 0;color:#3a463f;}
-blockquote p{margin:.35em 0;}
-blockquote p:first-child{margin-top:0;}blockquote p:last-child{margin-bottom:0;}
-code{background:#f0efe7;padding:.12em .4em;border-radius:5px;font-size:.9em;
-  font-family:"SF Mono",Menlo,Consolas,monospace;color:#3a463f;}
-pre{background:#1f2421;color:#e9efe9;padding:1em 1.2em;border-radius:10px;overflow-x:auto;}
-pre code{background:none;color:inherit;padding:0;}
-.table-wrap{overflow-x:auto;margin:1.1em 0;-webkit-overflow-scrolling:touch;
-  border:1px solid var(--line);border-radius:10px;}
-table{border-collapse:collapse;width:100%;font-size:clamp(13px,2.6vw,15px);min-width:520px;}
-table th,table td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top;line-height:1.6;}
-table th{background:var(--green);color:#fff;font-weight:700;white-space:nowrap;}
-table tr:nth-child(even) td{background:var(--zebra);}
-table td strong{color:var(--dark);}
-footer.doc{max-width:880px;margin:0 auto;padding:2em clamp(16px,5vw,40px) 3em;
-  text-align:center;color:#a9a99c;font-size:clamp(12px,2.4vw,13px);}
-footer.doc .rule{width:46px;height:3px;background:var(--green);border-radius:3px;margin:0 auto 1em;}
-@media(max-width:600px){article{border-radius:12px;}}
-</style>
-</head>
-<body>
-<div class="topbar">
-  <a class="back" href="index.html">&larr; 回課程首頁</a>
-  <span class="site">2048 數學課・備課文件</span>
-</div>
-<div class="wrap">
-  <header class="doc">
-    <div class="eyebrow">2048 數學課・颱風雨備線上限定</div>
-    <h1>2048 教學目標（每節 1 預設 ＋ 2 替代方向）</h1>
-  </header>
-  <article>
+<!DOCTYPE html><html lang="zh-Hant"><head><meta charset="utf-8"><title>教學目標｜2048 課程</title><style>body{font-family:'Noto Sans TC',-apple-system,sans-serif;max-width:900px;margin:40px auto;padding:0 24px;line-height:1.75;color:#222;}
+h1,h2,h3{color:#004B24;} h1{border-bottom:3px solid #379C39;padding-bottom:8px;} h2{border-left:6px solid #379C39;padding-left:10px;margin-top:2em;}
+table{border-collapse:collapse;width:100%;margin:1em 0;font-size:15px;} th,td{border:1px solid #cbd5c0;padding:8px 10px;text-align:left;vertical-align:top;}
+th{background:#EAF3E7;} tr:nth-child(even){background:#FAFDF8;} code{background:#F4F1E8;padding:1px 5px;border-radius:4px;}
+blockquote{border-left:4px solid #C9BCA6;margin:1em 0;padding:4px 16px;color:#666;background:#FCF9F2;}</style></head><body><h1>2048 教學目標（每節 1 預設 ＋ 2 替代方向）</h1>
 <blockquote>
 <p><strong>執行指南</strong>：<code>30_教學設計指南.md</code> §二.5｜<strong>主檔</strong>：<code>3_2048_教學流程.md</code><br />
 <strong>用途</strong>：教學流程像科普書（共用內容），教學目標是「老師的詮釋」——同樣流程、不同目標 → 不同提問設計（階段四簡報 §2.6 權重依據）。<br />
@@ -144,12 +76,4 @@ footer.doc .rule{width:46px;height:3px;background:var(--green);border-radius:3px
 <hr />
 <blockquote>
 <p>✅ <strong>請老師每節勾選／改寫 1–2 個</strong>（上限 2）。選定後，回頭看教學流程：最扣合目標的段落＝簡報提問權重最高（階段四 §2.6 依據）。</p>
-</blockquote>
-  </article>
-</div>
-<footer class="doc">
-  <div class="rule"></div>
-  數感實驗室 ・ 2048：玩出數學腦（教師備課文件）
-</footer>
-</body>
-</html>
+</blockquote></body></html>

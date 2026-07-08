@@ -1,0 +1,2516 @@
+<!DOCTYPE html><html lang="zh-Hant"><head><meta charset="utf-8"><title>注音變調檢查清單</title><style>body{font-family:'Noto Sans TC',-apple-system,sans-serif;max-width:900px;margin:40px auto;padding:0 24px;line-height:1.75;color:#222;}
+h1,h2,h3{color:#004B24;} h1{border-bottom:3px solid #379C39;padding-bottom:8px;} h2{border-left:6px solid #379C39;padding-left:10px;margin-top:2em;}
+table{border-collapse:collapse;width:100%;margin:1em 0;font-size:15px;} th,td{border:1px solid #cbd5c0;padding:8px 10px;text-align:left;vertical-align:top;}
+th{background:#EAF3E7;} tr:nth-child(even){background:#FAFDF8;} code{background:#F4F1E8;padding:1px 5px;border-radius:4px;}
+blockquote{border-left:4px solid #C9BCA6;margin:1em 0;padding:4px 16px;color:#666;background:#FCF9F2;}</style></head><body><h1>2048 注音版・「一／不」變調檢查清單</h1>
+<blockquote>
+<p>給二年級版審稿用。已依變調規則整批標好（一＋四聲→ㄧˊ、一＋一二三聲→ㄧˋ、不＋四聲→ㄅㄨˊ、序數與數數維持 ㄧ）。<br />
+<strong>「不確定待確認」表</strong>＝AI 沒有把握、保留原樣的字——請老師逐條勾選：維持 ✓ 或 要改（註明讀音），交回內容組修正。<br />
+統計：已改 L1 46 處／L2 139 處／L3 88 處；不確定 L1 3 條／L2 21 條／L3 6 條。</p>
+</blockquote>
+<hr />
+<h1>第一節（L1 注音版）</h1>
+<h1>2048 L1 注音版 — 「一／不」變調校訂清單</h1>
+<p>檔案：<code>5_2048_L1_簡報_注音版.html</code>（23 頁，BpmfGenSenRounded）<br />
+IVS：<code>&amp;#xE01E1;</code>＝選第 2 讀音、<code>&amp;#xE01E2;</code>＝選第 3 讀音<br />
+讀音檔位：一→ㄧˊ用 E01E1、一→ㄧˋ用 E01E2；不→ㄅㄨˊ用 E01E1<br />
+範圍：只改<strong>可見投影片文字</strong>（逐字口白 plan-note 為 display:none 資料源，依前輪慣例不動）</p>
+<ul>
+<li>共處理可見「一／不」51 處：<strong>改 46 處</strong>、維持 5 處</li>
+<li>改：<strong>一ˊ（E01E1）18</strong>、<strong>一ˋ（E01E2）26</strong>、<strong>不ˊ（E01E1）2</strong></li>
+<li>check_deck.py --measure：<strong>0 FAIL</strong>（1 WARN＝既有 &lt;2vw 微標註，與本次無關；無版面溢位）</li>
+<li>headless 截圖抽查 P13/P14/P15/P16 + 高倍放大驗證：ㄧˊ（一座＝上揚）、ㄧˋ（一碗／一格＝下降）、ㄅㄨˊ（不過＝上揚）皆正確；鄰字既有 VS（種／得／相）未被破壞</li>
+</ul>
+<hr />
+<h2>① 已改明細（46 處）</h2>
+<table>
+<thead>
+<tr>
+<th>頁</th>
+<th>詞</th>
+<th>字</th>
+<th>改成</th>
+<th>後字聲調依據</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P03</td>
+<td>一直（一直盯著）</td>
+<td>一</td>
+<td>ㄧˋ E01E2</td>
+<td>直=二聲</td>
+</tr>
+<tr>
+<td>P03</td>
+<td>一起（晚上一起）</td>
+<td>一</td>
+<td>ㄧˋ E01E2</td>
+<td>起=三聲</td>
+</tr>
+<tr>
+<td>P03</td>
+<td>等一下</td>
+<td>一</td>
+<td>ㄧˊ E01E1</td>
+<td>下=四聲</td>
+</tr>
+<tr>
+<td>P05</td>
+<td>滑一下</td>
+<td>一</td>
+<td>ㄧˊ E01E1</td>
+<td>下=四聲</td>
+</tr>
+<tr>
+<td>P05</td>
+<td>一樣（兩個一樣）</td>
+<td>一</td>
+<td>ㄧˊ E01E1</td>
+<td>樣=四聲</td>
+</tr>
+<tr>
+<td>P05</td>
+<td>一路（一路合併）</td>
+<td>一</td>
+<td>ㄧˊ E01E1</td>
+<td>路=四聲</td>
+</tr>
+<tr>
+<td>P06</td>
+<td>一樣（兩個一樣）</td>
+<td>一</td>
+<td>ㄧˊ E01E1</td>
+<td>樣=四聲</td>
+</tr>
+<tr>
+<td>P07</td>
+<td>這一步</td>
+<td>一</td>
+<td>ㄧˊ E01E1</td>
+<td>步=四聲</td>
+</tr>
+<tr>
+<td>P09</td>
+<td>一個（是一個叫翻倍）</td>
+<td>一</td>
+<td>ㄧˊ E01E1</td>
+<td>個=四聲（本調）</td>
+</tr>
+<tr>
+<td>P11</td>
+<td>一路（而且一路翻倍）</td>
+<td>一</td>
+<td>ㄧˊ E01E1</td>
+<td>路=四聲</td>
+</tr>
+<tr>
+<td>P11</td>
+<td>每一步</td>
+<td>一</td>
+<td>ㄧˊ E01E1</td>
+<td>步=四聲</td>
+</tr>
+<tr>
+<td>P11</td>
+<td>上一步</td>
+<td>一</td>
+<td>ㄧˊ E01E1</td>
+<td>步=四聲</td>
+</tr>
+<tr>
+<td>P13</td>
+<td>一開始</td>
+<td>一</td>
+<td>ㄧˋ E01E2</td>
+<td>開=一聲</td>
+</tr>
+<tr>
+<td>P13</td>
+<td>不到（但不到）</td>
+<td>不</td>
+<td>ㄅㄨˊ E01E1</td>
+<td>到=四聲</td>
+</tr>
+<tr>
+<td>P13</td>
+<td>一個（一個禮拜）</td>
+<td>一</td>
+<td>ㄧˊ E01E1</td>
+<td>個=四聲（本調）</td>
+</tr>
+<tr>
+<td>P14</td>
+<td>一格（最後一格）</td>
+<td>一</td>
+<td>ㄧˋ E01E2</td>
+<td>格=二聲</td>
+</tr>
+<tr>
+<td>P14</td>
+<td>一碗（選項1 一碗飯）</td>
+<td>一</td>
+<td>ㄧˋ E01E2</td>
+<td>碗=三聲</td>
+</tr>
+<tr>
+<td>P14</td>
+<td>一卡（選項2 一卡車）</td>
+<td>一</td>
+<td>ㄧˋ E01E2</td>
+<td>卡=三聲</td>
+</tr>
+<tr>
+<td>P14</td>
+<td>一座（選項3 一座山）</td>
+<td>一</td>
+<td>ㄧˊ E01E1</td>
+<td>座=四聲</td>
+</tr>
+<tr>
+<td>P14</td>
+<td>一座（選項4 比一座城市）</td>
+<td>一</td>
+<td>ㄧˊ E01E1</td>
+<td>座=四聲</td>
+</tr>
+<tr>
+<td>P14</td>
+<td>不過（不過幾粒米）</td>
+<td>不</td>
+<td>ㄅㄨˊ E01E1</td>
+<td>過=四聲</td>
+</tr>
+<tr>
+<td>P15</td>
+<td>一把（頁籤 一把尺）</td>
+<td>一</td>
+<td>ㄧˋ E01E2</td>
+<td>把=三聲</td>
+</tr>
+<tr>
+<td>P15</td>
+<td>一把（大標 先找一把尺）</td>
+<td>一</td>
+<td>ㄧˋ E01E2</td>
+<td>把=三聲</td>
+</tr>
+<tr>
+<td>P15</td>
+<td>一把（先立一把尺）</td>
+<td>一</td>
+<td>ㄧˋ E01E2</td>
+<td>把=三聲</td>
+</tr>
+<tr>
+<td>P15</td>
+<td>一碗（一碗飯≈2000多粒）</td>
+<td>一</td>
+<td>ㄧˋ E01E2</td>
+<td>碗=三聲</td>
+</tr>
+<tr>
+<td>P16</td>
+<td>一整（大標 一整年）</td>
+<td>一</td>
+<td>ㄧˋ E01E2</td>
+<td>整=三聲</td>
+</tr>
+<tr>
+<td>P16</td>
+<td>一年（全台灣一年種）</td>
+<td>一</td>
+<td>ㄧˋ E01E2</td>
+<td>年=二聲</td>
+</tr>
+<tr>
+<td>P16</td>
+<td>一格（這一格）</td>
+<td>一</td>
+<td>ㄧˋ E01E2</td>
+<td>格=二聲</td>
+</tr>
+<tr>
+<td>P16</td>
+<td>一碗（第12格才一碗飯）</td>
+<td>一</td>
+<td>ㄧˋ E01E2</td>
+<td>碗=三聲</td>
+</tr>
+<tr>
+<td>P16</td>
+<td>一整（就變成全台灣一整年）</td>
+<td>一</td>
+<td>ㄧˋ E01E2</td>
+<td>整=三聲</td>
+</tr>
+<tr>
+<td>P17</td>
+<td>一整（花蓮一整年）</td>
+<td>一</td>
+<td>ㄧˋ E01E2</td>
+<td>整=三聲</td>
+</tr>
+<tr>
+<td>P17</td>
+<td>一直（從現在一直吃）</td>
+<td>一</td>
+<td>ㄧˋ E01E2</td>
+<td>直=二聲</td>
+</tr>
+<tr>
+<td>P17</td>
+<td>一直（這就是一直翻倍）</td>
+<td>一</td>
+<td>ㄧˋ E01E2</td>
+<td>直=二聲</td>
+</tr>
+<tr>
+<td>P18</td>
+<td>一次（再玩一次，章節03隔頁）</td>
+<td>一</td>
+<td>ㄧˊ E01E1</td>
+<td>次=四聲</td>
+</tr>
+<tr>
+<td>P19</td>
+<td>一場（回到原版再玩一場）</td>
+<td>一</td>
+<td>ㄧˋ E01E2</td>
+<td>場=三/二聲（量詞，皆→ㄧˋ）</td>
+</tr>
+<tr>
+<td>P21</td>
+<td>一起（玩完一起歸納）</td>
+<td>一</td>
+<td>ㄧˋ E01E2</td>
+<td>起=三聲</td>
+</tr>
+<tr>
+<td>P21</td>
+<td>同一個（鎖在同一個角）</td>
+<td>一</td>
+<td>ㄧˊ E01E1</td>
+<td>個=四聲（另見不確定表註記）</td>
+</tr>
+<tr>
+<td>P21</td>
+<td>一排（排成一排）</td>
+<td>一</td>
+<td>ㄧˋ E01E2</td>
+<td>排=二聲</td>
+</tr>
+<tr>
+<td>P21</td>
+<td>一節（下一節，還有高手訣竅）</td>
+<td>一</td>
+<td>ㄧˋ E01E2</td>
+<td>節=二聲</td>
+</tr>
+<tr>
+<td>P22</td>
+<td>一節（頁籤 接下一節）</td>
+<td>一</td>
+<td>ㄧˋ E01E2</td>
+<td>節=二聲</td>
+</tr>
+<tr>
+<td>P22</td>
+<td>一顆（一顆2048）</td>
+<td>一</td>
+<td>ㄧˋ E01E2</td>
+<td>顆=一聲</td>
+</tr>
+<tr>
+<td>P22</td>
+<td>一下（16格一下就塞滿）</td>
+<td>一</td>
+<td>ㄧˊ E01E1</td>
+<td>下=四聲</td>
+</tr>
+<tr>
+<td>P22</td>
+<td>一節（下一節，談高手訣竅）</td>
+<td>一</td>
+<td>ㄧˋ E01E2</td>
+<td>節=二聲</td>
+</tr>
+<tr>
+<td>P23</td>
+<td>一路（合併＝相加、一路翻倍）</td>
+<td>一</td>
+<td>ㄧˊ E01E1</td>
+<td>路=四聲</td>
+</tr>
+<tr>
+<td>P23</td>
+<td>一下（下課時間休息一下）</td>
+<td>一</td>
+<td>ㄧˊ E01E1</td>
+<td>下=四聲</td>
+</tr>
+<tr>
+<td>P23</td>
+<td>一節（下一節，我們來看高手）</td>
+<td>一</td>
+<td>ㄧˋ E01E2</td>
+<td>節=二聲</td>
+</tr>
+</tbody>
+</table>
+<h3>維持不變（5 處，符合規則1／規則5，非變調）</h3>
+<table>
+<thead>
+<tr>
+<th>頁</th>
+<th>詞</th>
+<th>字</th>
+<th>判定</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>P02</td>
+<td>默契一</td>
+<td>一</td>
+<td>編號/詞尾 → 維持 ㄧ</td>
+</tr>
+<tr>
+<td>P15</td>
+<td>差不多</td>
+<td>不</td>
+<td>後字「多」一聲 → 維持 ㄅㄨˋ</td>
+</tr>
+<tr>
+<td>P21</td>
+<td>訣竅一</td>
+<td>一</td>
+<td>編號/詞尾 → 維持 ㄧ</td>
+</tr>
+<tr>
+<td>P23</td>
+<td>第一節課</td>
+<td>一</td>
+<td>序數「第一」 → 維持 ㄧ</td>
+</tr>
+<tr>
+<td>P17</td>
+<td>賠不起</td>
+<td>不</td>
+<td>補語結構，未改（見不確定表）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2>② 不確定 · 待老師確認</h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>頁</th>
+<th>詞／上下文</th>
+<th>一或不</th>
+<th>目前處理</th>
+<th>猶豫原因</th>
+<th>建議</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>P17</td>
+<td>賠不起（「連國王都賠不起」）</td>
+<td>不</td>
+<td><strong>未改</strong>（維持本調ㄅㄨˋ）</td>
+<td>V-不-補語（賠得起／賠不起）之「不」，口語常讀<strong>輕聲˙ㄅㄨ</strong>，非ㄅㄨˊ也非ㄅㄨˋ；且後字「起」三聲，機械規則本來就不變調。屬規則明列的「不確定：補語結構」</td>
+<td>維持現狀，或由老師改標輕聲˙ㄅㄨ。<strong>不</strong>套第四聲變調</td>
+</tr>
+<tr>
+<td>2</td>
+<td>P21</td>
+<td>同一個角（「把最大的鎖在同一個角」）</td>
+<td>一</td>
+<td>已改ㄧˊ</td>
+<td>「同一」有時當固定詞（一讀陰平ㄧ「同一」）；但「同一個」接量詞「個」，自然口語 tóng yí ge 會變調為ㄧˊ。已按變調改，屬合理但可商榷</td>
+<td>傾向保留ㄧˊ；若老師偏好把「同一」當固定詞不變調，可改回 ㄧ</td>
+</tr>
+<tr>
+<td>3</td>
+<td>P03</td>
+<td>孩子（「孩子會一直」「讓孩子自己玩」×2）</td>
+<td>—（輕聲疑點）</td>
+<td>未動（非一/不）</td>
+<td>名詞後綴「子」現標<strong>本調ㄗˇ</strong>，宜為<strong>輕聲˙ㄗ</strong>（截圖確認為ㄗˇ）</td>
+<td>老師確認是否改標輕聲˙ㄗ（需另一組 IVS/字型讀音，不在本輪一/不範圍）</td>
+</tr>
+</tbody>
+</table>
+<h3>輕聲後綴補充說明（截圖檢查結果）</h3>
+<ul>
+<li><strong>需注意</strong>：<code>孩子</code> 的「子」目前標本調 ㄗˇ（見上表 #3）。全檔可見文字未出現「石頭」類「頭」後綴。</li>
+<li><strong>已正常、無需處理</strong>：<code>麼</code>（怎麼／什麼／這麼）已標輕聲 ˙ㄇㄜ；<code>的</code> 已標 ˙ㄉㄜ；<code>著</code>（盯著）已標 ˙ㄓㄜ；<code>們</code>（它們／我們）字型呈中性/無明顯本調升號。以上皆為字型預設處理，本輪不動。</li>
+</ul>
+<hr />
+<h1>第二節（L2 注音版）</h1>
+<h1>2048 L2 注音版「一／不」變調標註 檢查清單</h1>
+<p>檔案：<code>5_2048_L2_簡報_注音版.html</code>（26 頁）<br />
+備份：<code>5_2048_L2_簡報_注音版.html.bak_pretone</code></p>
+<p>讀音檔位：一+U+E01E1=ㄧˊ／一+U+E01E2=ㄧˋ／不+U+E01E1=ㄅㄨˊ；不預設 ㄅㄨˋ、一序數/計數維持 ㄧ。</p>
+<h2>摘要</h2>
+<ul>
+<li>一→ㄧˊ（後字四聲，加 E01E1）：<strong>64</strong> 處</li>
+<li>一→ㄧˋ（後字一/二/三聲，加 E01E2）：<strong>63</strong> 處</li>
+<li>不→ㄅㄨˊ（後字四聲，加 E01E1）：<strong>12</strong> 處</li>
+<li>合計改動：<strong>139</strong> 處｜不確定待確認：<strong>21</strong> 條</li>
+<li>check_deck.py --measure：<strong>0 FAIL</strong>（WARN 與改動前相同，IVS 為零寬選擇字、不影響版面）</li>
+</ul>
+<h2>① 已改明細（依頁序）</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">#</th>
+<th style="text-align: right;">頁</th>
+<th style="text-align: center;">字</th>
+<th style="text-align: left;">詞例</th>
+<th style="text-align: left;">後字(聲調)</th>
+<th style="text-align: left;">標法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…再翻一倍。…</td>
+<td style="text-align: left;">倍(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…對應原文我們先來猜一個問題：你覺得 2048 這…</td>
+<td style="text-align: left;">個(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…了」、打 2 是「4096，再翻一倍」、打 3 …</td>
+<td style="text-align: left;">倍(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…明明只是一直翻倍，最後居然長到…</td>
+<td style="text-align: left;">直(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…是 2 連乘 16 次。明明只是一直翻倍，最後居…</td>
+<td style="text-align: left;">直(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…一路兩兩合併…</td>
+<td style="text-align: left;">路(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…兩個不一樣的數：…</td>
+<td style="text-align: left;">樣(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…把「2」當選手，一路合到 16…</td>
+<td style="text-align: left;">路(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…先別急著算六萬多，我們用一個小數字 16 來看清…</td>
+<td style="text-align: left;">個(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…4＋2＋1，只有 7 次。就像一場淘汰賽，8 個…</td>
+<td style="text-align: left;">場(3)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…次，也就是 32768 減 1。一樣的淘汰賽：3…</td>
+<td style="text-align: left;">樣(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…2767 場才選出冠軍。所以拼一個 65536，…</td>
+<td style="text-align: left;">個(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…翻倍有多猛？一張紙摺到月球…</td>
+<td style="text-align: left;">張(1)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…一張紙不斷對摺，每摺厚度翻倍，大…</td>
+<td style="text-align: left;">張(1)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: center;">不</td>
+<td style="text-align: left;">…一張紙不斷對摺，每摺厚度翻倍，大約 4…</td>
+<td style="text-align: left;">斷(4)</td>
+<td style="text-align: left;">不→ㄅㄨˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…對應原文我們來看一段影片，感受一下翻倍到底多誇張…</td>
+<td style="text-align: left;">段(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…文我們來看一段影片，感受一下翻倍到底多誇張。想像…</td>
+<td style="text-align: left;">下(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…感受一下翻倍到底多誇張。想像你拿一張普通的紙，把…</td>
+<td style="text-align: left;">張(1)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…候注意，前面幾摺好像沒什麼，後面一下子就衝上天了…</td>
+<td style="text-align: left;">下(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…衝上天了——這跟你玩 2048 一模一樣，前面輕…</td>
+<td style="text-align: left;">模(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…天了——這跟你玩 2048 一模一樣，前面輕鬆，…</td>
+<td style="text-align: left;">樣(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…3＋3＋3 是連加，4 個 3 一直加，可以縮寫…</td>
+<td style="text-align: left;">直(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…2×2×2 是連乘，5 個 2 一直乘，可以縮寫…</td>
+<td style="text-align: left;">直(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…2 的 5 次方，2⁵。你看，每一種寫法都是把同…</td>
+<td style="text-align: left;">種(3)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…，2⁵。你看，每一種寫法都是把同一件事寫得更短—…</td>
+<td style="text-align: left;">件(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…每合併一次，次方就加 1。…</td>
+<td style="text-align: left;">次(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…¹、4 是 2²、8 是 2³，一路上去。那目標…</td>
+<td style="text-align: left;">路(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…11 次，2¹¹。而且你每合併一次，那個次方就加…</td>
+<td style="text-align: left;">次(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…次，那個次方就加 1，從 2¹ 一步步爬到 2¹…</td>
+<td style="text-align: left;">步(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…進到各組，一起玩原版 2048。帶著「翻倍…</td>
+<td style="text-align: left;">起(3)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…好，現在進到你的分組房間。等一下我們要一起玩第二…</td>
+<td style="text-align: left;">下(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…在進到你的分組房間。等一下我們要一起玩第二次原版…</td>
+<td style="text-align: left;">起(3)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…起玩第二次原版 2048。這次不一樣，你要帶著我…</td>
+<td style="text-align: left;">樣(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…們剛剛學的眼光去玩：注意數字怎麼一路翻倍、現在最…</td>
+<td style="text-align: left;">路(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…哪邊滑、磚就往哪邊靠。記得，每滑一步，盤面就會多…</td>
+<td style="text-align: left;">步(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…。記得，每滑一步，盤面就會多冒出一顆新的磚。…</td>
+<td style="text-align: left;">顆(1)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…計時挑戰：帶著新眼光，再玩一局…</td>
+<td style="text-align: left;">局(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…用「翻倍」和「次方」的眼光，再玩一局原版 204…</td>
+<td style="text-align: left;">局(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…看數字怎麼一路翻倍…</td>
+<td style="text-align: left;">路(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…數字一路翻倍上去，繼續拼…</td>
+<td style="text-align: left;">路(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">41</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…下喔！打開原版 2048，認真玩一局。這次邊玩邊…</td>
+<td style="text-align: left;">局(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…。這次邊玩邊注意：你的數字是不是一路 2、4、8…</td>
+<td style="text-align: left;">路(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">43</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…2 的幾次方？目標是挑戰比你上一節更高的磚。組內…</td>
+<td style="text-align: left;">節(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…以互相報告，看誰最大。時間到我們一起回來。…</td>
+<td style="text-align: left;">起(3)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: center;">不</td>
+<td style="text-align: left;">…玩了兩次，發現光靠運氣不夠用了吧？…</td>
+<td style="text-align: left;">夠(4)</td>
+<td style="text-align: left;">不→ㄅㄨˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: center;">不</td>
+<td style="text-align: left;">…塞滿了，往哪滑都不動…</td>
+<td style="text-align: left;">動(4)</td>
+<td style="text-align: left;">不→ㄅㄨˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">47</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…住了，左右兩邊想合的磚永遠湊不到一起，空格越用越…</td>
+<td style="text-align: left;">起(3)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…就結束了。為什麼會這樣？因為我們一直在「看到能合…</td>
+<td style="text-align: left;">直(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">49</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: center;">不</td>
+<td style="text-align: left;">…到能合就合」，沒有先想位置。高手不是這樣玩的。…</td>
+<td style="text-align: left;">是(4)</td>
+<td style="text-align: left;">不→ㄅㄨˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…同一個遊戲，兩種盤面…</td>
+<td style="text-align: left;">個(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">51</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…結果一滑連著合…</td>
+<td style="text-align: left;">滑(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">52</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…應原文我們把兩種盤面放在一起比。左邊是亂玩的盤面…</td>
+<td style="text-align: left;">起(3)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">53</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…由大到小排成蛇形，因為很有秩序，一滑就能接連合好…</td>
+<td style="text-align: left;">滑(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">54</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…有秩序，一滑就能接連合好幾次。同一個遊戲、同樣的…</td>
+<td style="text-align: left;">個(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…每滑一次就亂跑…</td>
+<td style="text-align: left;">次(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…，大磚坐在正中央，就像在盤面插了一根柱子，把整個…</td>
+<td style="text-align: left;">根(1)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">57</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…誰也過不到對面，各自被困在自己那一區，空格很快被…</td>
+<td style="text-align: left;">區(1)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…在自己那一區，空格很快被塞滿，一下子就卡死了。第…</td>
+<td style="text-align: left;">下(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">59</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…其實幾乎長不大。你想讓它再翻一倍，就得讓另一個同…</td>
+<td style="text-align: left;">倍(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…不大。你想讓它再翻一倍，就得讓另一個同樣大的磚剛…</td>
+<td style="text-align: left;">個(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">61</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…是中間這顆磚四個方向都會動、位置一直在變，你很難…</td>
+<td style="text-align: left;">直(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">62</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…最大的磚就「凍」在那裡，白白佔著一格。第三，中間…</td>
+<td style="text-align: left;">格(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">63</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…白白佔著一格。第三，中間的磚每滑一次就亂跑。靠牆…</td>
+<td style="text-align: left;">次(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">64</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: center;">不</td>
+<td style="text-align: left;">…就亂跑。靠牆的磚往牆的方向滑根本不會動、位置很穩…</td>
+<td style="text-align: left;">會(4)</td>
+<td style="text-align: left;">不→ㄅㄨˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…往哪邊跑，你好不容易排好的順序，一換方向就全亂了…</td>
+<td style="text-align: left;">換(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…挑一個角落當基地，讓最大的磚一直待…</td>
+<td style="text-align: left;">個(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">67</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…挑一個角落當基地，讓最大的磚一直待在那裡。…</td>
+<td style="text-align: left;">直(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: center;">不</td>
+<td style="text-align: left;">…角落只連兩個方向，不易被推走…</td>
+<td style="text-align: left;">易(4)</td>
+<td style="text-align: left;">不→ㄅㄨˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…高手的第一招很簡單：挑一個角落，把它當成你的基地…</td>
+<td style="text-align: left;">個(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…當成你的基地，然後讓最大的那顆磚一直待在角落裡，…</td>
+<td style="text-align: left;">直(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">71</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: center;">不</td>
+<td style="text-align: left;">…？你想想看，角落只連著兩個方向，不像中間四面都會…</td>
+<td style="text-align: left;">像(4)</td>
+<td style="text-align: left;">不→ㄅㄨˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">72</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…落比較穩、不容易被擠走。而且大磚一旦不擋在中間，…</td>
+<td style="text-align: left;">旦(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">73</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…第二招：由大到小，排成一條蛇…</td>
+<td style="text-align: left;">條(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">74</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…，沿 S 形把數字由大排到小，像一條蛇。…</td>
+<td style="text-align: left;">條(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…相鄰常剛好少一級，很好合…</td>
+<td style="text-align: left;">級(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">76</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…相鄰少一級，一滑就連著合…</td>
+<td style="text-align: left;">級(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">77</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…相鄰少一級，一滑就連著合…</td>
+<td style="text-align: left;">滑(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…排？從角落那顆最大的磚開始，沿著一條 S 形的路…</td>
+<td style="text-align: left;">條(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">79</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…字由大慢慢排到小，整盤看起來就像一條蛇蜿蜒過去，…</td>
+<td style="text-align: left;">條(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…好處？因為相鄰的兩顆磚常常剛好少一級，要合很容易…</td>
+<td style="text-align: left;">級(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">81</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…很容易；而且整個盤面很有秩序，你一滑，常常就接連…</td>
+<td style="text-align: left;">滑(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">82</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…第三招：留一個方向，…</td>
+<td style="text-align: left;">個(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">83</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: center;">不</td>
+<td style="text-align: left;">…先不亂用…</td>
+<td style="text-align: left;">亂(4)</td>
+<td style="text-align: left;">不→ㄅㄨˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">84</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…大磚釘在右下角以後，有一個方向會把它推走。那個方…</td>
+<td style="text-align: left;">個(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">85</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…真的卡到不能動，才用它救一步…</td>
+<td style="text-align: left;">步(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">86</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: center;">不</td>
+<td style="text-align: left;">…應原文第三招，是「忍住，不亂滑」。你把最大的磚釘…</td>
+<td style="text-align: left;">亂(4)</td>
+<td style="text-align: left;">不→ㄅㄨˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">87</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…大的磚釘在右下角以後，想想看：哪一個方向會把它推…</td>
+<td style="text-align: left;">個(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">88</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: center;">不</td>
+<td style="text-align: left;">…要只用下、右、左三個方向玩，盡量不要往上；只有真…</td>
+<td style="text-align: left;">要(4)</td>
+<td style="text-align: left;">不→ㄅㄨˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">89</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…的卡到不能再動，才用「往上」救命一步。少用一個方…</td>
+<td style="text-align: left;">步(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">90</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…再動，才用「往上」救命一步。少用一個方向，聽起來…</td>
+<td style="text-align: left;">個(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">91</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…進階：先忍住，再一次引爆…</td>
+<td style="text-align: left;">次(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…同一級的數字，先排到同一條線。…</td>
+<td style="text-align: left;">級(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">93</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…同一級的數字，先排到同一條線。…</td>
+<td style="text-align: left;">條(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">94</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…一滑…</td>
+<td style="text-align: left;">滑(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">95</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…排好了，往基地方向滑一下。…</td>
+<td style="text-align: left;">下(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">96</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…一連串合併，最大磚一口氣跳好幾級…</td>
+<td style="text-align: left;">連(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">97</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…一連串合併，最大磚一口氣跳好幾級。…</td>
+<td style="text-align: left;">口(3)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">98</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…一滑：同時合併…</td>
+<td style="text-align: left;">滑(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">99</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…一滑…</td>
+<td style="text-align: left;">滑(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">100</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…對應原文還有一個高手才懂的祕密，叫「連鎖合併…</td>
+<td style="text-align: left;">個(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">101</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…併」。很多人輸在太貪心，看到兩顆一樣的就馬上合，…</td>
+<td style="text-align: left;">樣(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">102</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…梯弄亂了。高手反而會忍住：先把同一級的數字排到同…</td>
+<td style="text-align: left;">級(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">103</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…而會忍住：先把同一級的數字排到同一條線上、把局布…</td>
+<td style="text-align: left;">條(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">104</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…好，等位置都對了，往基地方向輕輕一滑，就會引發一…</td>
+<td style="text-align: left;">滑(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">105</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…了，往基地方向輕輕一滑，就會引發一連串的合併，最…</td>
+<td style="text-align: left;">連(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">106</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…，就會引發一連串的合併，最大的磚一口氣跳好幾級，…</td>
+<td style="text-align: left;">口(3)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">107</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…最大的磚一口氣跳好幾級，同時清出一大片空格。所以…</td>
+<td style="text-align: left;">大(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">108</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…出一大片空格。所以別貪快，每滑一步前先看看盤面。…</td>
+<td style="text-align: left;">步(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">109</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…這些招，是大家「一起玩」出來的…</td>
+<td style="text-align: left;">起(3)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: center;">不</td>
+<td style="text-align: left;">…不是某個人想到的…</td>
+<td style="text-align: left;">是(4)</td>
+<td style="text-align: left;">不→ㄅㄨˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">111</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…一起玩出來…</td>
+<td style="text-align: left;">起(3)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">112</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…——把大磚釘角落、排成蛇形、少用一個方向——好像…</td>
+<td style="text-align: left;">個(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">113</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: center;">不</td>
+<td style="text-align: left;">…有人說是「誰發明的」？沒錯，它們不是哪個天才想出…</td>
+<td style="text-align: left;">是(4)</td>
+<td style="text-align: left;">不→ㄅㄨˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">114</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…014 年爆紅以後，全世界的玩家一邊玩、一邊在網…</td>
+<td style="text-align: left;">邊(1)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">115</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…年爆紅以後，全世界的玩家一邊玩、一邊在網路上分享…</td>
+<td style="text-align: left;">邊(1)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">116</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…一邊玩、一邊在網路上分享，大家「一起玩」出來的共…</td>
+<td style="text-align: left;">起(3)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">117</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…證明是最好」的好規則，數學家給它一個名字，叫「啟…</td>
+<td style="text-align: left;">個(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">118</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…euristic。記住這個詞，下一節我們會看到，…</td>
+<td style="text-align: left;">節(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">119</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…組討論：2048 還能怎麼變？想一個新玩法，等一…</td>
+<td style="text-align: left;">個(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">120</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…8 還能怎麼變？想一個新玩法，等一下舉手上台分享…</td>
+<td style="text-align: left;">下(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">121</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…當設計師了。進到分組房間，跟組員一起想一件事：2…</td>
+<td style="text-align: left;">起(3)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">122</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…師了。進到分組房間，跟組員一起想一件事：2048…</td>
+<td style="text-align: left;">件(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">123</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…形狀、加新道具，什麼都行。討論出一個你們最喜歡的…</td>
+<td style="text-align: left;">個(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">124</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…討論出一個你們最喜歡的新玩法，等一下舉手，上台跟…</td>
+<td style="text-align: left;">下(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">125</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…不一定要翻倍，改成相鄰兩個相加？…</td>
+<td style="text-align: left;">定(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">126</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…向當靈感。方向一，換數字規則：不一定要兩個一樣才…</td>
+<td style="text-align: left;">定(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">127</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…方向一，換數字規則：不一定要兩個一樣才合，也許像…</td>
+<td style="text-align: left;">樣(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">128</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…：不一定要兩個一樣才合，也許像等一下要玩的費氏版…</td>
+<td style="text-align: left;">下(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">129</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…數字相加。方向二，換盤面形狀：不一定是 4×4，…</td>
+<td style="text-align: left;">定(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">130</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…下一節，玩這些變形…</td>
+<td style="text-align: left;">節(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">131</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…前兩個相加 ＝ 下一個…</td>
+<td style="text-align: left;">個(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">132</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…數字方塊接成一條蛇…</td>
+<td style="text-align: left;">條(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">133</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…，多到數不完。我先給你看三款，下一節我們會一個一…</td>
+<td style="text-align: left;">節(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">134</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…完。我先給你看三款，下一節我們會一個一個玩。第一…</td>
+<td style="text-align: left;">個(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">135</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…我先給你看三款，下一節我們會一個一個玩。第一款是…</td>
+<td style="text-align: left;">個(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">136</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…還能跟裡面的 AI 對手較量。下一節見。…</td>
+<td style="text-align: left;">節(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">137</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…下一節，2048 大變身…</td>
+<td style="text-align: left;">節(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+<tr>
+<td style="text-align: right;">138</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…更進一步學會次方表示法（2048＝2…</td>
+<td style="text-align: left;">步(4)</td>
+<td style="text-align: left;">一→ㄧˊ (E01E1)</td>
+</tr>
+<tr>
+<td style="text-align: right;">139</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…¹¹），也學會進階的思考策略。下一節我們換數字、…</td>
+<td style="text-align: left;">節(2)</td>
+<td style="text-align: left;">一→ㄧˋ (E01E2)</td>
+</tr>
+</tbody>
+</table>
+<h2>② 不確定待確認（維持原樣，未加變調；請老師定奪）</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align: right;">#</th>
+<th style="text-align: right;">頁</th>
+<th style="text-align: center;">字</th>
+<th style="text-align: left;">詞例</th>
+<th style="text-align: left;">疑點類型</th>
+<th style="text-align: left;">說明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…先猜一猜，答案可能比你想的還誇張。…</td>
+<td style="text-align: left;">redup</td>
+<td style="text-align: left;">V一V 疊詞（一為輕聲，無變調變體）</td>
+</tr>
+<tr>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…一萬多…</td>
+<td style="text-align: left;">num</td>
+<td style="text-align: left;">數字唸法（數學語境，維持 ㄧ？或量詞唸 ㄧˊ/ㄧˋ）</td>
+</tr>
+<tr>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…096，再翻一倍」、打 3 是「一萬多，高手才到」、…</td>
+<td style="text-align: left;">num</td>
+<td style="text-align: left;">數字唸法（數學語境，維持 ㄧ？或量詞唸 ㄧˊ/ㄧˋ）</td>
+</tr>
+<tr>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…對應原文我們把寫法換一換。上面這塊：3＋3＋3＋3…</td>
+<td style="text-align: left;">redup</td>
+<td style="text-align: left;">V一V 疊詞（一為輕聲，無變調變體）</td>
+</tr>
+<tr>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…10，是 10 的 1 次方；一百是 10 乘 10…</td>
+<td style="text-align: left;">num</td>
+<td style="text-align: left;">數字唸法（數學語境，維持 ㄧ？或量詞唸 ㄧˊ/ㄧˋ）</td>
+</tr>
+<tr>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…10，是 10 的 2 次方；一千是 10 的 3 …</td>
+<td style="text-align: left;">num</td>
+<td style="text-align: left;">數字唸法（數學語境，維持 ㄧ？或量詞唸 ㄧˊ/ㄧˋ）</td>
+</tr>
+<tr>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: center;">一</td>
+<td style="text-align: left;">…方；一千是 10 的 3 次方；一萬是 10 的 4…</td>
+<td style="text-align: left;">num</td>
+<td style="text-align: left;">數字唸法（數學語境，維持 ㄧ？或量詞唸 ㄧˊ/ㄧˋ）</td>
+</tr>
+<tr>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: center;">不</td>
+<td style="text-align: left;">…一局。這次邊玩邊注意：你的數字是不是一路 2、4、8…</td>
+<td style="text-align: left;">bu</td>
+<td style="text-align: left;">不＝輕聲/可能補語/V不V（動不了、合不到、是不是…）</td>
+</tr>
+<tr>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: center;">不</td>
+<td style="text-align: left;">…玩著玩著，盤面就動不了…</td>
+<td style="text-align: left;">bu</td>
+<td style="text-align: left;">不＝輕聲/可能補語/V不V（動不了、合不到、是不是…）</td>
+</tr>
+<tr>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: center;">不</td>
+<td style="text-align: left;">…最大的磚跑到中間擋路，兩邊合不到，空格越來越少。…</td>
+<td style="text-align: left;">bu</td>
+<td style="text-align: left;">不＝輕聲/可能補語/V不V（動不了、合不到、是不是…）</td>
+</tr>
+<tr>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: center;">不</td>
+<td style="text-align: left;">…想合的兩顆湊不到…</td>
+<td style="text-align: left;">bu</td>
+<td style="text-align: left;">不＝輕聲/可能補語/V不V（動不了、合不到、是不是…）</td>
+</tr>
+<tr>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: center;">不</td>
+<td style="text-align: left;">…給擋住了，左右兩邊想合的磚永遠湊不到一起，空格越用越…</td>
+<td style="text-align: left;">bu</td>
+<td style="text-align: left;">不＝輕聲/可能補語/V不V（動不了、合不到、是不是…）</td>
+</tr>
+<tr>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: center;">不</td>
+<td style="text-align: left;">…結果很快就動不了…</td>
+<td style="text-align: left;">bu</td>
+<td style="text-align: left;">不＝輕聲/可能補語/V不V（動不了、合不到、是不是…）</td>
+</tr>
+<tr>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: center;">不</td>
+<td style="text-align: left;">…間擋路，空格越來越少，很快就動不了。右邊是整齊的盤面…</td>
+<td style="text-align: left;">bu</td>
+<td style="text-align: left;">不＝輕聲/可能補語/V不V（動不了、合不到、是不是…）</td>
+</tr>
+<tr>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: center;">不</td>
+<td style="text-align: left;">…左右兩個 8 永遠合不到，塞滿就卡死…</td>
+<td style="text-align: left;">bu</td>
+<td style="text-align: left;">不＝輕聲/可能補語/V不V（動不了、合不到、是不是…）</td>
+</tr>
+<tr>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: center;">不</td>
+<td style="text-align: left;">…左右小磚過不去。…</td>
+<td style="text-align: left;">bu</td>
+<td style="text-align: left;">不＝輕聲/可能補語/V不V（動不了、合不到、是不是…）</td>
+</tr>
+<tr>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: center;">不</td>
+<td style="text-align: left;">…中間的大磚幾乎長不大…</td>
+<td style="text-align: left;">bu</td>
+<td style="text-align: left;">不＝輕聲/可能補語/V不V（動不了、合不到、是不是…）</td>
+</tr>
+<tr>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: center;">不</td>
+<td style="text-align: left;">…餵不到同樣大的磚。…</td>
+<td style="text-align: left;">bu</td>
+<td style="text-align: left;">不＝輕聲/可能補語/V不V（動不了、合不到、是不是…）</td>
+</tr>
+<tr>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: center;">不</td>
+<td style="text-align: left;">…小磚和右邊的小磚互相擋路，誰也過不到對面，各自被困在…</td>
+<td style="text-align: left;">bu</td>
+<td style="text-align: left;">不＝輕聲/可能補語/V不V（動不了、合不到、是不是…）</td>
+</tr>
+<tr>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: center;">不</td>
+<td style="text-align: left;">…。第二，中間的大磚其實幾乎長不大。你想讓它再翻一倍，…</td>
+<td style="text-align: left;">bu</td>
+<td style="text-align: left;">不＝輕聲/可能補語/V不V（動不了、合不到、是不是…）</td>
+</tr>
+<tr>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: center;">不</td>
+<td style="text-align: left;">…2048 都有人做出來了，多到數不完。我先給你看三款…</td>
+<td style="text-align: left;">bu</td>
+<td style="text-align: left;">不＝輕聲/可能補語/V不V（動不了、合不到、是不是…）</td>
+</tr>
+</tbody>
+</table>
+<h3>輕聲後綴疑點補充</h3>
+<ul>
+<li><strong>不＋了（動不了）</strong>：3 處（P14/15/16），「動不了」的「不」讀輕聲（ㄅㄨ˙），字型無輕聲變體，維持底字 ㄅㄨˋ。</li>
+<li><strong>潛在補語「V 不 C」</strong>：合不到／湊不到／過不去／過不到／長不大／餵不到／數不完 — 「不」多讀輕聲，未套四聲前的 ㄅㄨˊ 變調，維持底字。</li>
+<li><strong>V不V（是不是）</strong>：P13「是不是」為正反問句，中間「不」讀輕聲，維持底字。</li>
+<li><strong>數字唸法 一百/一千/一萬/一萬多</strong>：置於位值教學（「一千是 10 的 3 次方」），採「數字唸法維持 ㄧ」；若老師口語唸 ㄧˊㄨㄢˋ／ㄧˋㄑㄧㄢ，再改。</li>
+<li><strong>序數/詞尾維持 ㄧ</strong>（未列入不確定，已直接保留底字）：第一、統一、單一、方向一 等。</li>
+</ul>
+<hr />
+<h1>第三節（L3 注音版）</h1>
+<h1>2048 L3 注音版 —— 「一／不」變調套用清單</h1>
+<p>檔案：<code>5_2048_L3_簡報_注音版.html</code>（21 頁）<br />
+日期：2026-07-06<br />
+讀音檔位：一＋U+E01E1＝ㄧˊ／一＋U+E01E2＝ㄧˋ／不＋U+E01E1＝ㄅㄨˊ（皆為裸字元 VS，與檔內既有 長/數/轉/釘 同法）</p>
+<h2>總計</h2>
+<ul>
+<li>一 → ㄧˊ（E01E1，後字四聲）：<strong>54</strong> 處</li>
+<li>一 → ㄧˋ（E01E2，後字一/二/三聲）：<strong>30</strong> 處</li>
+<li>不 → ㄅㄨˊ（E01E1，後字四聲）：<strong>4</strong> 處</li>
+<li><strong>合計改動：88 處</strong></li>
+<li>依規則維持原樣（不列疑點）：7 處 ｜ 不確定待確認：10 條</li>
+<li>略過（CSS 註解／aria-label 屬性，不渲染）：10 處</li>
+</ul>
+<h2>① 已改明細（逐處）</h2>
+<table>
+<thead>
+<tr>
+<th>行</th>
+<th>字</th>
+<th>後字</th>
+<th>標成</th>
+<th>上下文</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>159</td>
+<td>一</td>
+<td>個</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…費氏 2584：同一個 2048，數…</td>
+</tr>
+<tr>
+<td>159</td>
+<td>一</td>
+<td>套</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…_title"&gt;換一套數字<br>遊…</td>
+</tr>
+<tr>
+<td>196</td>
+<td>一</td>
+<td>下</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…而且越長越快。等一下我們要玩的第二…</td>
+</tr>
+<tr>
+<td>196</td>
+<td>一</td>
+<td>串</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…口白</b>先認識一串很特別的數字，…</td>
+</tr>
+<tr>
+<td>196</td>
+<td>一</td>
+<td>個</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…它的規律超簡單，每一個數都是前面兩個…</td>
+</tr>
+<tr>
+<td>196</td>
+<td>一</td>
+<td>路</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>… 等於 8，就這樣一路長下去，而且越…</td>
+</tr>
+<tr>
+<td>198</td>
+<td>一</td>
+<td>個</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…個月生一對小兔。一個月一個月數…</td>
+</tr>
+<tr>
+<td>198</td>
+<td>一</td>
+<td>個</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…對小兔。一個月一個月數下去，兔…</td>
+</tr>
+<tr>
+<td>198</td>
+<td>一</td>
+<td>對</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…&gt;出了一道謎題：一對兔子，每個月生…</td>
+</tr>
+<tr>
+<td>198</td>
+<td>一</td>
+<td>對</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…對兔子，每個月生一對小兔。一個月…</td>
+</tr>
+<tr>
+<td>198</td>
+<td>一</td>
+<td>道</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…</span>出了一道謎題：一對兔…</td>
+</tr>
+<tr>
+<td>238</td>
+<td>一</td>
+<td>個</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…叫費波那契，他想了一個有趣的謎題：假…</td>
+</tr>
+<tr>
+<td>238</td>
+<td>一</td>
+<td>個</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…長大後也會繼續生。一個月、兩個月、三…</td>
+</tr>
+<tr>
+<td>238</td>
+<td>一</td>
+<td>對</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…對兔子，每個月會生一對小兔，小兔長大…</td>
+</tr>
+<tr>
+<td>238</td>
+<td>一</td>
+<td>對</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…有趣的謎題：假設有一對兔子，每個月會…</td>
+</tr>
+<tr>
+<td>240</td>
+<td>一</td>
+<td>下</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…好，換你們上場。等一下進到各組，老師…</td>
+</tr>
+<tr>
+<td>240</td>
+<td>一</td>
+<td>條</td>
+<td>ㄧˋ (E01E2)</td>
+<td>…款遊戲。規則只改了一條，先別急，等我…</td>
+</tr>
+<tr>
+<td>240</td>
+<td>一</td>
+<td>組</td>
+<td>ㄧˋ (E01E2)</td>
+<td>…的費氏數相加，看哪一組先合出 233…</td>
+</tr>
+<tr>
+<td>240</td>
+<td>一</td>
+<td>組</td>
+<td>ㄧˋ (E01E2)</td>
+<td>…給大家五分鐘，看哪一組先合出 233…</td>
+</tr>
+<tr>
+<td>242</td>
+<td>一</td>
+<td>條</td>
+<td>ㄧˋ (E01E2)</td>
+<td>…esc"&gt;規則只改一條：原本「相同數…</td>
+</tr>
+<tr>
+<td>242</td>
+<td>一</td>
+<td>路</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…3、2＋3＝5……一路合到 2584…</td>
+</tr>
+<tr>
+<td>255</td>
+<td>一</td>
+<td>起</td>
+<td>ㄧˋ (E01E2)</td>
+<td>…04B24"&gt;滑在一起</text>…</td>
+</tr>
+<tr>
+<td>267</td>
+<td>不</td>
+<td>是</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…鄰的費氏數才能合，不是相同數字&lt;/t…</td>
+</tr>
+<tr>
+<td>268</td>
+<td>一</td>
+<td>塊</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>… 合成 5……所以一塊磚不能跟自己合…</td>
+</tr>
+<tr>
+<td>291</td>
+<td>一</td>
+<td>下</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…&gt;口白</b>玩了一下，我考考大家。…</td>
+</tr>
+<tr>
+<td>291</td>
+<td>一</td>
+<td>塊</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…是 89。它要找哪一塊才能合併？把號…</td>
+</tr>
+<tr>
+<td>291</td>
+<td>一</td>
+<td>塊</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…次難一點：手上有一塊「55」，旁邊…</td>
+</tr>
+<tr>
+<td>291</td>
+<td>一</td>
+<td>點</td>
+<td>ㄧˋ (E01E2)</td>
+<td>…我考考大家。這次難一點：手上有一塊…</td>
+</tr>
+<tr>
+<td>291</td>
+<td>不</td>
+<td>在</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…＝110，110 不在費氏數列裡，相…</td>
+</tr>
+<tr>
+<td>291</td>
+<td>不</td>
+<td>是</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…住：這款要找鄰居，不是找雙胞胎。&lt;/…</td>
+</tr>
+<tr>
+<td>291</td>
+<td>不</td>
+<td>是</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…答頁（逼出「找鄰居不是找雙胞胎」；選…</td>
+</tr>
+<tr>
+<td>293</td>
+<td>一</td>
+<td>格</td>
+<td>ㄧˋ (E01E2)</td>
+<td>…比例。照著費氏方塊一格一格畫弧線，…</td>
+</tr>
+<tr>
+<td>293</td>
+<td>一</td>
+<td>格</td>
+<td>ㄧˋ (E01E2)</td>
+<td>…照著費氏方塊一格一格畫弧線，就連成…</td>
+</tr>
+<tr>
+<td>293</td>
+<td>一</td>
+<td>條</td>
+<td>ㄧˋ (E01E2)</td>
+<td>…格畫弧線，就連成一條螺旋；它也藏在…</td>
+</tr>
+<tr>
+<td>311</td>
+<td>一</td>
+<td>個</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…鱗片，都看得到它。一個小遊戲，居然連…</td>
+</tr>
+<tr>
+<td>311</td>
+<td>一</td>
+<td>格</td>
+<td>ㄧˋ (E01E2)</td>
+<td>…數列的方塊，一格一格畫上四分之一圓…</td>
+</tr>
+<tr>
+<td>311</td>
+<td>一</td>
+<td>格</td>
+<td>ㄧˋ (E01E2)</td>
+<td>…著費氏數列的方塊，一格一格畫上四分…</td>
+</tr>
+<tr>
+<td>311</td>
+<td>一</td>
+<td>條</td>
+<td>ㄧˋ (E01E2)</td>
+<td>…之一圓弧，就會連成一條漂亮的螺旋。這…</td>
+</tr>
+<tr>
+<td>313</td>
+<td>一</td>
+<td>個</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…_title"&gt;換一個方向<br>看…</td>
+</tr>
+<tr>
+<td>313</td>
+<td>一</td>
+<td>個</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…國到立體 3D：多一個維度，腦袋就轉…</td>
+</tr>
+<tr>
+<td>315</td>
+<td>一</td>
+<td>下</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…b&gt;口白</b>等一下要玩的立體版，…</td>
+</tr>
+<tr>
+<td>315</td>
+<td>一</td>
+<td>個</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…沒看過「上下」。多一個方向，有多難想…</td>
+</tr>
+<tr>
+<td>315</td>
+<td>一</td>
+<td>個</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…讓你頭有點暈。先看一個故事。《平面國…</td>
+</tr>
+<tr>
+<td>315</td>
+<td>一</td>
+<td>張</td>
+<td>ㄧˋ (E01E2)</td>
+<td>…面國》裡的生物住在一張平面上，從來沒…</td>
+</tr>
+<tr>
+<td>315</td>
+<td>一</td>
+<td>張</td>
+<td>ㄧˋ (E01E2)</td>
+<td>…面國》裡的生物住在一張平面上，從沒看…</td>
+</tr>
+<tr>
+<td>315</td>
+<td>一</td>
+<td>樣</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…平面國生物面對三維一樣。影片大概五分…</td>
+</tr>
+<tr>
+<td>317</td>
+<td>一</td>
+<td>個</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…__hero"&gt;多一個方向，選擇就暴…</td>
+</tr>
+<tr>
+<td>317</td>
+<td>一</td>
+<td>維</td>
+<td>ㄧˋ (E01E2)</td>
+<td>…-label"&gt;升一維，多了什麼&lt;/…</td>
+</tr>
+<tr>
+<td>325</td>
+<td>一</td>
+<td>維</td>
+<td>ㄧˋ (E01E2)</td>
+<td>…379C39"&gt;多一維</text>…</td>
+</tr>
+<tr>
+<td>333</td>
+<td>一</td>
+<td>下</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…層你看不到，要轉一下才看得見。格子…</td>
+</tr>
+<tr>
+<td>333</td>
+<td>一</td>
+<td>層</td>
+<td>ㄧˋ (E01E2)</td>
+<td>…。最麻煩的是中間那一層你看不到，要轉…</td>
+</tr>
+<tr>
+<td>333</td>
+<td>一</td>
+<td>步</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…變多、方向變多，下一步要顧的東西就暴…</td>
+</tr>
+<tr>
+<td>337</td>
+<td>一</td>
+<td>圈</td>
+<td>ㄧˋ (E01E2)</td>
+<td>…個方向滑，還能轉一圈看裡面那層。規…</td>
+</tr>
+<tr>
+<td>389</td>
+<td>一</td>
+<td>個</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…2048。盤面疊成一個三乘三乘三的立…</td>
+</tr>
+<tr>
+<td>389</td>
+<td>一</td>
+<td>起</td>
+<td>ㄧˋ (E01E2)</td>
+<td>…，還是相同數字撞在一起就合併，但現在…</td>
+</tr>
+<tr>
+<td>393</td>
+<td>一</td>
+<td>個</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…看完影片，我直接開一個會自己玩的 A…</td>
+</tr>
+<tr>
+<td>393</td>
+<td>一</td>
+<td>句</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…見文字精簡為「標題一句＋3 短語＋按…</td>
+</tr>
+<tr>
+<td>393</td>
+<td>一</td>
+<td>成</td>
+<td>ㄧˋ (E01E2)</td>
+<td>…把新磚九成冒 2、一成冒 4 的機率…</td>
+</tr>
+<tr>
+<td>393</td>
+<td>一</td>
+<td>次</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…I/ 這個分頁，按一次右上「Auto…</td>
+</tr>
+<tr>
+<td>393</td>
+<td>一</td>
+<td>次</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…場看 AI 自己玩一次</div>&lt;…</td>
+</tr>
+<tr>
+<td>393</td>
+<td>一</td>
+<td>步</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…整齊就加分；接著每一步先往下想好幾步…</td>
+</tr>
+<tr>
+<td>393</td>
+<td>一</td>
+<td>步</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…讓學生在留言區猜下一步、再揭曉；要停…</td>
+</tr>
+<tr>
+<td>393</td>
+<td>一</td>
+<td>段</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>… 秒備用，或改放上一段 Code B…</td>
+</tr>
+<tr>
+<td>393</td>
+<td>一</td>
+<td>鍵</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…</li><li>一鍵自動跑，贏過全…</td>
+</tr>
+<tr>
+<td>395</td>
+<td>一</td>
+<td>成</td>
+<td>ㄧˋ (E01E2)</td>
+<td>…方塊，九成是 2、一成是 4。第三，…</td>
+</tr>
+<tr>
+<td>395</td>
+<td>一</td>
+<td>模</td>
+<td>ㄧˋ (E01E2)</td>
+<td>…麼，再決定怎麼做」一模一樣，只是它…</td>
+</tr>
+<tr>
+<td>395</td>
+<td>一</td>
+<td>樣</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…決定怎麼做」一模一樣，只是它想得更…</td>
+</tr>
+<tr>
+<td>395</td>
+<td>一</td>
+<td>步</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…n&gt;<span>每一步都算機率、挑最…</td>
+</tr>
+<tr>
+<td>395</td>
+<td>一</td>
+<td>步</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…均下來分數最高的那一步。它跟我們「先…</td>
+</tr>
+<tr>
+<td>395</td>
+<td>一</td>
+<td>遍</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…種滑法都先在腦中試一遍。第二，把機率…</td>
+</tr>
+<tr>
+<td>397</td>
+<td>一</td>
+<td>個</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…蛇 2048。這是一個即時競技場，你…</td>
+</tr>
+<tr>
+<td>399</td>
+<td>一</td>
+<td>樣</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…esc"&gt;像貪食蛇一樣移動，蛇身由數…</td>
+</tr>
+<tr>
+<td>424</td>
+<td>一</td>
+<td>串</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…在場上移動，蛇身是一串數字方塊，相同…</td>
+</tr>
+<tr>
+<td>424</td>
+<td>一</td>
+<td>對</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…」的相反，乘和除是一對；空白鍵可以衝…</td>
+</tr>
+<tr>
+<td>424</td>
+<td>一</td>
+<td>樣</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…048。你像貪食蛇一樣在場上移動，蛇…</td>
+</tr>
+<tr>
+<td>424</td>
+<td>一</td>
+<td>起</td>
+<td>ㄧˋ (E01E2)</td>
+<td>…方塊，相同數字碰在一起會合併變大。場…</td>
+</tr>
+<tr>
+<td>426</td>
+<td>一</td>
+<td>個</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…成樓梯。第三節，同一個遊戲玩出三種變…</td>
+</tr>
+<tr>
+<td>426</td>
+<td>一</td>
+<td>直</td>
+<td>ㄧˋ (E01E2)</td>
+<td>…/li&gt;<li>比一直加快太多&lt;/l…</td>
+</tr>
+<tr>
+<td>426</td>
+<td>一</td>
+<td>直</td>
+<td>ㄧˋ (E01E2)</td>
+<td>…指數成長有多猛，比一直加快太多了。第…</td>
+</tr>
+<tr>
+<td>426</td>
+<td>一</td>
+<td>路</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…/b&gt;三節課，我們一路玩過來。第一節…</td>
+</tr>
+<tr>
+<td>426</td>
+<td>一</td>
+<td>路</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…o"&gt;三節課，我們一路玩過來&lt;/di…</td>
+</tr>
+<tr>
+<td>428</td>
+<td>一</td>
+<td>句</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…</b>最後送大家一句話：數學，是一…</td>
+</tr>
+<tr>
+<td>428</td>
+<td>一</td>
+<td>樣</td>
+<td>ㄧˊ/ㄅㄨˊ (E01E1)</td>
+<td>…，遊戲裡、生活裡都一樣。</div>…</td>
+</tr>
+<tr>
+<td>428</td>
+<td>一</td>
+<td>款</td>
+<td>ㄧˋ (E01E2)</td>
+<td>…過蠻力。今天玩的每一款 2048，背…</td>
+</tr>
+<tr>
+<td>428</td>
+<td>一</td>
+<td>種</td>
+<td>ㄧˋ (E01E2)</td>
+<td>…ote"&gt;數學，是一種&lt;span c…</td>
+</tr>
+<tr>
+<td>428</td>
+<td>一</td>
+<td>種</td>
+<td>ㄧˋ (E01E2)</td>
+<td>…一句話：數學，是一種超能力。它讓電…</td>
+</tr>
+<tr>
+<td>430</td>
+<td>一</td>
+<td>起</td>
+<td>ㄧˋ (E01E2)</td>
+<td>…課，我們和 AI 一起把 2048 …</td>
+</tr>
+<tr>
+<td>430</td>
+<td>一</td>
+<td>輪</td>
+<td>ㄧˋ (E01E2)</td>
+<td>…把 2048 玩過一輪。回家揪爸媽再…</td>
+</tr>
+</tbody>
+</table>
+<h2>② 不確定待確認（維持原樣，未加 VS）</h2>
+<table>
+<thead>
+<tr>
+<th>字</th>
+<th>詞</th>
+<th>類型</th>
+<th>判斷理由</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一</td>
+<td>數一數</td>
+<td>V一V 疊詞</td>
+<td>「數(ㄕㄨˇ)一數」動詞重疊，中間「一」多讀輕聲，非四聲變調規則可涵蓋 → 維持ㄧ。出現 2 次（L238、L333）</td>
+</tr>
+<tr>
+<td>不</td>
+<td>轉不過來</td>
+<td>V不C 補語（可能補語否定）</td>
+<td>「轉不過來」中「不」在可能補語，口語多讀輕聲(˙ㄅㄨ)，非單純 不＋四聲 → 維持ㄅㄨˋ。出現 2 次（L313、L333）</td>
+</tr>
+<tr>
+<td>不</td>
+<td>看不到</td>
+<td>V不C 補語</td>
+<td>「看不到」可能補語，「不」口語輕聲 → 維持ㄅㄨˋ。出現 2 次（L317、L333）</td>
+</tr>
+<tr>
+<td>不</td>
+<td>看不見</td>
+<td>V不C 補語</td>
+<td>「看不見」可能補語 → 維持ㄅㄨˋ（L317）</td>
+</tr>
+<tr>
+<td>不</td>
+<td>算不到</td>
+<td>V不C 補語</td>
+<td>「算不到」可能補語 → 維持ㄅㄨˋ（L428）</td>
+</tr>
+<tr>
+<td>不</td>
+<td>能不能</td>
+<td>A不A 正反問</td>
+<td>「能不能」正反問句，「不」多輕聲 → 維持ㄅㄨˋ。出現 2 次（L397、L424）</td>
+</tr>
+</tbody>
+</table>
+<h2>③ 依規則維持原樣（非疑點，僅記錄）</h2>
+<table>
+<thead>
+<tr>
+<th>字</th>
+<th>詞</th>
+<th>規則</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一</td>
+<td>第一，／第一節×2</td>
+<td>序數 → 維持ㄧ（L395、L426×2）</td>
+</tr>
+<tr>
+<td>一</td>
+<td>四分之一圓弧</td>
+<td>分數詞尾「四分之一」，一為數字尾 → 維持ㄧ（L311）</td>
+</tr>
+<tr>
+<td>不</td>
+<td>不能×2／不行</td>
+<td>後字「能/行」為二聲，非四聲 → 維持本調ㄅㄨˋ（L268、L291×2）</td>
+</tr>
+</tbody>
+</table>
+<h2>④ 輕聲後綴疑點（已依「本調」判定，老師可否決）</h2>
+<p>以下量詞／後綴在台灣口語常「輕聲化」，本次一律依<strong>本調四聲</strong>判「一」為 ㄧˊ（教育部教學慣例：一＋本調四聲→二聲），若老師偏好輕聲標法可回報調整：</p>
+<ul>
+<li><strong>一個</strong>（個 本調ㄍㄜˋ，口語常輕聲˙ㄍㄜ）：全檔 標 ㄧˊ，共 <strong>16</strong> 處（如「同一個」「每一個」「一個方向」）。</li>
+<li><strong>一下</strong>（下 本調ㄒㄧㄚˋ，口語常輕聲）：標 ㄧˊ，共 <strong>5</strong> 處（如「等一下」「玩了一下」「轉一下」）。</li>
+<li><strong>一塊</strong>（塊ㄎㄨㄞˋ）：標 ㄧˊ，共 <strong>3</strong> 處。</li>
+<li>費氏數列「1、1、2、3、5、8」為阿拉伯數字，非「一」字，未涉及；「數一數」已列②。</li>
+</ul>
+<h2>⑤ check_deck 結果</h2>
+<p><code>python3 check_deck.py 5_2048_L3_簡報_注音版.html --measure</code> → <strong>0 FAIL · 1 WARN</strong>（WARN 為圖內微標註 &lt;2vw，與本次無關）；--measure 無版面溢位。<br />
+既有多音字 IVS（長ㄓㄤˇ×4、數ㄕㄨˇ、轉ㄓㄨㄢˋ×2、釘ㄉㄧㄥˋ）皆未受影響、無重複疊加。</p></body></html>
