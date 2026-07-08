@@ -17,8 +17,13 @@
   a.card:hover{transform:translateY(-2px);border-color:var(--green);box-shadow:0 6px 18px rgba(0,155,107,.15)}
   a.card .t{font-size:clamp(17px,3.6vw,22px);font-weight:700;color:var(--dark)}
   a.card .d{font-size:clamp(13px,2.6vw,15px);color:#777;margin-top:3px}
-  a.full{border-left-color:var(--dark);background:linear-gradient(180deg,#fff,#f3faf6)}
-  a.full .t{color:var(--green)}
+  a.zhuyin{border-left-color:#0093b8;background:linear-gradient(180deg,#fff,#f2fafd)}
+  a.zhuyin:hover{border-color:#0093b8;box-shadow:0 6px 18px rgba(0,147,184,.15)}
+  a.zhuyin .t{color:#0a5a70}
+  a.zhuyin .tag{display:inline-block;background:#0093b8;color:#fff;font-size:.62em;font-weight:700;border-radius:6px;padding:1px 7px;vertical-align:middle;letter-spacing:.05em}
+  .deck-head{color:var(--dark);font-size:clamp(16px,3.8vw,21px);margin:1.6em 0 .7em;text-align:left}
+  .deck-head:first-of-type{margin-top:.4em}
+  .deck-note{text-align:left;color:#777;font-size:clamp(12px,2.4vw,14px);margin:-.2em 0 .8em}
   .hint{margin-top:1.8em;color:#999;font-size:clamp(12px,2.4vw,14px)}
   .docs-head{color:var(--dark);font-size:clamp(18px,4.4vw,24px);margin:2.2em 0 .9em;padding-top:1.6em;border-top:1px solid #e7e2d6}
   .docs-note{margin-top:1em;color:#999;font-size:clamp(12px,2.4vw,14px)}
@@ -30,11 +35,19 @@
   <div class="eyebrow">颱風雨備・線上限定</div>
   <h1>2048 數學課</h1>
   <div class="sub">用益智遊戲 2048 學指數成長、次方、思考策略與 AI｜數感實驗室</div>
+  <h2 class="deck-head">🎮 上課簡報・中高年級版</h2>
   <div class="cards">
-    <a class="card full" href="5_2048_完整簡報.html"><div class="t">▶ 完整版（三節合併・70 頁）</div><div class="d">一次看完三節課</div></a>
     <a class="card" href="5_2048_L1_簡報.html"><div class="t">第一節　認識 2048 與成長的祕密</div><div class="d">玩 2048・指數 vs 線性・印度米粒傳說</div></a>
     <a class="card" href="5_2048_L2_簡報.html"><div class="t">第二節　倍數的力量</div><div class="d">世界紀錄・次方表示法・高手訣竅</div></a>
     <a class="card" href="5_2048_L3_簡報.html"><div class="t">第三節　2048 大變身與 AI</div><div class="d">費氏版・立體 3D・貪食蛇・AI 玩 2048</div></a>
+  </div>
+
+  <h2 class="deck-head">🎮 上課簡報・二年級注音版</h2>
+  <div class="deck-note">全文加注注音、字級放大、內建字型免安裝，適合低年級孩子跟讀。</div>
+  <div class="cards">
+    <a class="card zhuyin" href="5_2048_L1_簡報_注音版.html"><div class="t">第一節　認識 2048 與成長的祕密　<span class="tag">注音</span></div><div class="d">玩 2048・指數 vs 線性・印度米粒傳說</div></a>
+    <a class="card zhuyin" href="5_2048_L2_簡報_注音版.html"><div class="t">第二節　倍數的力量　<span class="tag">注音</span></div><div class="d">世界紀錄・次方表示法・高手訣竅</div></a>
+    <a class="card zhuyin" href="5_2048_L3_簡報_注音版.html"><div class="t">第三節　2048 大變身與 AI　<span class="tag">注音</span></div><div class="d">費氏版・立體 3D・貪食蛇・AI 玩 2048</div></a>
   </div>
   <div class="hint">鍵盤：方向鍵翻頁 ・ o 總覽 ・ p 口白註記 ・ g 安全線 ・ f 全螢幕</div>
 
