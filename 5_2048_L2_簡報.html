@@ -684,7 +684,7 @@ body:has(.deck .slide.active.probe-group){background:var(--green-dark);}
               <text x="43" y="223">64</text><text x="101" y="223">128</text><text x="159" y="223" font-size="16">256</text><text x="217" y="223" font-size="16" fill="#FFFFFF" font-weight="900">512</text>
             </g>
             <path d="M217 217 L43 217 L43 159 L217 159 L217 110" fill="none" stroke="#379C39" stroke-opacity="0.55" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-            <polygon points="211,113 223,113 217,101" fill="#379C39" fill-opacity="0.8"/>
+            <polygon points="183,211 183,223 196,217" fill="#379C39" fill-opacity="0.8"/>
           </svg>
         </div>
         <div class="probe-cards__info">
@@ -823,7 +823,7 @@ body:has(.deck .slide.active.probe-group){background:var(--green-dark);}
             <text x="43" y="223">64</text><text x="101" y="223">128</text><text x="159" y="223" font-size="16">256</text><text x="217" y="223" font-size="16" fill="#FFFFFF" font-weight="900">512</text>
           </g>
           <path d="M217 217 L43 217 L43 159 L217 159 L217 110" fill="none" stroke="#379C39" stroke-opacity="0.6" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-          <polygon points="210,114 224,114 217,100" fill="#379C39" fill-opacity="0.85"/>
+          <polygon points="182,210 182,224 196,217" fill="#379C39" fill-opacity="0.85"/>
           <text x="130" y="282" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="15" font-weight="900" fill="#004B24">相鄰差一級，一滑就連著合</text>
         </svg>
       </div>
@@ -861,10 +861,21 @@ body:has(.deck .slide.active.probe-group){background:var(--green-dark);}
             <text x="43" y="165">4</text><text x="101" y="165">8</text><text x="159" y="165">16</text><text x="217" y="165">32</text>
             <text x="43" y="223">8</text><text x="101" y="223">16</text><text x="159" y="223">64</text><text x="217" y="223" font-size="16" fill="#FFFFFF" font-weight="900">512</text>
           </g>
-          <rect x="192" y="18" width="50" height="50" rx="7" fill="none" stroke="#BE2026" stroke-width="2.5" stroke-dasharray="5 4"/>
-          <text x="217" y="49" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="15" font-weight="900" fill="#BE2026" opacity="0.7">512</text>
-          <path d="M217 206 L217 64" fill="none" stroke="#BE2026" stroke-opacity="0.8" stroke-width="7" stroke-linecap="round"/>
-          <polygon points="204,68 230,68 217,46" fill="#BE2026" fill-opacity="0.9"/>
+          <!-- 往上滑：整欄一起上移一格（4→列1、32→列2、512→列3）。512 只離開角落一格 -->
+          <!-- 4、32 的淡落點 ghost（框＋字＋短細箭頭） -->
+          <rect x="192" y="18" width="50" height="50" rx="7" fill="none" stroke="#BE2026" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.32"/>
+          <rect x="192" y="76" width="50" height="50" rx="7" fill="none" stroke="#BE2026" stroke-width="1.5" stroke-dasharray="4 3" opacity="0.32"/>
+          <text x="217" y="45" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="15" font-weight="700" fill="#BE2026" opacity="0.34">4</text>
+          <text x="217" y="91" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="11" font-weight="700" fill="#BE2026" opacity="0.34">32</text>
+          <path d="M217 82 L217 64" fill="none" stroke="#BE2026" stroke-opacity="0.32" stroke-width="2" stroke-linecap="round"/>
+          <polygon points="212,66 222,66 217,58" fill="#BE2026" fill-opacity="0.32"/>
+          <path d="M217 140 L217 122" fill="none" stroke="#BE2026" stroke-opacity="0.32" stroke-width="2" stroke-linecap="round"/>
+          <polygon points="212,124 222,124 217,116" fill="#BE2026" fill-opacity="0.32"/>
+          <!-- 512 落點 ghost（第3列，紅色主角）：紅虛線框即代表 512 的落點 -->
+          <rect x="192" y="134" width="50" height="50" rx="7" fill="none" stroke="#BE2026" stroke-width="2.5" stroke-dasharray="5 4"/>
+          <!-- 512 上移一格：紅色粗箭頭（第4列 → 第3列），走左側避開「32」 -->
+          <path d="M201 214 L201 160" fill="none" stroke="#BE2026" stroke-opacity="0.85" stroke-width="7" stroke-linecap="round"/>
+          <polygon points="190,164 212,164 201,144" fill="#BE2026" fill-opacity="0.92"/>
           <text x="130" y="282" text-anchor="middle" font-family="'Noto Sans TC',sans-serif" font-size="15" font-weight="900" fill="#BE2026">往上滑 → 大磚離開角落（少用）</text>
         </svg>
       </div>
@@ -975,22 +986,20 @@ body:has(.deck .slide.active.probe-group){background:var(--green-dark);}
         <div style="display:flex;align-items:center;justify-content:center;">
           <svg viewBox="0 0 180 180" preserveAspectRatio="xMidYMid meet" style="width:calc(13 * var(--u));height:calc(13 * var(--u));display:block;" role="img" aria-label="蛇形排列：數字由大到小沿 S 形排好">
             <rect x="4" y="4" width="172" height="172" rx="12" fill="#DAD3C6"/>
-            <g fill="#ECE6DC"><rect x="13" y="13" width="35" height="35" rx="6"/><rect x="53" y="13" width="35" height="35" rx="6"/><rect x="93" y="13" width="35" height="35" rx="6"/><rect x="133" y="13" width="35" height="35" rx="6"/><rect x="133" y="53" width="35" height="35" rx="6"/></g>
+            <g fill="#ECE6DC"><rect x="13" y="13" width="35" height="35" rx="6"/><rect x="53" y="13" width="35" height="35" rx="6"/><rect x="93" y="13" width="35" height="35" rx="6"/><rect x="133" y="13" width="35" height="35" rx="6"/><rect x="13" y="53" width="35" height="35" rx="6"/><rect x="53" y="53" width="35" height="35" rx="6"/><rect x="93" y="53" width="35" height="35" rx="6"/></g>
             <g font-family="'Noto Sans TC',sans-serif" text-anchor="middle" font-weight="700" font-size="13" fill="#0A0A0A">
-              <rect x="13" y="53" width="35" height="35" rx="6" fill="#CDE9D8"/><text x="30.5" y="76">8</text>
-              <rect x="53" y="53" width="35" height="35" rx="6" fill="#A6DBBC"/><text x="70.5" y="76">4</text>
-              <rect x="93" y="53" width="35" height="35" rx="6" fill="#CDE9D8"/><text x="110.5" y="76">2</text>
-              <rect x="13" y="93" width="35" height="35" rx="6" fill="#4DAE76"/><text x="30.5" y="116" fill="#FFFFFF">32</text>
-              <rect x="53" y="93" width="35" height="35" rx="6" fill="#74C497"/><text x="70.5" y="116">16</text>
-              <rect x="93" y="93" width="35" height="35" rx="6" fill="#A6DBBC"/><text x="110.5" y="116">8</text>
-              <rect x="133" y="93" width="35" height="35" rx="6" fill="#CDE9D8"/><text x="150.5" y="116">4</text>
-              <rect x="13" y="133" width="35" height="35" rx="6" fill="#1F7A3A"/><text x="30.5" y="156" fill="#FFFFFF">128</text>
-              <rect x="53" y="133" width="35" height="35" rx="6" fill="#2E8B45"/><text x="70.5" y="156" fill="#FFFFFF">64</text>
-              <rect x="93" y="133" width="35" height="35" rx="6" fill="#379C39"/><text x="110.5" y="156" fill="#FFFFFF">32</text>
+              <rect x="133" y="53" width="35" height="35" rx="6" fill="#CDE9D8"/><text x="150.5" y="76">2</text>
+              <rect x="13" y="93" width="35" height="35" rx="6" fill="#379C39"/><text x="30.5" y="116" fill="#FFFFFF">32</text>
+              <rect x="53" y="93" width="35" height="35" rx="6" fill="#4DAE76"/><text x="70.5" y="116" fill="#FFFFFF">16</text>
+              <rect x="93" y="93" width="35" height="35" rx="6" fill="#74C497"/><text x="110.5" y="116">8</text>
+              <rect x="133" y="93" width="35" height="35" rx="6" fill="#A6DBBC"/><text x="150.5" y="116">4</text>
+              <rect x="13" y="133" width="35" height="35" rx="6" fill="#2E8B45"/><text x="30.5" y="156" fill="#FFFFFF">64</text>
+              <rect x="53" y="133" width="35" height="35" rx="6" fill="#1F7A3A"/><text x="70.5" y="156" fill="#FFFFFF" font-size="11">128</text>
+              <rect x="93" y="133" width="35" height="35" rx="6" fill="#0F622F"/><text x="110.5" y="156" fill="#FFFFFF" font-size="11">256</text>
               <rect x="133" y="133" width="35" height="35" rx="6" fill="#004B24"/><text x="150.5" y="156" fill="#FFFFFF" font-size="11">512</text>
             </g>
             <path d="M150 150 L30 150 L30 110 L150 110 L150 74" fill="none" stroke="#004B24" stroke-opacity="0.55" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <polygon points="144,77 156,77 150,66" fill="#004B24" fill-opacity="0.75"/>
+            <polygon points="124,145 124,155 136,150" fill="#004B24" fill-opacity="0.75"/>
           </svg>
         </div>
         <div style="font-size:calc(2 * var(--u));font-weight:900;color:var(--green-primary);letter-spacing:0.04em;flex:0 0 auto;">蛇形</div>
